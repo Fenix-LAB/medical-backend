@@ -1,44 +1,15 @@
-# Full API REST on fastAPI
+# API REST for medical application
 
 ## Description
-
-This is a simple API REST with fastAPI and SQLAlchemy ORM.
-
-## API REST
-API REST is an application programming interface that uses HTTP requests to GET, PUT, POST and DELETE data.
-Graphic representation of the API REST:
-![REST API](images/REST_Graph.png)
-
-## SQLAlchemy ORM
-SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL.
-
-## fastAPI
-FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+This is an API REST for a medical application. It is developed in Python using the FastAPI framework and the database is PostgreSQL.
 
 ## Installation
-Python 3.6+ is required to run this application.
-
-### Clone the repository
-```bash
-git clone
-```
+Python 3.10+ is required to run this application.
 
 ### Install the dependencies
 ```bash
 pip install -r requirements.txt
 ```
-
-### Run the application
-```bash
-uvicorn app.server:app --reload
-```
-
-### Run the database
-```bash
-docker build -t database .
-docker run -d -p 5432:5432 database
-```
-
 
 ## Files structure
     
