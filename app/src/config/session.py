@@ -1,8 +1,7 @@
-from contextlib import asynccontextmanager
-from typing import AsyncGenerator
+from contextlib import contextmanager
+from sqlalchemy import MetaData, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
 
 # Database connection
 host = "localhost"
@@ -12,30 +11,32 @@ password = "medical"
 db_name = "medical_db"
 
 POSTGRES_SQL_CONNECTION = (
-    f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db_name}"
+    f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
 )
 
-try:
-    engine = create_async_engine(POSTGRES_SQL_CONNECTION, echo=True)
-    print("Conection succesfully")
-except Exception as ex:
-    print("Could Not connect to Database %s", ex)
+def connect_to_db():
+
+    try:
+        engine = create_engine(POSTGRES_SQL_CONNECTION, echo=True)
+        print("Conection succesfully")
+    except Exception as ex:
+        print("Could Not connect to Database %s", ex)
+
+    return engine
 
 
-async_session = sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-    autocommit=False,
-    autoflush=False,
-)
+def get_data_base(engine):
+    meta = MetaData() 
+
+    meta.reflect(bind=engine)
+
+    Base = declarative_base() 
+
+    for table_name in meta.tables:
+        print("Table name:", table_name)
+
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+    return SessionLocal
 
 
-@asynccontextmanager
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session() as session:
-        async with session.begin():
-            try:
-                yield session
-            finally:
-                await session.close()

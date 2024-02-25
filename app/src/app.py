@@ -15,6 +15,7 @@ def create_app():
         allow_headers=["*"],
     )
 
-    app.include_router(router, prefix="/medical")
+    print("Starting router...")
+    app.include_router(router, prefix="/api/v1")
 
     return app
