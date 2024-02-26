@@ -14,7 +14,7 @@ if __name__ == "__main__":
  
     # engine = connect_to_db()
 
-    get_data_base(engine)
+    # get_data_base(engine)
 
     application = create_app()
 
@@ -24,4 +24,4 @@ if __name__ == "__main__":
         return {"message": "Welcome medical, server is up and running"}
 
     print("Starting server...")
-    uvicorn.run(application, host="127.0.0.1", port=80, reload=False)
+    uvicorn.run(application, host="127.0.0.1", port=80)

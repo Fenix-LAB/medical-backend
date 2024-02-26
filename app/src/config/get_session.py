@@ -24,8 +24,8 @@ def get_data_base(engine):
 
     Base = declarative_base() 
 
-    for table_name in meta.tables:
-        print("Table name:", table_name)
+    # for table_name in meta.tables:
+    #     print("Table name:", table_name)
 
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

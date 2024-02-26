@@ -18,7 +18,7 @@ POSTGRES_SQL_CONNECTION = (
 
 try:
     engine = create_engine(POSTGRES_SQL_CONNECTION, echo=True)
-    print("Conection succesfully")
+    print("Conection to Database was successful!")
 except Exception as ex:
     print("Could Not connect to Database %s", ex)
 
