@@ -56,7 +56,7 @@ async def update_company(company: CompanyRequest, company_id: int,  db_session: 
     ## REQUEST BODY
         - commercial_name: str
         - contact_person_id: int (optional)
-        - status: bool
+        - status: int
         - created_at: date
         - created_by: int
         - updated_at: date

@@ -8,8 +8,6 @@ from src.utils.helper import rows_to_dicts
 def get(db_session: Session):
     """Get All Companies"""
     try:
-        print("Starting get...")
-        print(f"db_session: {db_session}")
         query = text("SELECT * FROM companies")
         companies = db_session.execute(query).fetchall()
 
