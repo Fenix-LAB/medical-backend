@@ -16,7 +16,7 @@ class CompanyRequest(BaseModel):
 
 
 class CompanyUpdateRequest(BaseModel):
-    """Schema for response body of company"""
+    """Schema for update body of company"""
     commercial_name: Optional[str]
     contact_person_id: Optional[int]
     status: Optional[int]
