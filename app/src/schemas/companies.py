@@ -9,9 +9,7 @@ class CompanyRequest(BaseModel):
     commercial_name: str
     contact_person_id: Optional[int] = None
     status: int
-    created_at: date
     created_by: int
-    updated_at: date
     updated_by: int
 
 

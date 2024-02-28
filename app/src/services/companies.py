@@ -4,6 +4,7 @@ from sqlalchemy import text
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
 from src.utils.helper import rows_to_dicts
+from datetime import date
 
 def get(db_session: Session):
     """Get All Companies"""
@@ -26,6 +27,14 @@ def get(db_session: Session):
 def create(company: CompanyRequest, db_session: Session):
     """Create Company"""
     try:
+
+        created_at = date.today()
+        updated_at = date.today()
+
+        company = company.dict()
+        company["created_at"] = created_at
+        company["updated_at"] = updated_at
+
         query = text("INSERT INTO companies (commercial_name, contact_person_id, status, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :status, :created_at, :created_by, :updated_at, :updated_by)")
 
         db_session.execute(query, company.dict())
