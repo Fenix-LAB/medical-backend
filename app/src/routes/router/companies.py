@@ -69,7 +69,7 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
         - The contact_person_id is a field that is optional
 
     """
-
+    print(f'company: {company}')
     result = companies.update(company, company_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
