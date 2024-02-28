@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from src.config.get_session import get_db_connect
 from src.services import companies
 from fastapi.responses import JSONResponse
-from src.schemas.companies import CompanyRequest
+from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 
 router = APIRouter()
 
@@ -51,7 +51,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
 
 
 @router.put(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Update Company")
-async def update_company(company: CompanyRequest, company_id: int,  db_session: Session = Depends(get_db_connect)):
+async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect)):
     """
     ## REQUEST BODY
         - commercial_name: str

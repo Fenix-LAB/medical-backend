@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from sqlalchemy import text
-from src.schemas.companies import CompanyResponse, CompanyRequest
+from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
 from src.utils.helper import rows_to_dicts
 
@@ -42,7 +42,7 @@ def create(company: CompanyRequest, db_session: Session):
         ) from ex
 
 
-def update(company: CompanyRequest, company_id: int, db_session: Session):
+def update(company: CompanyUpdateRequest, company_id: int, db_session: Session):
     """Update Company"""
     try:
         query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE company_id = :company_id")

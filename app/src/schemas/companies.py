@@ -15,13 +15,12 @@ class CompanyRequest(BaseModel):
     updated_by: int
 
 
-class CompanyResponse(BaseModel):
+class CompanyUpdateRequest(BaseModel):
     """Schema for response body of company"""
-    company_id: int
-    commercial_name: str
+    commercial_name: Optional[str]
     contact_person_id: Optional[int]
-    status: int
-    created_at: date
-    created_by: int
-    updated_at: date
-    updated_by: int
+    status: Optional[int]
+    created_at: Optional[date]
+    created_by: Optional[int]
+    updated_at: Optional[date]
+    updated_by: Optional[int]
