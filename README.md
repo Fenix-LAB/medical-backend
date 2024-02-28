@@ -11,6 +11,14 @@ Python 3.10+ is required to run this application.
 pip install -r requirements.txt
 ```
 
+### Run the application
+```bash
+python app/server.py
+```
+
+### Look at the documentation
+Go to the following URL: http://localhost:80/docs
+
 ## Files structure
     
 ```bash 
