@@ -16,9 +16,9 @@ class PersonsRequest(BaseModel):
     address: str
     phone_number: str
     email: str
-    created_at: date
+    # created_at: date
     created_by: int
-    updated_at: date
+    # updated_at: date
     updated_by: int
     company_id: int
 
@@ -34,8 +34,8 @@ class PersonsUpdateRequest(BaseModel):
     address: Optional[str]
     phone_number: Optional[str]
     email: Optional[str]
-    created_at: Optional[date]
-    created_by: Optional[int]
-    updated_at: Optional[date]
+    # created_at: Optional[date]
+    # created_by: Optional[int]
+    # updated_at: Optional[date]
     updated_by: Optional[int]
     company_id: Optional[int]

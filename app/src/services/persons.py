@@ -31,13 +31,27 @@ def create(person: PersonsRequest, db_session: Session):
         created_at = date.today()
         updated_at = date.today()
 
-        person = person.dict()
-        person["created_at"] = created_at
-        person["updated_at"] = updated_at
+        data_person = {
+            "first_name": person.first_name,
+            "last_name": person.last_name,
+            "identification_type": person.identification_type,
+            "identification": person.identification,
+            "birthdate": person.birthdate,
+            "gender": person.gender,
+            "marital_status": person.marital_status,
+            "address": person.address,
+            "phone_number": person.phone_number,
+            "email": person.email,
+            "created_at": created_at,
+            "created_by": person.created_by,
+            "updated_at": updated_at,
+            "updated_by": person.updated_by,
+            "company_id": person.company_id
+        }
 
-        query = text("INSERT INTO persons (first_name, last_name, identification_type, identification, birthdate, gender, marital_status, address, phone_number, email, created_at, created_by, updated_at, updated_by, company_id) VALUES (:first_name, :last_name, :identification_type, :identification, :birthdate, gender, marital_status, address, phone_number, email, created_at, created_by, updated_at, updated_by, company_id)")
+        query = text("INSERT INTO persons (first_name, last_name, identification_type, identification, birthdate, gender, marital_status, address, phone_number, email, created_at, created_by, updated_at, updated_by, company_id) VALUES (:first_name, :last_name, :identification_type, :identification, :birthdate, :gender, :marital_status, :address, :phone_number, :email, :created_at, :created_by, :updated_at, :updated_by, :company_id)")
 
-        db_session.execute(query, person.dict())
+        db_session.execute(query, data_person)
 
         db_session.commit()
 
@@ -55,12 +69,26 @@ def update(person: PersonsUpdateRequest, person_id: int, db_session: Session):
     """Update Person"""
     try:
         update_at = date.today()
-        person = person.dict()
-        person["updated_at"] = update_at
+        
+        data_person = {
+            "first_name": person.first_name,
+            "last_name": person.last_name,
+            "identification_type": person.identification_type,
+            "identification": person.identification,
+            "birthdate": person.birthdate,
+            "gender": person.gender,
+            "marital_status": person.marital_status,
+            "address": person.address,
+            "phone_number": person.phone_number,
+            "email": person.email,
+            "updated_at": update_at,
+            "updated_by": person.updated_by,
+            "company_id": person.company_id
+        }
 
         query = text("UPDATE persons SET first_name = :first_name, last_name = :last_name, identification_type = :identification_type, identification = :identification, birthdate = :birthdate, gender = :gender, marital_status = :marital_status, address = :address, phone_number = :phone_number, email = :email, updated_at = :updated_at, updated_by = :updated_by, company_id = :company_id WHERE person_id = :person_id")
 
-        db_session.execute(query, {**person, "person_id": person_id})
+        db_session.execute(query, {**data_person, "person_id": person_id})
 
         db_session.commit()
 
