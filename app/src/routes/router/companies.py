@@ -30,10 +30,8 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
         - commercial_name: str
         - contact_person_id: int (optional)
         - status: bool
-        - created_at: date
         - created_by: int
-        - updated_at: date
-        - updated_by: int
+        - updated_by: int (Thid field will be added automatically by the system, so it is not necessary to send it in the request body)
 
     ## RESPONSE
         - Returns the created company
@@ -54,19 +52,16 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
 async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect)):
     """
     ## REQUEST BODY
-        - commercial_name: str
+        - commercial_name: str (optional)
         - contact_person_id: int (optional)
-        - status: int
-        - created_at: date
-        - created_by: int
-        - updated_at: date
-        - updated_by: int
+        - status: int (optional)
+        - updated_by: int (optional)
 
     ## RESPONSE
         - Returns the updated company
 
     ## DEVELOPER NOTES
-        - The contact_person_id is a field that is optional
+        - All fields are optional
 
     """
     print(f'company: {company}')
