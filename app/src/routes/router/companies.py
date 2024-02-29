@@ -31,7 +31,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
         - contact_person_id: int (optional)
         - status: bool
         - created_by: int
-        - updated_by: int (Thid field will be added automatically by the system, so it is not necessary to send it in the request body)
+        - updated_by: int (This field will be added automatically by the system, so it is not necessary to send it in the request body)
 
     ## RESPONSE
         - Returns the created company
