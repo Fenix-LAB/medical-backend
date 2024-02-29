@@ -4,7 +4,8 @@ from .router import (
     companies,
     persons,
     disease_types,
-    exam_types
+    exam_types,
+    exams
 )
 
 router = APIRouter()
@@ -18,4 +19,5 @@ router.include_router(companies.router, tags=["companies"])
 router.include_router(persons.router, tags=["persons"])
 router.include_router(disease_types.router, tags=["disease_types"])
 router.include_router(exam_types.router, tags=["exam_types"])
+router.include_router(exams.router, tags=["exams"])
 
