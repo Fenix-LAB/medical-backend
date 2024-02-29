@@ -55,7 +55,7 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
         - commercial_name: str (optional)
         - contact_person_id: int (optional)
         - status: int (optional)
-        - updated_by: int (optional)
+        - updated_by: int (optional, this field will be added automatically by the system, so it is not necessary to send it in the request body)
 
     ## RESPONSE
         - Returns the updated company
