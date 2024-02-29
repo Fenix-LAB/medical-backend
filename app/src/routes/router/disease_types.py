@@ -57,6 +57,9 @@ async def update_disease_type(disease_type: DiseaseTypesUpdateRequest, disease_t
 
     ## RESPONSE
         - Returns the updated disease type
+
+    ## DEVELOPER NOTES
+        - All fields are optional, but at least one will be required to update the disease type
         
     """
     
