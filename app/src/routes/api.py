@@ -17,3 +17,5 @@ async def server_start():
 router.include_router(companies.router, tags=["companies"])
 router.include_router(persons.router, tags=["persons"])
 router.include_router(disease_types.router, tags=["disease_types"])
+router.include_router(exam_types.router, tags=["exam_types"])
+
