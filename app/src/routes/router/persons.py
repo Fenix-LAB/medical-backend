@@ -33,7 +33,15 @@ async def create_person(person: PersonsRequest, db_session: Session = Depends(ge
         - identification_type: int
         - identification: str
         - birthdate: date
-        -
+        - gender: str
+        - marital_status: str
+        - address: str
+        - phone_number: str
+        - email: str
+        - created_by: int (This field will be added automatically by the system, so it is not necessary to send it in the request body)
+        - updated_by: int (This field will be added automatically by the system, so it is not necessary to send it in the request body)
+        - company_id: int
+
     ## RESPONSE
         - Returns the created person
         
@@ -55,9 +63,19 @@ async def update_person(person: PersonsUpdateRequest, person_id: int,  db_sessio
         - identification_type: int
         - identification: str
         - birthdate: date
-        -
+        - gender: str
+        - marital_status: str
+        - address: str
+        - phone_number: str
+        - email: str
+        - updated_by: int (This field will be added automatically by the system, so it is not necessary to send it in the request body)
+        - company_id: int
+
     ## RESPONSE
         - Returns the updated person
+
+    ## DEVELOPER NOTES
+        - All fields are optional
         
     """
 
