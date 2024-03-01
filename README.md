@@ -6,6 +6,12 @@ This is an API REST for a medical application. It is developed in Python using t
 ## Installation
 Python 3.10+ is required to run this application.
 
+### Virtual environment
+Create a virtual environment with the following command:
+```bash
+python -m venv venv
+```
+
 ### Install the dependencies
 ```bash
 pip install -r requirements.txt
