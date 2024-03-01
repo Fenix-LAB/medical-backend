@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.14
+-- Dumped from database version 15.5
 -- Dumped by pg_dump version 15.2
 
--- Started on 2024-02-17 11:35:05 -05
+-- Started on 2024-02-27 00:23:53 -05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,22 +19,31 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 6 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
 --
 
--- *not* creating schema, since initdb creates it
+CREATE SCHEMA public;
 
 
-ALTER SCHEMA public OWNER TO postgres;
+ALTER SCHEMA public OWNER TO pg_database_owner;
+
+--
+-- TOC entry 4561 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- TOC entry 219 (class 1259 OID 2147227)
--- Name: appointments; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 214 (class 1259 OID 16446)
+-- Name: appointments; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.appointments (
@@ -54,11 +63,11 @@ CREATE TABLE public.appointments (
 );
 
 
-ALTER TABLE public.appointments OWNER TO datapluserp;
+ALTER TABLE public.appointments OWNER TO medicalrappuser;
 
 --
--- TOC entry 218 (class 1259 OID 2147225)
--- Name: appointments_appointment_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 215 (class 1259 OID 16454)
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.appointments_appointment_id_seq
@@ -70,20 +79,20 @@ CREATE SEQUENCE public.appointments_appointment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.appointments_appointment_id_seq OWNER TO datapluserp;
+ALTER TABLE public.appointments_appointment_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3429 (class 0 OID 0)
--- Dependencies: 218
--- Name: appointments_appointment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4562 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.appointments_appointment_id_seq OWNED BY public.appointments.appointment_id;
 
 
 --
--- TOC entry 207 (class 1259 OID 2147026)
--- Name: companies; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 216 (class 1259 OID 16455)
+-- Name: companies; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.companies (
@@ -98,11 +107,11 @@ CREATE TABLE public.companies (
 );
 
 
-ALTER TABLE public.companies OWNER TO datapluserp;
+ALTER TABLE public.companies OWNER TO medicalrappuser;
 
 --
--- TOC entry 206 (class 1259 OID 2147024)
--- Name: companies_company_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 217 (class 1259 OID 16461)
+-- Name: companies_company_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.companies_company_id_seq
@@ -114,20 +123,20 @@ CREATE SEQUENCE public.companies_company_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.companies_company_id_seq OWNER TO datapluserp;
+ALTER TABLE public.companies_company_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3430 (class 0 OID 0)
--- Dependencies: 206
--- Name: companies_company_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4563 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: companies_company_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.companies_company_id_seq OWNED BY public.companies.company_id;
 
 
 --
--- TOC entry 223 (class 1259 OID 2147365)
--- Name: disease_types; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 218 (class 1259 OID 16462)
+-- Name: disease_types; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.disease_types (
@@ -142,11 +151,11 @@ CREATE TABLE public.disease_types (
 );
 
 
-ALTER TABLE public.disease_types OWNER TO datapluserp;
+ALTER TABLE public.disease_types OWNER TO medicalrappuser;
 
 --
--- TOC entry 222 (class 1259 OID 2147363)
--- Name: disease_types_disease_type_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 219 (class 1259 OID 16470)
+-- Name: disease_types_disease_type_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.disease_types_disease_type_id_seq
@@ -158,20 +167,20 @@ CREATE SEQUENCE public.disease_types_disease_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.disease_types_disease_type_id_seq OWNER TO datapluserp;
+ALTER TABLE public.disease_types_disease_type_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3431 (class 0 OID 0)
--- Dependencies: 222
--- Name: disease_types_disease_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4564 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: disease_types_disease_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.disease_types_disease_type_id_seq OWNED BY public.disease_types.disease_type_id;
 
 
 --
--- TOC entry 225 (class 1259 OID 2147379)
--- Name: diseases; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 220 (class 1259 OID 16471)
+-- Name: diseases; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.diseases (
@@ -188,11 +197,11 @@ CREATE TABLE public.diseases (
 );
 
 
-ALTER TABLE public.diseases OWNER TO datapluserp;
+ALTER TABLE public.diseases OWNER TO medicalrappuser;
 
 --
--- TOC entry 224 (class 1259 OID 2147377)
--- Name: diseases_disease_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 221 (class 1259 OID 16479)
+-- Name: diseases_disease_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.diseases_disease_id_seq
@@ -204,20 +213,20 @@ CREATE SEQUENCE public.diseases_disease_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.diseases_disease_id_seq OWNER TO datapluserp;
+ALTER TABLE public.diseases_disease_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3432 (class 0 OID 0)
--- Dependencies: 224
--- Name: diseases_disease_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4565 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: diseases_disease_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.diseases_disease_id_seq OWNED BY public.diseases.disease_id;
 
 
 --
--- TOC entry 209 (class 1259 OID 2147089)
--- Name: doctors; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 222 (class 1259 OID 16480)
+-- Name: doctors; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.doctors (
@@ -234,11 +243,11 @@ CREATE TABLE public.doctors (
 );
 
 
-ALTER TABLE public.doctors OWNER TO datapluserp;
+ALTER TABLE public.doctors OWNER TO medicalrappuser;
 
 --
--- TOC entry 208 (class 1259 OID 2147087)
--- Name: doctors_doctor_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 223 (class 1259 OID 16486)
+-- Name: doctors_doctor_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.doctors_doctor_id_seq
@@ -250,20 +259,20 @@ CREATE SEQUENCE public.doctors_doctor_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.doctors_doctor_id_seq OWNER TO datapluserp;
+ALTER TABLE public.doctors_doctor_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3433 (class 0 OID 0)
--- Dependencies: 208
--- Name: doctors_doctor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4566 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: doctors_doctor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.doctors_doctor_id_seq OWNED BY public.doctors.doctor_id;
 
 
 --
--- TOC entry 215 (class 1259 OID 2147160)
--- Name: establishments; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 224 (class 1259 OID 16487)
+-- Name: establishments; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.establishments (
@@ -282,11 +291,11 @@ CREATE TABLE public.establishments (
 );
 
 
-ALTER TABLE public.establishments OWNER TO datapluserp;
+ALTER TABLE public.establishments OWNER TO medicalrappuser;
 
 --
--- TOC entry 214 (class 1259 OID 2147158)
--- Name: establishments_establishment_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 225 (class 1259 OID 16495)
+-- Name: establishments_establishment_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.establishments_establishment_id_seq
@@ -298,20 +307,20 @@ CREATE SEQUENCE public.establishments_establishment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.establishments_establishment_id_seq OWNER TO datapluserp;
+ALTER TABLE public.establishments_establishment_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3434 (class 0 OID 0)
--- Dependencies: 214
--- Name: establishments_establishment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4567 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: establishments_establishment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.establishments_establishment_id_seq OWNED BY public.establishments.establishment_id;
 
 
 --
--- TOC entry 227 (class 1259 OID 2147400)
--- Name: exam_types; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 226 (class 1259 OID 16496)
+-- Name: exam_types; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.exam_types (
@@ -327,11 +336,11 @@ CREATE TABLE public.exam_types (
 );
 
 
-ALTER TABLE public.exam_types OWNER TO datapluserp;
+ALTER TABLE public.exam_types OWNER TO medicalrappuser;
 
 --
--- TOC entry 226 (class 1259 OID 2147398)
--- Name: exam_types_exam_type_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 227 (class 1259 OID 16504)
+-- Name: exam_types_exam_type_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.exam_types_exam_type_id_seq
@@ -343,20 +352,20 @@ CREATE SEQUENCE public.exam_types_exam_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.exam_types_exam_type_id_seq OWNER TO datapluserp;
+ALTER TABLE public.exam_types_exam_type_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3435 (class 0 OID 0)
--- Dependencies: 226
--- Name: exam_types_exam_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4568 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: exam_types_exam_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.exam_types_exam_type_id_seq OWNED BY public.exam_types.exam_type_id;
 
 
 --
--- TOC entry 233 (class 1259 OID 2147458)
--- Name: exams; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 228 (class 1259 OID 16505)
+-- Name: exams; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.exams (
@@ -373,11 +382,11 @@ CREATE TABLE public.exams (
 );
 
 
-ALTER TABLE public.exams OWNER TO datapluserp;
+ALTER TABLE public.exams OWNER TO medicalrappuser;
 
 --
--- TOC entry 232 (class 1259 OID 2147456)
--- Name: exams_exam_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 229 (class 1259 OID 16513)
+-- Name: exams_exam_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.exams_exam_id_seq
@@ -389,20 +398,20 @@ CREATE SEQUENCE public.exams_exam_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.exams_exam_id_seq OWNER TO datapluserp;
+ALTER TABLE public.exams_exam_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3436 (class 0 OID 0)
--- Dependencies: 232
--- Name: exams_exam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4569 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: exams_exam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.exams_exam_id_seq OWNED BY public.exams.exam_id;
 
 
 --
--- TOC entry 237 (class 1259 OID 2147506)
--- Name: image_exams; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 230 (class 1259 OID 16514)
+-- Name: image_exams; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.image_exams (
@@ -419,11 +428,11 @@ CREATE TABLE public.image_exams (
 );
 
 
-ALTER TABLE public.image_exams OWNER TO datapluserp;
+ALTER TABLE public.image_exams OWNER TO medicalrappuser;
 
 --
--- TOC entry 236 (class 1259 OID 2147504)
--- Name: image_exams_image_exam_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 231 (class 1259 OID 16522)
+-- Name: image_exams_image_exam_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.image_exams_image_exam_id_seq
@@ -435,20 +444,20 @@ CREATE SEQUENCE public.image_exams_image_exam_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.image_exams_image_exam_id_seq OWNER TO datapluserp;
+ALTER TABLE public.image_exams_image_exam_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3437 (class 0 OID 0)
--- Dependencies: 236
--- Name: image_exams_image_exam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4570 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: image_exams_image_exam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.image_exams_image_exam_id_seq OWNED BY public.image_exams.image_exam_id;
 
 
 --
--- TOC entry 231 (class 1259 OID 2147439)
--- Name: image_types; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 232 (class 1259 OID 16523)
+-- Name: image_types; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.image_types (
@@ -464,11 +473,11 @@ CREATE TABLE public.image_types (
 );
 
 
-ALTER TABLE public.image_types OWNER TO datapluserp;
+ALTER TABLE public.image_types OWNER TO medicalrappuser;
 
 --
--- TOC entry 230 (class 1259 OID 2147437)
--- Name: image_types_image_type_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 233 (class 1259 OID 16531)
+-- Name: image_types_image_type_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.image_types_image_type_id_seq
@@ -480,20 +489,20 @@ CREATE SEQUENCE public.image_types_image_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.image_types_image_type_id_seq OWNER TO datapluserp;
+ALTER TABLE public.image_types_image_type_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3438 (class 0 OID 0)
--- Dependencies: 230
--- Name: image_types_image_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4571 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: image_types_image_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.image_types_image_type_id_seq OWNED BY public.image_types.image_type_id;
 
 
 --
--- TOC entry 217 (class 1259 OID 2147179)
--- Name: insurances; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 234 (class 1259 OID 16532)
+-- Name: insurances; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.insurances (
@@ -510,11 +519,11 @@ CREATE TABLE public.insurances (
 );
 
 
-ALTER TABLE public.insurances OWNER TO datapluserp;
+ALTER TABLE public.insurances OWNER TO medicalrappuser;
 
 --
--- TOC entry 216 (class 1259 OID 2147177)
--- Name: insurances_insurance_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 235 (class 1259 OID 16540)
+-- Name: insurances_insurance_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.insurances_insurance_id_seq
@@ -526,20 +535,20 @@ CREATE SEQUENCE public.insurances_insurance_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.insurances_insurance_id_seq OWNER TO datapluserp;
+ALTER TABLE public.insurances_insurance_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3439 (class 0 OID 0)
--- Dependencies: 216
--- Name: insurances_insurance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4572 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: insurances_insurance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.insurances_insurance_id_seq OWNED BY public.insurances.insurance_id;
 
 
 --
--- TOC entry 221 (class 1259 OID 2147301)
--- Name: medical_attentions; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 236 (class 1259 OID 16541)
+-- Name: medical_attentions; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.medical_attentions (
@@ -565,11 +574,11 @@ CREATE TABLE public.medical_attentions (
 );
 
 
-ALTER TABLE public.medical_attentions OWNER TO datapluserp;
+ALTER TABLE public.medical_attentions OWNER TO medicalrappuser;
 
 --
--- TOC entry 220 (class 1259 OID 2147299)
--- Name: medical_attentions_attention_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 237 (class 1259 OID 16549)
+-- Name: medical_attentions_attention_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.medical_attentions_attention_id_seq
@@ -581,20 +590,20 @@ CREATE SEQUENCE public.medical_attentions_attention_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.medical_attentions_attention_id_seq OWNER TO datapluserp;
+ALTER TABLE public.medical_attentions_attention_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3440 (class 0 OID 0)
--- Dependencies: 220
--- Name: medical_attentions_attention_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4573 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: medical_attentions_attention_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.medical_attentions_attention_id_seq OWNED BY public.medical_attentions.attention_id;
 
 
 --
--- TOC entry 235 (class 1259 OID 2147482)
--- Name: medication_diets; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 238 (class 1259 OID 16550)
+-- Name: medication_diets; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.medication_diets (
@@ -613,11 +622,11 @@ CREATE TABLE public.medication_diets (
 );
 
 
-ALTER TABLE public.medication_diets OWNER TO datapluserp;
+ALTER TABLE public.medication_diets OWNER TO medicalrappuser;
 
 --
--- TOC entry 234 (class 1259 OID 2147480)
--- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 239 (class 1259 OID 16558)
+-- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.medication_diets_med_diet_id_seq
@@ -629,20 +638,20 @@ CREATE SEQUENCE public.medication_diets_med_diet_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.medication_diets_med_diet_id_seq OWNER TO datapluserp;
+ALTER TABLE public.medication_diets_med_diet_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3441 (class 0 OID 0)
--- Dependencies: 234
--- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4574 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.medication_diets_med_diet_id_seq OWNED BY public.medication_diets.med_diet_id;
 
 
 --
--- TOC entry 229 (class 1259 OID 2147419)
--- Name: medication_types; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 240 (class 1259 OID 16559)
+-- Name: medication_types; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.medication_types (
@@ -658,11 +667,11 @@ CREATE TABLE public.medication_types (
 );
 
 
-ALTER TABLE public.medication_types OWNER TO datapluserp;
+ALTER TABLE public.medication_types OWNER TO medicalrappuser;
 
 --
--- TOC entry 228 (class 1259 OID 2147417)
--- Name: medication_types_medication_type_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 241 (class 1259 OID 16567)
+-- Name: medication_types_medication_type_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.medication_types_medication_type_id_seq
@@ -674,20 +683,20 @@ CREATE SEQUENCE public.medication_types_medication_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.medication_types_medication_type_id_seq OWNER TO datapluserp;
+ALTER TABLE public.medication_types_medication_type_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3442 (class 0 OID 0)
--- Dependencies: 228
--- Name: medication_types_medication_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4575 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: medication_types_medication_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.medication_types_medication_type_id_seq OWNED BY public.medication_types.medication_type_id;
 
 
 --
--- TOC entry 205 (class 1259 OID 2147004)
--- Name: patients; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 242 (class 1259 OID 16568)
+-- Name: patients; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.patients (
@@ -710,11 +719,11 @@ CREATE TABLE public.patients (
 );
 
 
-ALTER TABLE public.patients OWNER TO datapluserp;
+ALTER TABLE public.patients OWNER TO medicalrappuser;
 
 --
--- TOC entry 204 (class 1259 OID 2147002)
--- Name: patients_patient_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 243 (class 1259 OID 16576)
+-- Name: patients_patient_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.patients_patient_id_seq
@@ -726,20 +735,20 @@ CREATE SEQUENCE public.patients_patient_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.patients_patient_id_seq OWNER TO datapluserp;
+ALTER TABLE public.patients_patient_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3443 (class 0 OID 0)
--- Dependencies: 204
--- Name: patients_patient_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4576 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: patients_patient_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.patients_patient_id_seq OWNED BY public.patients.patient_id;
 
 
 --
--- TOC entry 203 (class 1259 OID 2146975)
--- Name: persons; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 244 (class 1259 OID 16577)
+-- Name: persons; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.persons (
@@ -762,11 +771,11 @@ CREATE TABLE public.persons (
 );
 
 
-ALTER TABLE public.persons OWNER TO datapluserp;
+ALTER TABLE public.persons OWNER TO medicalrappuser;
 
 --
--- TOC entry 202 (class 1259 OID 2146973)
--- Name: persons_person_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 245 (class 1259 OID 16584)
+-- Name: persons_person_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.persons_person_id_seq
@@ -778,20 +787,20 @@ CREATE SEQUENCE public.persons_person_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.persons_person_id_seq OWNER TO datapluserp;
+ALTER TABLE public.persons_person_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3444 (class 0 OID 0)
--- Dependencies: 202
--- Name: persons_person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4577 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: persons_person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.persons_person_id_seq OWNED BY public.persons.person_id;
 
 
 --
--- TOC entry 213 (class 1259 OID 2147131)
--- Name: services; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 246 (class 1259 OID 16585)
+-- Name: services; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.services (
@@ -810,11 +819,11 @@ CREATE TABLE public.services (
 );
 
 
-ALTER TABLE public.services OWNER TO datapluserp;
+ALTER TABLE public.services OWNER TO medicalrappuser;
 
 --
--- TOC entry 212 (class 1259 OID 2147129)
--- Name: services_service_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 247 (class 1259 OID 16593)
+-- Name: services_service_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.services_service_id_seq
@@ -826,20 +835,20 @@ CREATE SEQUENCE public.services_service_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.services_service_id_seq OWNER TO datapluserp;
+ALTER TABLE public.services_service_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3445 (class 0 OID 0)
--- Dependencies: 212
--- Name: services_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4578 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: services_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.services_service_id_seq OWNED BY public.services.service_id;
 
 
 --
--- TOC entry 211 (class 1259 OID 2147115)
--- Name: specialties; Type: TABLE; Schema: public; Owner: datapluserp
+-- TOC entry 248 (class 1259 OID 16594)
+-- Name: specialties; Type: TABLE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE TABLE public.specialties (
@@ -854,11 +863,11 @@ CREATE TABLE public.specialties (
 );
 
 
-ALTER TABLE public.specialties OWNER TO datapluserp;
+ALTER TABLE public.specialties OWNER TO medicalrappuser;
 
 --
--- TOC entry 210 (class 1259 OID 2147113)
--- Name: specialties_specialty_id_seq; Type: SEQUENCE; Schema: public; Owner: datapluserp
+-- TOC entry 249 (class 1259 OID 16600)
+-- Name: specialties_specialty_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
 --
 
 CREATE SEQUENCE public.specialties_specialty_id_seq
@@ -870,165 +879,221 @@ CREATE SEQUENCE public.specialties_specialty_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.specialties_specialty_id_seq OWNER TO datapluserp;
+ALTER TABLE public.specialties_specialty_id_seq OWNER TO medicalrappuser;
 
 --
--- TOC entry 3446 (class 0 OID 0)
--- Dependencies: 210
--- Name: specialties_specialty_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: datapluserp
+-- TOC entry 4579 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: specialties_specialty_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
 --
 
 ALTER SEQUENCE public.specialties_specialty_id_seq OWNED BY public.specialties.specialty_id;
 
 
 --
--- TOC entry 3152 (class 2604 OID 2147230)
--- Name: appointments appointment_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 251 (class 1259 OID 16822)
+-- Name: users; Type: TABLE; Schema: public; Owner: medicalrappuser
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    username character varying(100) NOT NULL,
+    password character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    full_name character varying(255) NOT NULL,
+    role character varying(50) NOT NULL,
+    access_token character varying(255),
+    status smallint DEFAULT 1,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    created_by integer,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_by integer
+);
+
+
+ALTER TABLE public.users OWNER TO medicalrappuser;
+
+--
+-- TOC entry 250 (class 1259 OID 16821)
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: medicalrappuser
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO medicalrappuser;
+
+--
+-- TOC entry 4580 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: medicalrappuser
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
+
+
+--
+-- TOC entry 4226 (class 2604 OID 16601)
+-- Name: appointments appointment_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments ALTER COLUMN appointment_id SET DEFAULT nextval('public.appointments_appointment_id_seq'::regclass);
 
 
 --
--- TOC entry 3128 (class 2604 OID 2147029)
--- Name: companies company_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4230 (class 2604 OID 16602)
+-- Name: companies company_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.companies ALTER COLUMN company_id SET DEFAULT nextval('public.companies_company_id_seq'::regclass);
 
 
 --
--- TOC entry 3160 (class 2604 OID 2147368)
--- Name: disease_types disease_type_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4234 (class 2604 OID 16603)
+-- Name: disease_types disease_type_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.disease_types ALTER COLUMN disease_type_id SET DEFAULT nextval('public.disease_types_disease_type_id_seq'::regclass);
 
 
 --
--- TOC entry 3164 (class 2604 OID 2147382)
--- Name: diseases disease_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4238 (class 2604 OID 16604)
+-- Name: diseases disease_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.diseases ALTER COLUMN disease_id SET DEFAULT nextval('public.diseases_disease_id_seq'::regclass);
 
 
 --
--- TOC entry 3132 (class 2604 OID 2147092)
--- Name: doctors doctor_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4242 (class 2604 OID 16605)
+-- Name: doctors doctor_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.doctors ALTER COLUMN doctor_id SET DEFAULT nextval('public.doctors_doctor_id_seq'::regclass);
 
 
 --
--- TOC entry 3144 (class 2604 OID 2147163)
--- Name: establishments establishment_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4246 (class 2604 OID 16606)
+-- Name: establishments establishment_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.establishments ALTER COLUMN establishment_id SET DEFAULT nextval('public.establishments_establishment_id_seq'::regclass);
 
 
 --
--- TOC entry 3168 (class 2604 OID 2147403)
--- Name: exam_types exam_type_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4250 (class 2604 OID 16607)
+-- Name: exam_types exam_type_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exam_types ALTER COLUMN exam_type_id SET DEFAULT nextval('public.exam_types_exam_type_id_seq'::regclass);
 
 
 --
--- TOC entry 3180 (class 2604 OID 2147461)
--- Name: exams exam_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4254 (class 2604 OID 16608)
+-- Name: exams exam_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exams ALTER COLUMN exam_id SET DEFAULT nextval('public.exams_exam_id_seq'::regclass);
 
 
 --
--- TOC entry 3188 (class 2604 OID 2147509)
--- Name: image_exams image_exam_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4258 (class 2604 OID 16609)
+-- Name: image_exams image_exam_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_exams ALTER COLUMN image_exam_id SET DEFAULT nextval('public.image_exams_image_exam_id_seq'::regclass);
 
 
 --
--- TOC entry 3176 (class 2604 OID 2147442)
--- Name: image_types image_type_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4262 (class 2604 OID 16610)
+-- Name: image_types image_type_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_types ALTER COLUMN image_type_id SET DEFAULT nextval('public.image_types_image_type_id_seq'::regclass);
 
 
 --
--- TOC entry 3148 (class 2604 OID 2147182)
--- Name: insurances insurance_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4266 (class 2604 OID 16611)
+-- Name: insurances insurance_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.insurances ALTER COLUMN insurance_id SET DEFAULT nextval('public.insurances_insurance_id_seq'::regclass);
 
 
 --
--- TOC entry 3156 (class 2604 OID 2147304)
--- Name: medical_attentions attention_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4270 (class 2604 OID 16612)
+-- Name: medical_attentions attention_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions ALTER COLUMN attention_id SET DEFAULT nextval('public.medical_attentions_attention_id_seq'::regclass);
 
 
 --
--- TOC entry 3184 (class 2604 OID 2147485)
--- Name: medication_diets med_diet_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4274 (class 2604 OID 16613)
+-- Name: medication_diets med_diet_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_diets ALTER COLUMN med_diet_id SET DEFAULT nextval('public.medication_diets_med_diet_id_seq'::regclass);
 
 
 --
--- TOC entry 3172 (class 2604 OID 2147422)
--- Name: medication_types medication_type_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4278 (class 2604 OID 16614)
+-- Name: medication_types medication_type_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_types ALTER COLUMN medication_type_id SET DEFAULT nextval('public.medication_types_medication_type_id_seq'::regclass);
 
 
 --
--- TOC entry 3124 (class 2604 OID 2147007)
--- Name: patients patient_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4282 (class 2604 OID 16615)
+-- Name: patients patient_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.patients ALTER COLUMN patient_id SET DEFAULT nextval('public.patients_patient_id_seq'::regclass);
 
 
 --
--- TOC entry 3121 (class 2604 OID 2146978)
--- Name: persons person_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4286 (class 2604 OID 16616)
+-- Name: persons person_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.persons ALTER COLUMN person_id SET DEFAULT nextval('public.persons_person_id_seq'::regclass);
 
 
 --
--- TOC entry 3140 (class 2604 OID 2147134)
--- Name: services service_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4289 (class 2604 OID 16617)
+-- Name: services service_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.services ALTER COLUMN service_id SET DEFAULT nextval('public.services_service_id_seq'::regclass);
 
 
 --
--- TOC entry 3136 (class 2604 OID 2147118)
--- Name: specialties specialty_id; Type: DEFAULT; Schema: public; Owner: datapluserp
+-- TOC entry 4293 (class 2604 OID 16618)
+-- Name: specialties specialty_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.specialties ALTER COLUMN specialty_id SET DEFAULT nextval('public.specialties_specialty_id_seq'::regclass);
 
 
 --
--- TOC entry 3404 (class 0 OID 2147227)
--- Dependencies: 219
--- Data for Name: appointments; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4297 (class 2604 OID 16825)
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: medicalrappuser
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 4518 (class 0 OID 16446)
+-- Dependencies: 214
+-- Data for Name: appointments; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.appointments (appointment_id, patient_id, doctor_id, insurance_id, establishment_id, appointment_date, duration_minutes, status, notes, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1036,9 +1101,9 @@ COPY public.appointments (appointment_id, patient_id, doctor_id, insurance_id, e
 
 
 --
--- TOC entry 3392 (class 0 OID 2147026)
--- Dependencies: 207
--- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4520 (class 0 OID 16455)
+-- Dependencies: 216
+-- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.companies (company_id, commercial_name, contact_person_id, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1046,9 +1111,9 @@ COPY public.companies (company_id, commercial_name, contact_person_id, status, c
 
 
 --
--- TOC entry 3408 (class 0 OID 2147365)
--- Dependencies: 223
--- Data for Name: disease_types; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4522 (class 0 OID 16462)
+-- Dependencies: 218
+-- Data for Name: disease_types; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.disease_types (disease_type_id, disease_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1056,9 +1121,9 @@ COPY public.disease_types (disease_type_id, disease_name, description, status, c
 
 
 --
--- TOC entry 3410 (class 0 OID 2147379)
--- Dependencies: 225
--- Data for Name: diseases; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4524 (class 0 OID 16471)
+-- Dependencies: 220
+-- Data for Name: diseases; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.diseases (disease_id, disease_type_id, disease_code, disease_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1066,9 +1131,9 @@ COPY public.diseases (disease_id, disease_type_id, disease_code, disease_name, d
 
 
 --
--- TOC entry 3394 (class 0 OID 2147089)
--- Dependencies: 209
--- Data for Name: doctors; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4526 (class 0 OID 16480)
+-- Dependencies: 222
+-- Data for Name: doctors; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.doctors (doctor_id, person_id, specialty_id, license_number, status, created_at, created_by, updated_at, updated_by, company_id) FROM stdin;
@@ -1076,9 +1141,9 @@ COPY public.doctors (doctor_id, person_id, specialty_id, license_number, status,
 
 
 --
--- TOC entry 3400 (class 0 OID 2147160)
--- Dependencies: 215
--- Data for Name: establishments; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4528 (class 0 OID 16487)
+-- Dependencies: 224
+-- Data for Name: establishments; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.establishments (establishment_id, company_id, establishment_name, establishment_number, address, city, country, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1086,9 +1151,9 @@ COPY public.establishments (establishment_id, company_id, establishment_name, es
 
 
 --
--- TOC entry 3412 (class 0 OID 2147400)
--- Dependencies: 227
--- Data for Name: exam_types; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4530 (class 0 OID 16496)
+-- Dependencies: 226
+-- Data for Name: exam_types; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.exam_types (exam_type_id, company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1096,9 +1161,9 @@ COPY public.exam_types (exam_type_id, company_id, exam_name, description, status
 
 
 --
--- TOC entry 3418 (class 0 OID 2147458)
--- Dependencies: 233
--- Data for Name: exams; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4532 (class 0 OID 16505)
+-- Dependencies: 228
+-- Data for Name: exams; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.exams (exam_id, exam_type_id, company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1106,9 +1171,9 @@ COPY public.exams (exam_id, exam_type_id, company_id, exam_name, description, st
 
 
 --
--- TOC entry 3422 (class 0 OID 2147506)
--- Dependencies: 237
--- Data for Name: image_exams; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4534 (class 0 OID 16514)
+-- Dependencies: 230
+-- Data for Name: image_exams; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.image_exams (image_exam_id, image_type_id, company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1116,9 +1181,9 @@ COPY public.image_exams (image_exam_id, image_type_id, company_id, exam_name, de
 
 
 --
--- TOC entry 3416 (class 0 OID 2147439)
--- Dependencies: 231
--- Data for Name: image_types; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4536 (class 0 OID 16523)
+-- Dependencies: 232
+-- Data for Name: image_types; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.image_types (image_type_id, company_id, image_type_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1126,9 +1191,9 @@ COPY public.image_types (image_type_id, company_id, image_type_name, description
 
 
 --
--- TOC entry 3402 (class 0 OID 2147179)
--- Dependencies: 217
--- Data for Name: insurances; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4538 (class 0 OID 16532)
+-- Dependencies: 234
+-- Data for Name: insurances; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.insurances (insurance_id, person_id, insurance_name, policy_number, coverage_details, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1136,9 +1201,9 @@ COPY public.insurances (insurance_id, person_id, insurance_name, policy_number, 
 
 
 --
--- TOC entry 3406 (class 0 OID 2147301)
--- Dependencies: 221
--- Data for Name: medical_attentions; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4540 (class 0 OID 16541)
+-- Dependencies: 236
+-- Data for Name: medical_attentions; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.medical_attentions (attention_id, appointment_id, establishment_id, doctor_id, service_id, insurance_id, company_id, attention_date, symptoms, diagnosis, treatment, current_condition, evolution, next_appointment_date, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1146,9 +1211,9 @@ COPY public.medical_attentions (attention_id, appointment_id, establishment_id, 
 
 
 --
--- TOC entry 3420 (class 0 OID 2147482)
--- Dependencies: 235
--- Data for Name: medication_diets; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4542 (class 0 OID 16550)
+-- Dependencies: 238
+-- Data for Name: medication_diets; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.medication_diets (med_diet_id, medication_type_id, company_id, medication_diet_name, generic_composition, indications, contraindications, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1156,9 +1221,9 @@ COPY public.medication_diets (med_diet_id, medication_type_id, company_id, medic
 
 
 --
--- TOC entry 3414 (class 0 OID 2147419)
--- Dependencies: 229
--- Data for Name: medication_types; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4544 (class 0 OID 16559)
+-- Dependencies: 240
+-- Data for Name: medication_types; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.medication_types (medication_type_id, company_id, medication_name, description, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1166,9 +1231,9 @@ COPY public.medication_types (medication_type_id, company_id, medication_name, d
 
 
 --
--- TOC entry 3390 (class 0 OID 2147004)
--- Dependencies: 205
--- Data for Name: patients; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4546 (class 0 OID 16568)
+-- Dependencies: 242
+-- Data for Name: patients; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.patients (patient_id, person_id, category, occupation_ref, income_date, is_client, insurance, status, alert_1, alert_2, alert_3, created_at, created_by, updated_at, updated_by, company_id) FROM stdin;
@@ -1176,9 +1241,9 @@ COPY public.patients (patient_id, person_id, category, occupation_ref, income_da
 
 
 --
--- TOC entry 3388 (class 0 OID 2146975)
--- Dependencies: 203
--- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4548 (class 0 OID 16577)
+-- Dependencies: 244
+-- Data for Name: persons; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.persons (person_id, first_name, last_name, identification_type, identification, birthdate, gender, marital_status, address, phone_number, email, created_at, created_by, updated_at, updated_by, company_id) FROM stdin;
@@ -1186,9 +1251,9 @@ COPY public.persons (person_id, first_name, last_name, identification_type, iden
 
 
 --
--- TOC entry 3398 (class 0 OID 2147131)
--- Dependencies: 213
--- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4550 (class 0 OID 16585)
+-- Dependencies: 246
+-- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.services (service_id, service_name, description, price, iva_percentage, status, created_at, created_by, updated_at, updated_by, company_id, specialty_id) FROM stdin;
@@ -1196,9 +1261,9 @@ COPY public.services (service_id, service_name, description, price, iva_percenta
 
 
 --
--- TOC entry 3396 (class 0 OID 2147115)
--- Dependencies: 211
--- Data for Name: specialties; Type: TABLE DATA; Schema: public; Owner: datapluserp
+-- TOC entry 4552 (class 0 OID 16594)
+-- Dependencies: 248
+-- Data for Name: specialties; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
 --
 
 COPY public.specialties (specialty_id, company_id, specialty_name, status, created_at, created_by, updated_at, updated_by) FROM stdin;
@@ -1206,170 +1271,189 @@ COPY public.specialties (specialty_id, company_id, specialty_name, status, creat
 
 
 --
--- TOC entry 3447 (class 0 OID 0)
--- Dependencies: 218
--- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4555 (class 0 OID 16822)
+-- Dependencies: 251
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: medicalrappuser
+--
+
+COPY public.users (user_id, username, password, email, full_name, role, access_token, status, created_at, created_by, updated_at, updated_by) FROM stdin;
+\.
+
+
+--
+-- TOC entry 4581 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: appointments_appointment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.appointments_appointment_id_seq', 1, false);
 
 
 --
--- TOC entry 3448 (class 0 OID 0)
--- Dependencies: 206
--- Name: companies_company_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4582 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: companies_company_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.companies_company_id_seq', 1, false);
 
 
 --
--- TOC entry 3449 (class 0 OID 0)
--- Dependencies: 222
--- Name: disease_types_disease_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4583 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: disease_types_disease_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.disease_types_disease_type_id_seq', 1, false);
 
 
 --
--- TOC entry 3450 (class 0 OID 0)
--- Dependencies: 224
--- Name: diseases_disease_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4584 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: diseases_disease_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.diseases_disease_id_seq', 1, false);
 
 
 --
--- TOC entry 3451 (class 0 OID 0)
--- Dependencies: 208
--- Name: doctors_doctor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4585 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: doctors_doctor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.doctors_doctor_id_seq', 1, false);
 
 
 --
--- TOC entry 3452 (class 0 OID 0)
--- Dependencies: 214
--- Name: establishments_establishment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4586 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: establishments_establishment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.establishments_establishment_id_seq', 1, false);
 
 
 --
--- TOC entry 3453 (class 0 OID 0)
--- Dependencies: 226
--- Name: exam_types_exam_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4587 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: exam_types_exam_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.exam_types_exam_type_id_seq', 1, false);
 
 
 --
--- TOC entry 3454 (class 0 OID 0)
--- Dependencies: 232
--- Name: exams_exam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4588 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: exams_exam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.exams_exam_id_seq', 1, false);
 
 
 --
--- TOC entry 3455 (class 0 OID 0)
--- Dependencies: 236
--- Name: image_exams_image_exam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4589 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: image_exams_image_exam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.image_exams_image_exam_id_seq', 1, false);
 
 
 --
--- TOC entry 3456 (class 0 OID 0)
--- Dependencies: 230
--- Name: image_types_image_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4590 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: image_types_image_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.image_types_image_type_id_seq', 1, false);
 
 
 --
--- TOC entry 3457 (class 0 OID 0)
--- Dependencies: 216
--- Name: insurances_insurance_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4591 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: insurances_insurance_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.insurances_insurance_id_seq', 1, false);
 
 
 --
--- TOC entry 3458 (class 0 OID 0)
--- Dependencies: 220
--- Name: medical_attentions_attention_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4592 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: medical_attentions_attention_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.medical_attentions_attention_id_seq', 1, false);
 
 
 --
--- TOC entry 3459 (class 0 OID 0)
--- Dependencies: 234
--- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4593 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: medication_diets_med_diet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.medication_diets_med_diet_id_seq', 1, false);
 
 
 --
--- TOC entry 3460 (class 0 OID 0)
--- Dependencies: 228
--- Name: medication_types_medication_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4594 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: medication_types_medication_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.medication_types_medication_type_id_seq', 1, false);
 
 
 --
--- TOC entry 3461 (class 0 OID 0)
--- Dependencies: 204
--- Name: patients_patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4595 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: patients_patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.patients_patient_id_seq', 1, false);
 
 
 --
--- TOC entry 3462 (class 0 OID 0)
--- Dependencies: 202
--- Name: persons_person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4596 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: persons_person_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.persons_person_id_seq', 1, false);
 
 
 --
--- TOC entry 3463 (class 0 OID 0)
--- Dependencies: 212
--- Name: services_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4597 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: services_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.services_service_id_seq', 1, false);
 
 
 --
--- TOC entry 3464 (class 0 OID 0)
--- Dependencies: 210
--- Name: specialties_specialty_id_seq; Type: SEQUENCE SET; Schema: public; Owner: datapluserp
+-- TOC entry 4598 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: specialties_specialty_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
 --
 
 SELECT pg_catalog.setval('public.specialties_specialty_id_seq', 1, false);
 
 
 --
--- TOC entry 3209 (class 2606 OID 2147238)
--- Name: appointments appointments_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4599 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: medicalrappuser
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 1, false);
+
+
+--
+-- TOC entry 4302 (class 2606 OID 16620)
+-- Name: appointments appointments_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments
@@ -1377,8 +1461,8 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- TOC entry 3197 (class 2606 OID 2147034)
--- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4304 (class 2606 OID 16622)
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.companies
@@ -1386,8 +1470,8 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- TOC entry 3213 (class 2606 OID 2147376)
--- Name: disease_types disease_types_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4306 (class 2606 OID 16624)
+-- Name: disease_types disease_types_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.disease_types
@@ -1395,8 +1479,8 @@ ALTER TABLE ONLY public.disease_types
 
 
 --
--- TOC entry 3215 (class 2606 OID 2147390)
--- Name: diseases diseases_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4308 (class 2606 OID 16626)
+-- Name: diseases diseases_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.diseases
@@ -1404,8 +1488,8 @@ ALTER TABLE ONLY public.diseases
 
 
 --
--- TOC entry 3199 (class 2606 OID 2147097)
--- Name: doctors doctors_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4310 (class 2606 OID 16628)
+-- Name: doctors doctors_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.doctors
@@ -1413,8 +1497,8 @@ ALTER TABLE ONLY public.doctors
 
 
 --
--- TOC entry 3205 (class 2606 OID 2147171)
--- Name: establishments establishments_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4312 (class 2606 OID 16630)
+-- Name: establishments establishments_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.establishments
@@ -1422,8 +1506,8 @@ ALTER TABLE ONLY public.establishments
 
 
 --
--- TOC entry 3217 (class 2606 OID 2147411)
--- Name: exam_types exam_types_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4314 (class 2606 OID 16632)
+-- Name: exam_types exam_types_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exam_types
@@ -1431,8 +1515,8 @@ ALTER TABLE ONLY public.exam_types
 
 
 --
--- TOC entry 3223 (class 2606 OID 2147469)
--- Name: exams exams_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4316 (class 2606 OID 16634)
+-- Name: exams exams_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exams
@@ -1440,8 +1524,8 @@ ALTER TABLE ONLY public.exams
 
 
 --
--- TOC entry 3227 (class 2606 OID 2147517)
--- Name: image_exams image_exams_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4318 (class 2606 OID 16636)
+-- Name: image_exams image_exams_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_exams
@@ -1449,8 +1533,8 @@ ALTER TABLE ONLY public.image_exams
 
 
 --
--- TOC entry 3221 (class 2606 OID 2147450)
--- Name: image_types image_types_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4320 (class 2606 OID 16638)
+-- Name: image_types image_types_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_types
@@ -1458,8 +1542,8 @@ ALTER TABLE ONLY public.image_types
 
 
 --
--- TOC entry 3207 (class 2606 OID 2147190)
--- Name: insurances insurances_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4322 (class 2606 OID 16640)
+-- Name: insurances insurances_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.insurances
@@ -1467,8 +1551,8 @@ ALTER TABLE ONLY public.insurances
 
 
 --
--- TOC entry 3211 (class 2606 OID 2147312)
--- Name: medical_attentions medical_attentions_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4324 (class 2606 OID 16642)
+-- Name: medical_attentions medical_attentions_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1476,8 +1560,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3225 (class 2606 OID 2147493)
--- Name: medication_diets medication_diets_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4326 (class 2606 OID 16644)
+-- Name: medication_diets medication_diets_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_diets
@@ -1485,8 +1569,8 @@ ALTER TABLE ONLY public.medication_diets
 
 
 --
--- TOC entry 3219 (class 2606 OID 2147430)
--- Name: medication_types medication_types_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4328 (class 2606 OID 16646)
+-- Name: medication_types medication_types_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_types
@@ -1494,8 +1578,8 @@ ALTER TABLE ONLY public.medication_types
 
 
 --
--- TOC entry 3195 (class 2606 OID 2147012)
--- Name: patients patients_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4330 (class 2606 OID 16648)
+-- Name: patients patients_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.patients
@@ -1503,8 +1587,8 @@ ALTER TABLE ONLY public.patients
 
 
 --
--- TOC entry 3193 (class 2606 OID 2146983)
--- Name: persons persons_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4332 (class 2606 OID 16650)
+-- Name: persons persons_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.persons
@@ -1512,8 +1596,8 @@ ALTER TABLE ONLY public.persons
 
 
 --
--- TOC entry 3203 (class 2606 OID 2147142)
--- Name: services services_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4334 (class 2606 OID 16652)
+-- Name: services services_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.services
@@ -1521,8 +1605,8 @@ ALTER TABLE ONLY public.services
 
 
 --
--- TOC entry 3201 (class 2606 OID 2147123)
--- Name: specialties specialties_pkey; Type: CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4336 (class 2606 OID 16654)
+-- Name: specialties specialties_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.specialties
@@ -1530,8 +1614,35 @@ ALTER TABLE ONLY public.specialties
 
 
 --
--- TOC entry 3241 (class 2606 OID 2147244)
--- Name: appointments appointments_doctor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4338 (class 2606 OID 16836)
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 4340 (class 2606 OID 16832)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- TOC entry 4342 (class 2606 OID 16834)
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: medicalrappuser
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 4343 (class 2606 OID 16655)
+-- Name: appointments appointments_doctor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments
@@ -1539,8 +1650,8 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- TOC entry 3242 (class 2606 OID 2147254)
--- Name: appointments appointments_establishment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4344 (class 2606 OID 16660)
+-- Name: appointments appointments_establishment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments
@@ -1548,8 +1659,8 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- TOC entry 3243 (class 2606 OID 2147249)
--- Name: appointments appointments_insurance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4345 (class 2606 OID 16665)
+-- Name: appointments appointments_insurance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments
@@ -1557,8 +1668,8 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- TOC entry 3244 (class 2606 OID 2147239)
--- Name: appointments appointments_patient_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4346 (class 2606 OID 16670)
+-- Name: appointments appointments_patient_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.appointments
@@ -1566,8 +1677,8 @@ ALTER TABLE ONLY public.appointments
 
 
 --
--- TOC entry 3232 (class 2606 OID 2147035)
--- Name: companies companies_contact_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4347 (class 2606 OID 16675)
+-- Name: companies companies_contact_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.companies
@@ -1575,8 +1686,8 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- TOC entry 3251 (class 2606 OID 2147391)
--- Name: diseases diseases_disease_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4348 (class 2606 OID 16680)
+-- Name: diseases diseases_disease_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.diseases
@@ -1584,8 +1695,8 @@ ALTER TABLE ONLY public.diseases
 
 
 --
--- TOC entry 3233 (class 2606 OID 2147108)
--- Name: doctors doctors_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4349 (class 2606 OID 16685)
+-- Name: doctors doctors_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.doctors
@@ -1593,8 +1704,8 @@ ALTER TABLE ONLY public.doctors
 
 
 --
--- TOC entry 3234 (class 2606 OID 2147098)
--- Name: doctors doctors_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4350 (class 2606 OID 16690)
+-- Name: doctors doctors_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.doctors
@@ -1602,8 +1713,8 @@ ALTER TABLE ONLY public.doctors
 
 
 --
--- TOC entry 3235 (class 2606 OID 2147153)
--- Name: doctors doctors_specialties_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4351 (class 2606 OID 16695)
+-- Name: doctors doctors_specialties_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.doctors
@@ -1611,8 +1722,8 @@ ALTER TABLE ONLY public.doctors
 
 
 --
--- TOC entry 3239 (class 2606 OID 2147172)
--- Name: establishments establishments_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4352 (class 2606 OID 16700)
+-- Name: establishments establishments_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.establishments
@@ -1620,8 +1731,8 @@ ALTER TABLE ONLY public.establishments
 
 
 --
--- TOC entry 3252 (class 2606 OID 2147412)
--- Name: exam_types exam_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4353 (class 2606 OID 16705)
+-- Name: exam_types exam_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exam_types
@@ -1629,8 +1740,8 @@ ALTER TABLE ONLY public.exam_types
 
 
 --
--- TOC entry 3255 (class 2606 OID 2147475)
--- Name: exams exams_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4354 (class 2606 OID 16710)
+-- Name: exams exams_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exams
@@ -1638,8 +1749,8 @@ ALTER TABLE ONLY public.exams
 
 
 --
--- TOC entry 3256 (class 2606 OID 2147470)
--- Name: exams exams_exam_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4355 (class 2606 OID 16715)
+-- Name: exams exams_exam_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.exams
@@ -1647,8 +1758,8 @@ ALTER TABLE ONLY public.exams
 
 
 --
--- TOC entry 3229 (class 2606 OID 2147018)
--- Name: patients fk_person_id; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4369 (class 2606 OID 16720)
+-- Name: patients fk_person_id; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.patients
@@ -1656,8 +1767,8 @@ ALTER TABLE ONLY public.patients
 
 
 --
--- TOC entry 3259 (class 2606 OID 2147523)
--- Name: image_exams image_exams_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4356 (class 2606 OID 16725)
+-- Name: image_exams image_exams_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_exams
@@ -1665,8 +1776,8 @@ ALTER TABLE ONLY public.image_exams
 
 
 --
--- TOC entry 3260 (class 2606 OID 2147518)
--- Name: image_exams image_exams_image_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4357 (class 2606 OID 16730)
+-- Name: image_exams image_exams_image_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_exams
@@ -1674,8 +1785,8 @@ ALTER TABLE ONLY public.image_exams
 
 
 --
--- TOC entry 3254 (class 2606 OID 2147451)
--- Name: image_types image_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4358 (class 2606 OID 16735)
+-- Name: image_types image_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.image_types
@@ -1683,8 +1794,8 @@ ALTER TABLE ONLY public.image_types
 
 
 --
--- TOC entry 3240 (class 2606 OID 2147191)
--- Name: insurances insurances_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4359 (class 2606 OID 16740)
+-- Name: insurances insurances_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.insurances
@@ -1692,8 +1803,8 @@ ALTER TABLE ONLY public.insurances
 
 
 --
--- TOC entry 3245 (class 2606 OID 2147313)
--- Name: medical_attentions medical_attentions_appointment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4360 (class 2606 OID 16745)
+-- Name: medical_attentions medical_attentions_appointment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1701,8 +1812,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3246 (class 2606 OID 2147338)
--- Name: medical_attentions medical_attentions_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4361 (class 2606 OID 16750)
+-- Name: medical_attentions medical_attentions_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1710,8 +1821,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3247 (class 2606 OID 2147323)
--- Name: medical_attentions medical_attentions_doctor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4362 (class 2606 OID 16755)
+-- Name: medical_attentions medical_attentions_doctor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1719,8 +1830,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3248 (class 2606 OID 2147318)
--- Name: medical_attentions medical_attentions_establishment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4363 (class 2606 OID 16760)
+-- Name: medical_attentions medical_attentions_establishment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1728,8 +1839,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3249 (class 2606 OID 2147333)
--- Name: medical_attentions medical_attentions_insurance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4364 (class 2606 OID 16765)
+-- Name: medical_attentions medical_attentions_insurance_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1737,8 +1848,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3250 (class 2606 OID 2147328)
--- Name: medical_attentions medical_attentions_service_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4365 (class 2606 OID 16770)
+-- Name: medical_attentions medical_attentions_service_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medical_attentions
@@ -1746,8 +1857,8 @@ ALTER TABLE ONLY public.medical_attentions
 
 
 --
--- TOC entry 3257 (class 2606 OID 2147499)
--- Name: medication_diets medication_diets_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4366 (class 2606 OID 16775)
+-- Name: medication_diets medication_diets_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_diets
@@ -1755,8 +1866,8 @@ ALTER TABLE ONLY public.medication_diets
 
 
 --
--- TOC entry 3258 (class 2606 OID 2147494)
--- Name: medication_diets medication_diets_medication_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4367 (class 2606 OID 16780)
+-- Name: medication_diets medication_diets_medication_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_diets
@@ -1764,8 +1875,8 @@ ALTER TABLE ONLY public.medication_diets
 
 
 --
--- TOC entry 3253 (class 2606 OID 2147431)
--- Name: medication_types medication_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4368 (class 2606 OID 16785)
+-- Name: medication_types medication_types_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.medication_types
@@ -1773,8 +1884,8 @@ ALTER TABLE ONLY public.medication_types
 
 
 --
--- TOC entry 3230 (class 2606 OID 2147050)
--- Name: patients patients_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4370 (class 2606 OID 16790)
+-- Name: patients patients_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.patients
@@ -1782,8 +1893,8 @@ ALTER TABLE ONLY public.patients
 
 
 --
--- TOC entry 3231 (class 2606 OID 2147013)
--- Name: patients patients_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4371 (class 2606 OID 16795)
+-- Name: patients patients_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.patients
@@ -1791,8 +1902,8 @@ ALTER TABLE ONLY public.patients
 
 
 --
--- TOC entry 3228 (class 2606 OID 2147045)
--- Name: persons persons_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4372 (class 2606 OID 16800)
+-- Name: persons persons_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.persons
@@ -1800,8 +1911,8 @@ ALTER TABLE ONLY public.persons
 
 
 --
--- TOC entry 3237 (class 2606 OID 2147143)
--- Name: services services_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4373 (class 2606 OID 16805)
+-- Name: services services_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.services
@@ -1809,8 +1920,8 @@ ALTER TABLE ONLY public.services
 
 
 --
--- TOC entry 3238 (class 2606 OID 2147148)
--- Name: services services_specialty_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4374 (class 2606 OID 16810)
+-- Name: services services_specialty_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.services
@@ -1818,25 +1929,15 @@ ALTER TABLE ONLY public.services
 
 
 --
--- TOC entry 3236 (class 2606 OID 2147124)
--- Name: specialties specialties_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: datapluserp
+-- TOC entry 4375 (class 2606 OID 16815)
+-- Name: specialties specialties_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: medicalrappuser
 --
 
 ALTER TABLE ONLY public.specialties
     ADD CONSTRAINT specialties_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(company_id);
 
 
---
--- TOC entry 3428 (class 0 OID 0)
--- Dependencies: 6
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE USAGE ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2024-02-17 11:35:06 -05
+-- Completed on 2024-02-27 00:24:12 -05
 
 --
 -- PostgreSQL database dump complete
