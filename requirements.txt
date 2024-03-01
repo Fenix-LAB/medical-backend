@@ -5,3 +5,4 @@ uvicorn==0.27.1
 python-dotenv==1.0.1
 psycopg2==2.9.9
 jwt==1.3.1
+passlib==1.7.2

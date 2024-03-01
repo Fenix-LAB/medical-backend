@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from typing import Any
+from src.utils import passutil
 
 def check_username_password(email: str, password: str, db: Session) -> Any:
     """ Verify Password"""
@@ -8,7 +9,7 @@ def check_username_password(email: str, password: str, db: Session) -> Any:
 
     return passutil.verify_password(str(password), str(db_user_info.password))
 
-def check_active_session(self, session_id: str, db: Session):
+def check_active_session(session_id: str, db: Session):
     """ check for active session """
     try:
         db_session = db.query(models.UsersLoginAttempt).filter(
@@ -19,7 +20,7 @@ def check_active_session(self, session_id: str, db: Session):
         fastapi_logger.exception("logoff_user")
         return None
 
-def login_user(self, user: schemas.UserLogIn, session_id: str, Sdb: Session) -> Any:
+def login_user(user: schemas.UserLogIn, session_id: str, Sdb: Session) -> Any:
     """ Login Attempt Record """
     try:
         db_session = models.UsersLoginAttempt(
@@ -36,8 +37,7 @@ def login_user(self, user: schemas.UserLogIn, session_id: str, Sdb: Session) -> 
         fastapi_logger.exception("login_user")
         return None
 
-def active_user(self, session_id: str,
-            db: Session) -> Any:
+def active_user(session_id: str, db: Session) -> Any:
     """ check for active user"""
     try:
         db_session = db.query(models.UsersLoginAttempt).filter(
