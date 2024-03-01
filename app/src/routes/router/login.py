@@ -9,7 +9,6 @@ from jwt.utils import get_int_from_datetime
 from datetime import datetime
 import uuid
 from fastapi.security import OAuth2PasswordRequestForm
-import sys
 
 from crud import crud_login, get_user, get_active_user, crud_users
 from util import schemas, response_schemas
@@ -23,8 +22,7 @@ router = APIRouter()
 
 # replace response_model=Token with custom responses
 @router.post("/getToken", responses=response_schemas.get_token_response, include_in_schema=False)
-def authenticate_user(form_data: OAuth2PasswordRequestForm = Depends(),
-                      db: Session = Depends(get_db_connect)) -> JSONResponse:
+def authenticate_user(form_data: OAuth2PasswordRequestForm = Depends(), sdb: Session = Depends(get_db_connect)) -> JSONResponse:
     
     """ Return Access Token"""
     db_user = get_active_user(email=form_data.username, db=db)
