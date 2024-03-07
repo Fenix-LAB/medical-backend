@@ -11,6 +11,7 @@ from .router import (
     services,
     diseases,
     establishment,
+    users
 )
 
 router = APIRouter()
@@ -20,6 +21,7 @@ async def server_start():
     """Server is up and running"""
     return {"message": "Welcome medical, server is up and running"}
 
+router.include_router(users.router, tags=["users"])
 router.include_router(companies.router, tags=["companies"])
 router.include_router(persons.router, tags=["persons"])
 router.include_router(disease_types.router, tags=["disease_types"])
