@@ -7,3 +7,4 @@ EXAM_TYPES_ROW = ['exam_type_id', 'company_id', 'exam_name', 'description', 'sta
 EXAMS_ROW = ['exam_id', 'exam_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 IMAGE_EXAMS_ROW = ['image_exam_id', 'image_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 IMAGE_TYPES_ROW = ['image_type_id', 'company_id', 'image_type_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+SERVICE_ROW = ['service_name', 'description', 'price', 'iva_percentage', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'company_id', 'specialty_id']
