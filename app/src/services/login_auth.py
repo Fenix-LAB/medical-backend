@@ -7,7 +7,7 @@ def get_user_info(db_session: Session, username: str) -> tuple:
     try:
         query = text("SELECT username, password, email FROM users WHERE username = :username")
         user = db_session.execute(query, {"username": username}).fetchone()
-        
+
         return user[0], user[1], user[2]
 
     except Exception as ex:
