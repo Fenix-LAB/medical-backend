@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
-from src.utils.ctes import COMPANIES_ROW
+from src.utils.ctes import IMAGE_TYPES_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
 
@@ -14,7 +14,7 @@ def get(db_session: Session):
         companies = db_session.execute(query).fetchall()
 
         # Convert the list of tuples to a list of dictionaries
-        companies = rows_to_dicts(companies, COMPANIES_ROW)
+        companies = rows_to_dicts(companies, IMAGE_TYPES_ROW)
         
         return companies
 
