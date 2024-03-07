@@ -5,3 +5,4 @@ PERSONS_ROW = ['person_id', 'first_name', 'last_name', 'identification_type', 'i
 DISEASE_TYPES_ROW = ['disease_type_id', 'disease_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 EXAM_TYPES_ROW = ['exam_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 EXAMS_ROW = ['exam_id', 'exam_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+IMAGE_EXAMS_ROW = ['image_exam_id', 'image_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
