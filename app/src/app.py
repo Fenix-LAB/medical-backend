@@ -5,7 +5,7 @@ from src.routes.api import router
 
 
 def create_app():
-    app = FastAPI()
+    app = FastAPI(title="Medical API", version="0.1.0", description="Medical API for software SAAS for medical clinics")
 
     app.add_middleware(
         CORSMiddleware,

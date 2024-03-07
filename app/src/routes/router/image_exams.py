@@ -43,11 +43,11 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
 
     """
     
-        result = image_exams.create(image_exam, db_session)
-        if isinstance(result, Exception):
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-        
-        return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
+    result = image_exams.create(image_exam, db_session)
+    if isinstance(result, Exception):
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
+    
+    return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
 @router.put(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Update Image Exam")
