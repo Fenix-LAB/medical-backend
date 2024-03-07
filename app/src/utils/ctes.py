@@ -6,3 +6,4 @@ DISEASE_TYPES_ROW = ['disease_type_id', 'disease_name', 'description', 'status',
 EXAM_TYPES_ROW = ['exam_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 EXAMS_ROW = ['exam_id', 'exam_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 IMAGE_EXAMS_ROW = ['image_exam_id', 'image_type_id', 'company_id', 'exam_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+IMAGE_TYPES_ROW = ['image_type_id', 'company_id', 'image_type_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
