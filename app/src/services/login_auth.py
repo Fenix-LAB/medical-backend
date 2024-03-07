@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 
 def get_user_info(db_session: Session, username: str) -> tuple:
-    """Get User name and Password"""
+    """Get User name, email and Password"""
     try:
         query = text("SELECT username, password, email FROM users WHERE username = :username")
         user = db_session.execute(query, {"username": username}).fetchone()
