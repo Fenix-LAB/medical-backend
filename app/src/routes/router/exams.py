@@ -5,17 +5,25 @@ from src.config.get_session import get_db_connect
 from src.services import exams
 from fastapi.responses import JSONResponse
 from src.schemas.exams import ExamsRequest, ExamsUpdateRequest
-
+from src.utils.security import verify_token, valid_user
 
 router = APIRouter()
 
 @router.get(path="/exams", status_code=status.HTTP_200_OK, summary="Get All Exams")
-async def get_exams(db_session: Session = Depends(get_db_connect)):
+async def get_exams(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## RESPONSE
         - Returns a list of exams
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = exams.get(db_session)
     if isinstance(result, Exception):
@@ -25,7 +33,7 @@ async def get_exams(db_session: Session = Depends(get_db_connect)):
 
 
 @router.post(path="/exams", status_code=status.HTTP_201_CREATED, summary="Create Exam")
-async def create_exam(exam: ExamsRequest, db_session: Session = Depends(get_db_connect)):
+async def create_exam(exam: ExamsRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - exam_type_id: int
@@ -44,6 +52,14 @@ async def create_exam(exam: ExamsRequest, db_session: Session = Depends(get_db_c
 
     """
 
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
+
     result = exams.create(exam, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
@@ -52,7 +68,7 @@ async def create_exam(exam: ExamsRequest, db_session: Session = Depends(get_db_c
 
 
 @router.put(path="/exams{exam_id}", status_code=status.HTTP_200_OK, summary="Update Exam")
-async def update_exam(exam: ExamsUpdateRequest, exam_id: int,  db_session: Session = Depends(get_db_connect)):
+async def update_exam(exam: ExamsUpdateRequest, exam_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - exam_type_id: int (optional)
@@ -67,6 +83,14 @@ async def update_exam(exam: ExamsUpdateRequest, exam_id: int,  db_session: Sessi
 
     """
 
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
+
     result = exams.update(exam, exam_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
@@ -75,7 +99,7 @@ async def update_exam(exam: ExamsUpdateRequest, exam_id: int,  db_session: Sessi
 
 
 @router.delete(path="/exams{exam_id}", status_code=status.HTTP_200_OK, summary="Delete Exam")
-async def delete_exam(exam_id: int, db_session: Session = Depends(get_db_connect)):
+async def delete_exam(exam_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST PARAMS
         - exam_id: int
@@ -84,6 +108,14 @@ async def delete_exam(exam_id: int, db_session: Session = Depends(get_db_connect
         - Returns the deleted exam
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = exams.delete(exam_id, db_session)
     if isinstance(result, Exception):
