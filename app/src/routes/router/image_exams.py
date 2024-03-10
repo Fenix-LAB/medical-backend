@@ -5,16 +5,25 @@ from src.config.get_session import get_db_connect
 from src.services import image_exams
 from fastapi.responses import JSONResponse
 from src.schemas.image_exams import ImageExamRequest, ImageExamUpdateRequest
+from src.utils.security import verify_token, valid_user
 
 router = APIRouter()
 
 @router.get(path="/image_exams", status_code=status.HTTP_200_OK, summary="Get All Image Exams")
-async def get_image_exams(db_session: Session = Depends(get_db_connect)):
+async def get_image_exams(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## RESPONSE
         - Returns a list of image exams
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = image_exams.get(db_session)
     if isinstance(result, Exception):
@@ -24,7 +33,7 @@ async def get_image_exams(db_session: Session = Depends(get_db_connect)):
 
 
 @router.post(path="/image_exams", status_code=status.HTTP_201_CREATED, summary="Create Image Exam")
-async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = Depends(get_db_connect)):
+async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -42,6 +51,14 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
         - The image_type_id and company_id are fields that are optional
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
     result = image_exams.create(image_exam, db_session)
     if isinstance(result, Exception):
@@ -51,7 +68,7 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
 
 
 @router.put(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Update Image Exam")
-async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: int,  db_session: Session = Depends(get_db_connect)):
+async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -69,6 +86,14 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
 
     """
 
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
+
     result = image_exams.update(image_exam, image_exam_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
@@ -77,7 +102,7 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
 
 
 @router.delete(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Delete Image Exam")
-async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(get_db_connect)):
+async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST PARAMS
         - image_exam_id: int
@@ -86,6 +111,14 @@ async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(ge
         - Returns the deleted image exam
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = image_exams.delete(image_exam_id, db_session)
     if isinstance(result, Exception):
