@@ -6,11 +6,12 @@ from src.services import companies
 from fastapi.responses import JSONResponse
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/companies", status_code=status.HTTP_200_OK, summary="Get All Companies")
-async def get_companies(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_companies(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of companies
@@ -33,7 +34,7 @@ async def get_companies(db_session: Session = Depends(get_db_connect), token: st
 
 
 @router.post(path="/companies", status_code=status.HTTP_201_CREATED, summary="Create Company")
-async def create_company(company: CompanyRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_company(company: CompanyRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - commercial_name: str
@@ -66,7 +67,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
 
 
 @router.put(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Update Company")
-async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - commercial_name: str (optional)
@@ -98,7 +99,7 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
 
 
 @router.delete(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Delete Company")
-async def delete_company(company_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_company(company_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted company
