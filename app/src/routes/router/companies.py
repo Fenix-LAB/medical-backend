@@ -1,20 +1,29 @@
 from fastapi import APIRouter
-from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from src.config.get_session import get_db_connect
 from src.services import companies
 from fastapi.responses import JSONResponse
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
+from src.utils.security import verify_token, valid_user
 
 router = APIRouter()
 
 @router.get(path="/companies", status_code=status.HTTP_200_OK, summary="Get All Companies")
-async def get_companies(db_session: Session = Depends(get_db_connect)):
+async def get_companies(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## RESPONSE
         - Returns a list of companies
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = companies.get(db_session)
     if isinstance(result, Exception):
@@ -24,7 +33,7 @@ async def get_companies(db_session: Session = Depends(get_db_connect)):
 
 
 @router.post(path="/companies", status_code=status.HTTP_201_CREATED, summary="Create Company")
-async def create_company(company: CompanyRequest, db_session: Session = Depends(get_db_connect)):
+async def create_company(company: CompanyRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - commercial_name: str
@@ -41,6 +50,14 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
 
     """
 
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
+
     result = companies.create(company, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
@@ -49,7 +66,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
 
 
 @router.put(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Update Company")
-async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect)):
+async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## REQUEST BODY
         - commercial_name: str (optional)
@@ -64,7 +81,15 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
         - All fields are optional
 
     """
-    print(f'company: {company}')
+    
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
+    
     result = companies.update(company, company_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
@@ -73,12 +98,20 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
 
 
 @router.delete(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Delete Company")
-async def delete_company(company_id: int, db_session: Session = Depends(get_db_connect)):
+async def delete_company(company_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
     """
     ## RESPONSE
         - Returns the deleted company
 
     """
+
+    payload = verify_token(token)
+    if isinstance(payload, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
+    
+    valid = valid_user(db_session, payload)
+    if isinstance(valid, Exception):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
     result = companies.delete(company_id, db_session)
     if isinstance(result, Exception):
