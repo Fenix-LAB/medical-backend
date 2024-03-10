@@ -6,11 +6,12 @@ from src.services import diseases_types
 from fastapi.responses import JSONResponse
 from src.schemas.disease_types import DiseaseTypesRequest, DiseaseTypesUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/disease_types", status_code=status.HTTP_200_OK, summary="Get All Disease Types")
-async def get_disease_types(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_disease_types(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of disease types
@@ -33,7 +34,7 @@ async def get_disease_types(db_session: Session = Depends(get_db_connect), token
 
 
 @router.post(path="/disease_types", status_code=status.HTTP_201_CREATED, summary="Create Disease Type")
-async def create_disease_type(disease_type: DiseaseTypesRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_disease_type(disease_type: DiseaseTypesRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - disease_name: str
@@ -63,7 +64,7 @@ async def create_disease_type(disease_type: DiseaseTypesRequest, db_session: Ses
 
 
 @router.put(path="/disease_types{disease_type_id}", status_code=status.HTTP_200_OK, summary="Update Disease Type")
-async def update_disease_type(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_disease_type(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - disease_name: str
@@ -95,7 +96,7 @@ async def update_disease_type(disease_type: DiseaseTypesUpdateRequest, disease_t
 
 
 @router.delete(path="/disease_types{disease_type_id}", status_code=status.HTTP_200_OK, summary="Delete Disease Type")
-async def delete_disease_type(disease_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_disease_type(disease_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted disease type

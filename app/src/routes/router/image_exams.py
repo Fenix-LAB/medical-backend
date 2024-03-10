@@ -6,11 +6,12 @@ from src.services import image_exams
 from fastapi.responses import JSONResponse
 from src.schemas.image_exams import ImageExamRequest, ImageExamUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/image_exams", status_code=status.HTTP_200_OK, summary="Get All Image Exams")
-async def get_image_exams(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_image_exams(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of image exams
@@ -33,7 +34,7 @@ async def get_image_exams(db_session: Session = Depends(get_db_connect), token: 
 
 
 @router.post(path="/image_exams", status_code=status.HTTP_201_CREATED, summary="Create Image Exam")
-async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -68,7 +69,7 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
 
 
 @router.put(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Update Image Exam")
-async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -102,7 +103,7 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
 
 
 @router.delete(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Delete Image Exam")
-async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST PARAMS
         - image_exam_id: int

@@ -6,11 +6,12 @@ from src.services import persons
 from fastapi.responses import JSONResponse
 from src.schemas.persons import PersonsRequest, PersonsUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/persons", status_code=status.HTTP_200_OK, summary="Get All Persons")
-async def get_persons(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_persons(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of persons
@@ -33,7 +34,7 @@ async def get_persons(db_session: Session = Depends(get_db_connect), token: str 
 
 
 @router.post(path="/persons", status_code=status.HTTP_201_CREATED, summary="Create Person")
-async def create_person(person: PersonsRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_person(person: PersonsRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - person_id: int
@@ -72,7 +73,7 @@ async def create_person(person: PersonsRequest, db_session: Session = Depends(ge
 
 
 @router.put(path="/persons{person_id}", status_code=status.HTTP_200_OK, summary="Update Person")
-async def update_person(person: PersonsUpdateRequest, person_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_person(person: PersonsUpdateRequest, person_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - first_name: str
@@ -112,7 +113,7 @@ async def update_person(person: PersonsUpdateRequest, person_id: int,  db_sessio
 
 
 @router.delete(path="/persons{person_id}", status_code=status.HTTP_200_OK, summary="Delete Person")
-async def delete_person(person_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_person(person_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted person

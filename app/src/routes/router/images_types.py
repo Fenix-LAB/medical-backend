@@ -6,11 +6,12 @@ from src.services import image_types
 from fastapi.responses import JSONResponse
 from src.schemas.image_type import ImageTypeRequest, ImageTypeUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/image_types", status_code=status.HTTP_200_OK, summary="Get All Image Types")
-async def get_image_types(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_image_types(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of image types
@@ -33,7 +34,7 @@ async def get_image_types(db_session: Session = Depends(get_db_connect), token: 
 
 
 @router.post(path="/image_types", status_code=status.HTTP_201_CREATED, summary="Create Image Type")
-async def create_image_type(image_type: ImageTypeRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_image_type(image_type: ImageTypeRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - company_id: int (optional)
@@ -67,7 +68,7 @@ async def create_image_type(image_type: ImageTypeRequest, db_session: Session = 
 
 
 @router.put(path="/image_types/{image_type_id}", status_code=status.HTTP_200_OK, summary="Update Image Type")
-async def update_image_type(image_type: ImageTypeUpdateRequest, image_type_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_image_type(image_type: ImageTypeUpdateRequest, image_type_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - company_id: int (optional)
@@ -97,7 +98,7 @@ async def update_image_type(image_type: ImageTypeUpdateRequest, image_type_id: i
 
 
 @router.delete(path="/image_types/{image_type_id}", status_code=status.HTTP_200_OK, summary="Delete Image Type")
-async def delete_image_type(image_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_image_type(image_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted image type

@@ -6,11 +6,12 @@ from src.services import establishments
 from fastapi.responses import JSONResponse
 from src.schemas.establishments import EstablishmentRequest, EstablishmentUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/establishments", status_code=status.HTTP_200_OK, summary="Get All Establishments")
-async def get_establishments(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_establishments(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of establishments
@@ -33,7 +34,7 @@ async def get_establishments(db_session: Session = Depends(get_db_connect), toke
 
 
 @router.post(path="/establishments", status_code=status.HTTP_201_CREATED, summary="Create Establishment")
-async def create_establishment(establishment: EstablishmentRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_establishment(establishment: EstablishmentRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - name: str
@@ -63,7 +64,7 @@ async def create_establishment(establishment: EstablishmentRequest, db_session: 
 
 
 @router.put(path="/establishments{establishment_id}", status_code=status.HTTP_200_OK, summary="Update Establishment")
-async def update_establishment(establishment: EstablishmentUpdateRequest, establishment_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_establishment(establishment: EstablishmentUpdateRequest, establishment_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - name: str (optional)
@@ -92,7 +93,7 @@ async def update_establishment(establishment: EstablishmentUpdateRequest, establ
 
 
 @router.delete(path="/establishments{establishment_id}", status_code=status.HTTP_200_OK, summary="Delete Establishment")
-async def delete_establishment(establishment_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_establishment(establishment_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted establishment

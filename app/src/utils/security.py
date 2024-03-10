@@ -11,7 +11,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 #TODO: Mover a archivo .env
 # Dependencia para obtener el token JWT de la cabecera de autorización
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
 
 # Función para generar un token JWT
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):

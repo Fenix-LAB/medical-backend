@@ -6,11 +6,12 @@ from src.services import diseases
 from fastapi.responses import JSONResponse
 from src.schemas.diseases import DiseaseRequest, DiseaseUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/diseases", status_code=status.HTTP_200_OK, summary="Get All Diseases")
-async def get_diseases(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_diseases(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of diseases
@@ -33,7 +34,7 @@ async def get_diseases(db_session: Session = Depends(get_db_connect), token: str
 
 
 @router.post(path="/diseases", status_code=status.HTTP_201_CREATED, summary="Create Disease")
-async def create_disease(disease: DiseaseRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_disease(disease: DiseaseRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - disease_type_id: int (optional)
@@ -60,7 +61,7 @@ async def create_disease(disease: DiseaseRequest, db_session: Session = Depends(
 
 
 @router.put(path="/diseases{disease_id}", status_code=status.HTTP_200_OK, summary="Update Disease")
-async def update_disease(disease: DiseaseUpdateRequest, disease_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_disease(disease: DiseaseUpdateRequest, disease_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - disease_type_id: int (optional)
@@ -94,7 +95,7 @@ async def update_disease(disease: DiseaseUpdateRequest, disease_id: int,  db_ses
 
 
 @router.delete(path="/diseases{disease_id}", status_code=status.HTTP_200_OK, summary="Delete Disease")
-async def delete_disease(disease_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_disease(disease_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a message that indicates that the disease was deleted successfully

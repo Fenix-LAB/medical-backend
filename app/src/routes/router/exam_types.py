@@ -6,11 +6,12 @@ from src.services import exam_types
 from fastapi.responses import JSONResponse
 from src.schemas.exam_types import ExamTypesRequest, ExamTypesUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/exam_types", status_code=status.HTTP_200_OK, summary="Get All Exam Types")
-async def get_exam_types(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_exam_types(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of exam types
@@ -33,7 +34,7 @@ async def get_exam_types(db_session: Session = Depends(get_db_connect), token: s
 
 
 @router.post(path="/exam_types", status_code=status.HTTP_201_CREATED, summary="Create Exam Type")
-async def create_exam_type(exam_type: ExamTypesRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_exam_type(exam_type: ExamTypesRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - company_id: int
@@ -67,7 +68,7 @@ async def create_exam_type(exam_type: ExamTypesRequest, db_session: Session = De
 
 
 @router.put(path="/exam_types/{exam_type_id}", status_code=status.HTTP_200_OK, summary="Update Exam Type")
-async def update_exam_type(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_exam_type(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - company_id: int (optional)
@@ -100,7 +101,7 @@ async def update_exam_type(exam_type: ExamTypesUpdateRequest, exam_type_id: int,
 
 
 @router.delete(path="/exam_types/{exam_type_id}", status_code=status.HTTP_200_OK, summary="Delete Exam Type")
-async def delete_exam_type(exam_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_exam_type(exam_type_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST PARAMS
         - exam_type_id: int

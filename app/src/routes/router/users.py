@@ -6,11 +6,12 @@ from src.services import users
 from fastapi.responses import JSONResponse
 from src.schemas.users import UserRequest, UserUpdateRequest
 from src.utils.security import verify_token, valid_user
+from src.utils.security import oauth2_scheme
 
 router = APIRouter()
 
 @router.get(path="/users", status_code=status.HTTP_200_OK, summary="Get All Users")
-async def get_users(db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def get_users(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns a list of users
@@ -33,7 +34,7 @@ async def get_users(db_session: Session = Depends(get_db_connect), token: str = 
 
 
 @router.post(path="/users", status_code=status.HTTP_201_CREATED, summary="Create User")
-async def create_user(user: UserRequest, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def create_user(user: UserRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - username: str
@@ -69,7 +70,7 @@ async def create_user(user: UserRequest, db_session: Session = Depends(get_db_co
 
 
 @router.put(path="/users{user_id}", status_code=status.HTTP_200_OK, summary="Update User")
-async def update_user(user: UserUpdateRequest, user_id: int,  db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def update_user(user: UserUpdateRequest, user_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## REQUEST BODY
         - username: str (optional)
@@ -101,7 +102,7 @@ async def update_user(user: UserUpdateRequest, user_id: int,  db_session: Sessio
 
 
 @router.delete(path="/users{user_id}", status_code=status.HTTP_200_OK, summary="Delete User")
-async def delete_user(user_id: int, db_session: Session = Depends(get_db_connect), token: str = Header(..., alias="x-token")):
+async def delete_user(user_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
     """
     ## RESPONSE
         - Returns the deleted user
