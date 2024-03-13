@@ -56,12 +56,11 @@ def create(company: CompanyRequest, db_session: Session, payload):
         ) from ex
 
 
-def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, token: str):
+def update(company_id: int, company: CompanyUpdateRequest, db_session: Session, payload):
     """Update Company"""
     try:
-        # Generate the current datetime
         updated_at = datetime.now()
-        updated_by = decode_token(token)
+        updated_by = payload.get("id")
 
         data_company = {
             "commercial_name": company.commercial_name,
@@ -70,14 +69,14 @@ def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, 
             "updated_at": updated_at,
             "updated_by": updated_by
         }
-        
+
         query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE company_id = :company_id")
 
         db_session.execute(query, {**data_company, "company_id": company_id})
 
         db_session.commit()
 
-        return {"message": "Company updated successfully"}
+        return {"message": f"Company with id {company_id} updated successfully"}
     
     except Exception as ex:
         db_session.rollback()

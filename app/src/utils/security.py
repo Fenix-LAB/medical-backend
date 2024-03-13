@@ -1,4 +1,5 @@
 import jwt
+import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional
 from sqlalchemy.orm import Session
@@ -62,21 +63,20 @@ def valid_user(db_session: Session, payload):
         return f'Error: {ex}'
     
 
-def decode_token(token: str):
+def encrypt_password(password: str):
     """
-    Función para decodificar un token JWT
-    :param token: str: Token JWT
-    :return: username: str: Nombre de usuario
+    Función para encriptar una contraseña
+    :param password: str: Contraseña a encriptar
+    :return: str: Contraseña encriptada
     """
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        id = payload.get("id")
-        return int(id)
-    except jwt.ExpiredSignatureError:
-        return "Token has expired"
-    except jwt.InvalidTokenError:
-        return "Invalid token"
-    except Exception as e:
-        return e
+def verify_password(plain_password: str, hashed_password: str):
+    """
+    Función para verificar una contraseña
+    :param plain_password: str: Contraseña en texto plano
+    :param hashed_password: str: Contraseña encriptada
+    :return: bool: Retorna True si la contraseña es válida, de lo contrario False
+    """
+    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
        
