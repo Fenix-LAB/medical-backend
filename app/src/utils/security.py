@@ -66,7 +66,17 @@ def decode_token(token: str):
     """
     Función para decodificar un token JWT
     :param token: str: Token JWT
-    :return: dict: Retorna el payload del token JWT
+    :return: username: str: Nombre de usuario
     """
-    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        id = payload.get("id")
+        return int(id)
+    except jwt.ExpiredSignatureError:
+        return "Token has expired"
+    except jwt.InvalidTokenError:
+        return "Invalid token"
+    except Exception as e:
+        return e
        

@@ -59,7 +59,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = companies.create(company, db_session)
+    result = companies.create(company, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     

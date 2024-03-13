@@ -8,11 +8,11 @@ class CompanyRequest(BaseModel):
     """Schema for request body of company"""
     commercial_name: str
     contact_person_id: Optional[int] = None
-    status: int
+    # status: int
     # created_at: date
-    created_by: int
+    # created_by: int
     # updated_at: date
-    updated_by: int
+    # updated_by: int
 
 
 class CompanyUpdateRequest(BaseModel):
@@ -20,4 +20,4 @@ class CompanyUpdateRequest(BaseModel):
     commercial_name: Optional[str] = None
     contact_person_id: Optional[int] = None
     status: Optional[int] = None
-    updated_by: Optional[int] = None
+    # updated_by: Optional[int] = None

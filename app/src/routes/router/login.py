@@ -13,7 +13,7 @@ router = APIRouter()
 @router.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db_session: Session = Depends(get_db_connect)):
 
-    user_db, password_db, email_db = get_user_info(db_session, form_data.username)
+    user_db, password_db, email_db, id_db = get_user_info(db_session, form_data.username)
     
     if user_db is None or password_db != form_data.password:
         raise HTTPException(
@@ -22,5 +22,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
             headers={"WWW-Authenticate": "Bearer"}
     )
     else:
-        access_token = create_access_token(data={"sub": user_db, "email": email_db})
+        access_token = create_access_token(data={"sub": user_db, "email": email_db, "id": id_db})
         return JSONResponse(content={"access_token": access_token, "token_type": "bearer", "info": "Token has been created successfully"})

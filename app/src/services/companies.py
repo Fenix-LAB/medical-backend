@@ -5,6 +5,7 @@ from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
+from src.utils.security import decode_token
 
 def get(db_session: Session):
     """Get All Companies"""
@@ -24,24 +25,22 @@ def get(db_session: Session):
         ) from ex
 
 
-def create(company: CompanyRequest, db_session: Session):
+def create(company: CompanyRequest, db_session: Session, payload):
     """Create Company"""
     try:
-        # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = payload.get("id")
 
         data_company = {
             "commercial_name": company.commercial_name,
             "contact_person_id": company.contact_person_id,
-            "status": company.status,
             "created_at": created_at,
-            "created_by": company.created_by,
-            "updated_at": updated_at,
-            "updated_by": company.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
-        query = text("INSERT INTO companies (commercial_name, contact_person_id, status, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text("INSERT INTO companies (commercial_name, contact_person_id, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :created_at, :created_by, :updated_at, :updated_by)")
 
         db_session.execute(query, data_company)
 
@@ -57,20 +56,19 @@ def create(company: CompanyRequest, db_session: Session):
         ) from ex
 
 
-def update(company: CompanyUpdateRequest, company_id: int, db_session: Session):
+def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, token: str):
     """Update Company"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
-
-        print(f'company: {company}')
+        updated_by = decode_token(token)
 
         data_company = {
             "commercial_name": company.commercial_name,
             "contact_person_id": company.contact_person_id,
             "status": company.status,
             "updated_at": updated_at,
-            "updated_by": company.updated_by
+            "updated_by": updated_by
         }
         
         query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE company_id = :company_id")
