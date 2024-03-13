@@ -4,14 +4,18 @@ from sqlalchemy import text
 
 def get_user_info(db_session: Session, username: str) -> tuple:
     """Get User name, email and Password"""
-    try:
-        query = text("SELECT username, password, email FROM users WHERE username = :username")
-        user = db_session.execute(query, {"username": username}).fetchone()
+    # try:
+    query = text("SELECT username, password, email FROM users WHERE username = :username")
+    user = db_session.execute(query, {"username": username}).fetchone()
+    print(f'User: {user}')
 
-        return user[0], user[1], user[2]
+    if user is None:
+        return None, None, None
 
-    except Exception as ex:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(ex),
-        ) from ex
+    return user
+
+    # except Exception as ex:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #         detail=f'Error: {str(ex)}',
+    #     ) from ex
