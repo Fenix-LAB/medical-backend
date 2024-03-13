@@ -5,7 +5,7 @@ from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
-from src.utils.security import decode_token
+
 
 def get(db_session: Session):
     """Get All Companies"""

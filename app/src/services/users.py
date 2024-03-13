@@ -5,7 +5,7 @@ from src.schemas.users import UserRequest, UserUpdateRequest
 from src.utils.ctes import USERS_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
-
+from src.utils.security import encrypt_password
 
 def get(db_session: Session):
     """Get All Users"""
@@ -32,9 +32,11 @@ def create(user: UserRequest, db_session: Session):
         created_at = datetime.now()
         updated_at = datetime.now()
 
+        password = encrypt_password(user.password)
+
         data_user = {
             "username": user.username,
-            "password": user.password,
+            "password": password,
             "email": user.email,
             "full_name": user.full_name,
             "role": user.role,
