@@ -60,4 +60,13 @@ def valid_user(db_session: Session, payload):
         return f'User {username} is valid'
     except Exception as ex:
         return f'Error: {ex}'
+    
+
+def decode_token(token: str):
+    """
+    Función para decodificar un token JWT
+    :param token: str: Token JWT
+    :return: dict: Retorna el payload del token JWT
+    """
+    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
        
