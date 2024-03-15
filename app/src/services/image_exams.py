@@ -24,21 +24,21 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(company: CompanyRequest, db_session: Session):
+def create(company: CompanyRequest, db_session: Session, payload):
     """Create Company"""
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = payload.get("id")
 
         data_company = {
             "commercial_name": company.commercial_name,
             "contact_person_id": company.contact_person_id,
-            "status": company.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": company.created_by,
-            "updated_at": updated_at,
-            "updated_by": company.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
         query = text("INSERT INTO companies (commercial_name, contact_person_id, status, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :status, :created_at, :created_by, :updated_at, :updated_by)")
@@ -57,18 +57,19 @@ def create(company: CompanyRequest, db_session: Session):
         ) from ex
     
 
-def update(company: CompanyUpdateRequest, company_id: int, db_session: Session):
+def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, payload):
     """Update Company"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = payload.get("id")
 
         data_company = {
             "commercial_name": company.commercial_name,
             "contact_person_id": company.contact_person_id,
             "status": company.status,
             "updated_at": updated_at,
-            "updated_by": company.updated_by
+            "updated_by": updated_by
         }
 
         query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")

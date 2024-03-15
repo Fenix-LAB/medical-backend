@@ -61,7 +61,7 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = image_exams.create(image_exam, db_session)
+    result = image_exams.create(image_exam, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -95,7 +95,7 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = image_exams.update(image_exam, image_exam_id, db_session)
+    result = image_exams.update(image_exam, image_exam_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
