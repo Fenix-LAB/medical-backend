@@ -24,12 +24,12 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(person: PersonsRequest, db_session: Session):    
+def create(person: PersonsRequest, db_session: Session, payload):    
     """Create Person"""
     try:
 
         created_at = date.today()
-        updated_at = date.today()
+        created_by = payload.get("id")
 
         data_person = {
             "first_name": person.first_name,
@@ -43,9 +43,9 @@ def create(person: PersonsRequest, db_session: Session):
             "phone_number": person.phone_number,
             "email": person.email,
             "created_at": created_at,
-            "created_by": person.created_by,
-            "updated_at": updated_at,
-            "updated_by": person.updated_by,
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None,
             "company_id": person.company_id
         }
 
@@ -65,10 +65,11 @@ def create(person: PersonsRequest, db_session: Session):
         ) from ex
     
 
-def update(person: PersonsUpdateRequest, person_id: int, db_session: Session):
+def update(person: PersonsUpdateRequest, person_id: int, db_session: Session, payload):
     """Update Person"""
     try:
         update_at = date.today()
+        updated_by = payload.get("id")
         
         data_person = {
             "first_name": person.first_name,
@@ -82,7 +83,7 @@ def update(person: PersonsUpdateRequest, person_id: int, db_session: Session):
             "phone_number": person.phone_number,
             "email": person.email,
             "updated_at": update_at,
-            "updated_by": person.updated_by,
+            "updated_by": updated_by,
             "company_id": person.company_id
         }
 

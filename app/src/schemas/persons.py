@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 class PersonsRequest(BaseModel):
     """Schema for request body of persons"""
-    person_id: int
     first_name: str
     last_name: str
     identification_type: int
@@ -17,10 +16,10 @@ class PersonsRequest(BaseModel):
     phone_number: str
     email: str
     # created_at: date
-    created_by: int
+    # created_by: int
     # updated_at: date
-    updated_by: int
-    company_id: int
+    # updated_by: int
+    company_id: Optional[int]
 
 class PersonsUpdateRequest(BaseModel):
     """Schema for update body of persons"""
@@ -37,5 +36,5 @@ class PersonsUpdateRequest(BaseModel):
     # created_at: Optional[date]
     # created_by: Optional[int]
     # updated_at: Optional[date]
-    updated_by: Optional[int]
+    # updated_by: Optional[int]
     company_id: Optional[int]

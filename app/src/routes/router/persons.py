@@ -65,7 +65,7 @@ async def create_person(person: PersonsRequest, db_session: Session = Depends(ge
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = persons.create(person, db_session)
+    result = persons.create(person, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -97,6 +97,8 @@ async def update_person(person: PersonsUpdateRequest, person_id: int,  db_sessio
         
     """
 
+    print(f'data: {person}')
+
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
@@ -105,7 +107,7 @@ async def update_person(person: PersonsUpdateRequest, person_id: int,  db_sessio
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = persons.update(person, person_id, db_session)
+    result = persons.update(person, person_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
