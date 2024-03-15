@@ -60,7 +60,7 @@ async def create_exam_type(exam_type: ExamTypesRequest, db_session: Session = De
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = exam_types.create(exam_type, db_session)
+    result = exam_types.create(exam_type, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -93,7 +93,7 @@ async def update_exam_type(exam_type: ExamTypesUpdateRequest, exam_type_id: int,
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = exam_types.update(exam_type, exam_type_id, db_session)
+    result = exam_types.update(exam_type, exam_type_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     

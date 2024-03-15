@@ -6,9 +6,9 @@ class ExamTypesRequest(BaseModel):
     company_id: int
     exam_name: str
     description: Optional[str] = None
-    status: int
-    created_by: int
-    updated_by: int
+    # status: int
+    # created_by: int
+    # updated_by: int
 
 
 class ExamTypesUpdateRequest(BaseModel):
@@ -17,4 +17,4 @@ class ExamTypesUpdateRequest(BaseModel):
     exam_name: Optional[str] = None
     description: Optional[str] = None
     status: Optional[int] = None
-    updated_by: Optional[int] = None
+    # updated_by: Optional[int] = None

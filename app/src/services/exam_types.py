@@ -26,22 +26,22 @@ def get(db_session: Session):
     
 
 
-def create(exam_type: ExamTypesRequest, db_session: Session):
+def create(exam_type: ExamTypesRequest, db_session: Session, payload):
     """Create Exam Type"""
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = payload["id"]
 
         data_exam_type = {
             "company_id": exam_type.company_id,
             "exam_name": exam_type.exam_name,
             "description": exam_type.description,
-            "status": exam_type.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": exam_type.created_by,
-            "updated_at": updated_at,
-            "updated_by": exam_type.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
         query = text("INSERT INTO exam_types (company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :exam_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
@@ -60,11 +60,12 @@ def create(exam_type: ExamTypesRequest, db_session: Session):
         ) from ex
     
 
-def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Session):
+def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Session, payload):
     """Update Exam Type"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = payload["id"]
 
         data_exam_type = {
             "company_id": exam_type.company_id,
@@ -72,7 +73,7 @@ def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Ses
             "description": exam_type.description,
             "status": exam_type.status,
             "updated_at": updated_at,
-            "updated_by": exam_type.updated_by
+            "updated_by": updated_by
         }
 
         query = text("UPDATE exam_types SET company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE exam_type_id = :exam_type_id")
