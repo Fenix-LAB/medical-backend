@@ -60,7 +60,7 @@ async def create_image_type(image_type: ImageTypeRequest, db_session: Session = 
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = image_types.create(image_type, db_session)
+    result = image_types.create(image_type, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -90,7 +90,7 @@ async def update_image_type(image_type: ImageTypeUpdateRequest, image_type_id: i
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = image_types.update(image_type, image_type_id, db_session)
+    result = image_types.update(image_type=image_type, image_type_id=image_type_id, db_session=db_session, payload=payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
