@@ -25,23 +25,23 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(service: ServiceRequest, db_session: Session):
+def create(service: ServiceRequest, db_session: Session, payload):
     """Create Service"""
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = payload.get("id")
 
         data_service = {
             "service_name": service.service_name,
             "description": service.description,
             "price": service.price,
             "iva_percentage": service.iva_percentage,
-            "status": service.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": service.created_by,
-            "updated_at": updated_at,
-            "updated_by": service.updated_by,
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None,
             "company_id": service.company_id,
             "specialty_id": service.specialty_id
         }
@@ -62,11 +62,12 @@ def create(service: ServiceRequest, db_session: Session):
         ) from ex
     
 
-def update(service: ServiceUpdateRequest, service_id: int, db_session: Session):
+def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, payload):
     """Update Service"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = payload.get("id")
 
         data_service = {
             "service_name": service.service_name,
@@ -75,7 +76,7 @@ def update(service: ServiceUpdateRequest, service_id: int, db_session: Session):
             "iva_percentage": service.iva_percentage,
             "status": service.status,
             "updated_at": updated_at,
-            "updated_by": service.updated_by,
+            "updated_by": updated_by,
             "company_id": service.company_id,
             "specialty_id": service.specialty_id
         }

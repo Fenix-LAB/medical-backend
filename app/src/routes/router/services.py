@@ -63,7 +63,7 @@ async def create_service(service: ServiceRequest, db_session: Session = Depends(
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = services.create(service, db_session)
+    result = services.create(service, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -96,7 +96,7 @@ async def update_service(service: ServiceUpdateRequest, service_id: int,  db_ses
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = services.update(service, service_id, db_session)
+    result = services.update(service, service_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
