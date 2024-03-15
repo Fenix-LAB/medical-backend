@@ -25,23 +25,23 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(disease: DiseaseRequest, db_session: Session):
+def create(disease: DiseaseRequest, db_session: Session, token):
     """Create Disease"""
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = token.get("id")
 
         data_disease = {
             "disease_type_id": disease.disease_type_id,
             "disease_code": disease.disease_code,
             "disease_name": disease.disease_name,
             "description": disease.description,
-            "status": disease.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": disease.created_by,
-            "updated_at": updated_at,
-            "updated_by": disease.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
         query = text("INSERT INTO diseases (disease_type_id, disease_code, disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_type_id, :disease_code, :disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
@@ -60,11 +60,12 @@ def create(disease: DiseaseRequest, db_session: Session):
         ) from ex
     
 
-def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session):
+def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session, token):
     """Update Disease"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = token.get("id")
 
         data_disease = {
             "disease_type_id": disease.disease_type_id,
@@ -73,7 +74,7 @@ def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session):
             "description": disease.description,
             "status": disease.status,
             "updated_at": updated_at,
-            "updated_by": disease.updated_by
+            "updated_by": updated_by
         }
 
         query = text("UPDATE diseases SET disease_type_id = :disease_type_id, disease_code = :disease_code, disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE disease_id = :disease_id")

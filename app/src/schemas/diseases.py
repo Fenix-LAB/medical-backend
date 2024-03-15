@@ -7,9 +7,9 @@ class DiseaseRequest(BaseModel):
     disease_code: str
     disease_name: str
     description: Optional[str] = None
-    status: int
-    created_by: int
-    updated_by: int
+    # status: int
+    # created_by: int
+    # updated_by: int
 
 
 class DiseaseUpdateRequest(BaseModel):
@@ -19,4 +19,4 @@ class DiseaseUpdateRequest(BaseModel):
     disease_name: Optional[str] = None
     description: Optional[str] = None
     status: Optional[int] = None
-    updated_by: Optional[int] = None
+    # updated_by: Optional[int] = None
