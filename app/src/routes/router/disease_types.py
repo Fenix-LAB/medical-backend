@@ -56,7 +56,7 @@ async def create_disease_type(disease_type: DiseaseTypesRequest, db_session: Ses
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = diseases_types.create(disease_type, db_session)
+    result = diseases_types.create(disease_type, db_session, token)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -88,7 +88,7 @@ async def update_disease_type(disease_type: DiseaseTypesUpdateRequest, disease_t
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = diseases_types.update(disease_type, disease_type_id, db_session)
+    result = diseases_types.update(disease_type, disease_type_id, db_session, token)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     

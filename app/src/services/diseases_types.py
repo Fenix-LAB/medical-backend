@@ -25,21 +25,21 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(disease_type: DiseaseTypesRequest, db_session: Session):
+def create(disease_type: DiseaseTypesRequest, db_session: Session, token):
     """Create Disease Type"""
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = token.get("id")
 
         data_disease_type = {
             "disease_name": disease_type.disease_name,
             "description": disease_type.description,
-            "status": disease_type.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": disease_type.created_by,
-            "updated_at": updated_at,
-            "updated_by": disease_type.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
         query = text("INSERT INTO disease_types (disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
@@ -58,18 +58,19 @@ def create(disease_type: DiseaseTypesRequest, db_session: Session):
         ) from ex
     
 
-def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_session: Session):
+def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_session: Session, token):
     """Update Disease Type"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = token.get("id")
 
         data_disease_type = {
             "disease_name": disease_type.disease_name,
             "description": disease_type.description,
             "status": disease_type.status,
             "updated_at": updated_at,
-            "updated_by": disease_type.updated_by
+            "updated_by": updated_by
         }
 
         query = text("UPDATE disease_types SET disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")
