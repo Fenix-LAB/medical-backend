@@ -10,9 +10,9 @@ class EstablishmentRequest(BaseModel):
     address: str
     city: str
     country: str
-    status: int
-    created_by: int
-    updated_by: int
+    # status: int
+    # created_by: int
+    # updated_by: int
 
 
 class EstablishmentUpdateRequest(BaseModel):
@@ -24,4 +24,4 @@ class EstablishmentUpdateRequest(BaseModel):
     city: Optional[str] = None
     country: Optional[str] = None
     status: Optional[int] = None
-    updated_by: Optional[int] = None
+    # updated_by: Optional[int] = None

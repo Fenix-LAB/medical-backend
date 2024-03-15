@@ -56,7 +56,7 @@ async def create_establishment(establishment: EstablishmentRequest, db_session: 
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = establishments.create(establishment, db_session)
+    result = establishments.create(establishment, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     
@@ -85,7 +85,7 @@ async def update_establishment(establishment: EstablishmentUpdateRequest, establ
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
     
-    result = establishments.update(establishment, establishment_id, db_session)
+    result = establishments.update(establishment, establishment_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
     

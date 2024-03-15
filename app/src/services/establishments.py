@@ -25,12 +25,11 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(establishment: EstablishmentRequest, db_session: Session):
-    """Create Establishment"""
+def create(establishment: EstablishmentRequest, db_session: Session, payload):
     try:
         # Generate the current datetime
         created_at = datetime.now()
-        updated_at = datetime.now()
+        created_by = payload["id"]
 
         data_establishment = {
             "company_id": establishment.company_id,
@@ -39,11 +38,11 @@ def create(establishment: EstablishmentRequest, db_session: Session):
             "address": establishment.address,
             "city": establishment.city,
             "country": establishment.country,
-            "status": establishment.status,
+            "status": 1,
             "created_at": created_at,
-            "created_by": establishment.created_by,
-            "updated_at": updated_at,
-            "updated_by": establishment.updated_by
+            "created_by": created_by,
+            "updated_at": None,
+            "updated_by": None
         }
 
         query = text("INSERT INTO establishments (company_id, establishment_name, establishment_number, address, city, country, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :establishment_name, :establishment_number, :address, :city, :country, :status, :created_at, :created_by, :updated_at, :updated_by)")
@@ -62,11 +61,12 @@ def create(establishment: EstablishmentRequest, db_session: Session):
         ) from ex
     
 
-def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_session: Session):
+def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_session: Session, payload):
     """Update Establishment"""
     try:
         # Generate the current datetime
         updated_at = datetime.now()
+        updated_by = payload["id"]
 
         data_establishment = {
             "establishment_name": establishment.establishment_name,
@@ -76,7 +76,7 @@ def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_
             "country": establishment.country,
             "status": establishment.status,
             "updated_at": updated_at,
-            "updated_by": establishment.updated_by
+            "updated_by": updated_by
         }
 
         query = text("UPDATE establishments SET establishment_name = :establishment_name, establishment_number = :establishment_number, address = :address, city = :city, country = :country, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE establishment_id = :establishment_id")
