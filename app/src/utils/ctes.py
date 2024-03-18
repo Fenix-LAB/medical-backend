@@ -11,3 +11,4 @@ SERVICE_ROW = ['service_id','service_name', 'description', 'price', 'iva_percent
 DISEASES_ROW = ['disease_id', 'disease_type_id', 'disease_code', 'disease_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 ESTABLISHMENTS_ROW = ['establishment_id', 'company_id', 'establishment_name', 'establishment_number', 'address', 'city', 'country', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 USERS_ROW = ['user_id', 'username', 'password', 'email', 'full_name', 'role','access_token', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+APPPOINTMENTS_ROW = ['appointment_id', 'patient_id', 'doctor_id', 'insurance_id', 'establishment_id', 'appointment_date', 'duration_minutes', 'status', 'notes', 'created_at', 'created_by', 'updated_at', 'updated_by']
