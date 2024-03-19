@@ -12,7 +12,10 @@ from .router import (
     diseases,
     establishment,
     users,
-    login
+    login,
+    appointments,
+    doctors,
+    insurances
 )
 
 router = APIRouter()
