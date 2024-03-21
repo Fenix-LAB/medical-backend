@@ -15,3 +15,4 @@ APPPOINTMENTS_ROW = ['appointment_id', 'patient_id', 'doctor_id', 'insurance_id'
 DOCTORS_ROW = ['doctor_id', 'person_id', 'specialty_id', 'license_number', 'status', 'company_id', 'created_at', 'created_by', 'updated_at', 'updated_by']
 INSURANCES_ROW = ['insurance_id', 'person_id', 'insurance_name', 'policy_number', 'coverage_details', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 MEDICAL_ATTENTIONS_ROW = ['attention_id', 'appointment_id', 'establishment_id', 'doctor_id', 'service_id', 'insurance_id', 'company_id', 'attention_date', 'symptoms', 'diagnosis', 'treatment', 'current_condition', 'evolution', 'next_appointment_date', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+MEDICATION_DIETS_ROW = ['medication_diet_id', 'medication_type_id', 'company_id', 'medication_diet_name', 'generic_composition', 'indications', 'contraindications', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
