@@ -15,7 +15,10 @@ from .router import (
     login,
     appointments,
     doctors,
-    insurances
+    insurances,
+    medication_types,
+    medication_diets,
+    medical_attention
 )
 
 router = APIRouter()
@@ -40,3 +43,6 @@ router.include_router(establishment.router, tags=["establishment"])
 router.include_router(appointments.router, tags=["appointments"])
 router.include_router(doctors.router, tags=["doctors"])
 router.include_router(insurances.router, tags=["insurances"])
+router.include_router(medication_types.router, tags=["medication_types"])
+router.include_router(medication_diets.router, tags=["medication_diets"])
+router.include_router(medical_attention.router, tags=["medical_attention"])
