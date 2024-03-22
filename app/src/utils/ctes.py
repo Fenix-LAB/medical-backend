@@ -18,3 +18,4 @@ MEDICAL_ATTENTIONS_ROW = ['attention_id', 'appointment_id', 'establishment_id', 
 MEDICATION_DIETS_ROW = ['medication_diet_id', 'medication_type_id', 'company_id', 'medication_diet_name', 'generic_composition', 'indications', 'contraindications', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 MEDICATION_TYPES_ROW = ['medication_type_id', 'company_id', 'medication_name', 'description', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
 PATIENTS_ROW = ['patient_id', 'person_id', 'category', 'occupation_ref', 'income_date', 'is_client', 'insurance', 'alert_1', 'alert_2', 'alert_3', 'company_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
+SPECIALTIES_ROW = ['specialty_id', 'company_id', 'specialty_name', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by']
