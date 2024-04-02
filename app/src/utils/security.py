@@ -9,7 +9,7 @@ from fastapi.security import OAuth2PasswordBearer
 # Secret key para firmar los tokens JWT (debería ser una clave secreta más segura en un entorno de producción)
 SECRET_KEY = "43611869c1ed09fe5388ecbc8b3eab582f2c5c4fe22a2ed8de1fe9455c10267c"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 480
 #TODO: Mover a archivo .env
 # Dependencia para obtener el token JWT de la cabecera de autorización
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
