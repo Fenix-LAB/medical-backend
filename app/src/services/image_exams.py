@@ -1,21 +1,22 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from sqlalchemy import text
-from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
+from src.schemas.image_exams import ImageExamRequest
 from src.utils.ctes import COMPANIES_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
 
+
 def get(db_session: Session):
-    """Get All Companies"""
+    """Get All Image Exams"""
     try:
-        query = text("SELECT * FROM companies")
-        companies = db_session.execute(query).fetchall()
+        query = text("SELECT * FROM image_exams")
+        image_exams = db_session.execute(query).fetchall()
 
         # Convert the list of tuples to a list of dictionaries
-        companies = rows_to_dicts(companies, COMPANIES_ROW)
+        image_exams = rows_to_dicts(image_exams, COMPANIES_ROW)
         
-        return companies
+        return image_exams
 
     except Exception as ex:
         raise HTTPException(
@@ -24,16 +25,17 @@ def get(db_session: Session):
         ) from ex
     
 
-def create(company: CompanyRequest, db_session: Session, payload):
-    """Create Company"""
+def create(image_exam: ImageExamRequest, db_session: Session, payload):
+    """Create Image Exam"""
     try:
-        # Generate the current datetime
         created_at = datetime.now()
         created_by = payload.get("id")
 
-        data_company = {
-            "commercial_name": company.commercial_name,
-            "contact_person_id": company.contact_person_id,
+        data_image_exam = {
+            "image_type_id": image_exam.image_type_id,
+            "company_id": image_exam.company_id,
+            "exam_name": image_exam.exam_name,
+            "description": image_exam.description,
             "status": 1,
             "created_at": created_at,
             "created_by": created_by,
@@ -41,14 +43,14 @@ def create(company: CompanyRequest, db_session: Session, payload):
             "updated_by": None
         }
 
-        query = text("INSERT INTO companies (commercial_name, contact_person_id, status, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text("INSERT INTO image_exams (image_type_id, company_id, exam_name , description, status, created_at, created_by, updated_at, updated_by) VALUES (:image_type_id, :company_id, :exam_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
 
-        db_session.execute(query, data_company)
+        db_session.execute(query, data_image_exam)
 
         db_session.commit()
 
-        return {"message": "Company created successfully"}
-
+        return {"message": "Image Exam created successfully"}
+    
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
@@ -57,28 +59,29 @@ def create(company: CompanyRequest, db_session: Session, payload):
         ) from ex
     
 
-def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, payload):
-    """Update Company"""
+def update(image_exam_id: int, image_exam: ImageExamRequest, db_session: Session, payload):
+    """Update Image Exam"""
     try:
-        # Generate the current datetime
         updated_at = datetime.now()
         updated_by = payload.get("id")
 
-        data_company = {
-            "commercial_name": company.commercial_name,
-            "contact_person_id": company.contact_person_id,
-            "status": company.status,
+        data_image_exam = {
+            "image_type_id": image_exam.image_type_id,
+            "company_id": image_exam.company_id,
+            "exam_name": image_exam.exam_name,
+            "description": image_exam.description,
+            "status": 1,
             "updated_at": updated_at,
             "updated_by": updated_by
         }
 
-        query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")
+        query = text("UPDATE image_exams SET image_type_id = :image_type_id, company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")
 
-        db_session.execute(query, {**data_company, "id": company_id})
+        db_session.execute(query, {**data_image_exam, "id": image_exam_id})
 
         db_session.commit()
 
-        return {"message": "Company updated successfully"}
+        return {"message": "Image Exam updated successfully"}
     
     except Exception as ex:
         db_session.rollback()
@@ -88,19 +91,17 @@ def update(company: CompanyUpdateRequest, company_id: int, db_session: Session, 
         ) from ex
     
 
-def delete(company_id: int, db_session: Session):
-    """Delete Company"""
+def delete(image_exam_id: int, db_session: Session):
+    """Delete Image Exam"""
     try:
-        query = text("DELETE FROM companies WHERE id = :id")
-
-        db_session.execute(query, {"id": company_id})
+        query = text("DELETE FROM image_exams WHERE id = :id")
+        db_session.execute(query, {"id": image_exam_id})
 
         db_session.commit()
 
-        return {"message": "Company deleted successfully"}
+        return {"message": "Image Exam deleted successfully"}
     
     except Exception as ex:
-
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
