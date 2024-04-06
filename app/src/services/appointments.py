@@ -37,6 +37,7 @@ def create(appointment: AppointmentRequest, db_session: Session, payload):
             "insurance_id": appointment.insurance_id,
             "establishment_id": appointment.establishment_id,
             "appointment_date": appointment.appointment_date,
+            "appointment_hours": appointment.appointment_hours,
             "duration_minutes": appointment.duration_minutes,
             "status": 1,
             "notes": appointment.notes,
@@ -46,7 +47,7 @@ def create(appointment: AppointmentRequest, db_session: Session, payload):
             "updated_by": None
         }
 
-        query = text("INSERT INTO appointments (patient_id, doctor_id, insurance_id, establishment_id, appointment_date, duration_minutes, status, notes, created_at, created_by, updated_at, updated_by) VALUES (:patient_id, :doctor_id, :insurance_id, :establishment_id, :appointment_date, :duration_minutes, :status, :notes, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text("INSERT INTO appointments (patient_id, doctor_id, insurance_id, establishment_id, appointment_date,appointment_hours, duration_minutes, status, notes, created_at, created_by, updated_at, updated_by) VALUES (:patient_id, :doctor_id, :insurance_id, :establishment_id, :appointment_date, :appointment_hours, :duration_minutes, :status, :notes, :created_at, :created_by, :updated_at, :updated_by)")
 
         db_session.execute(query, data_appointment)
 
@@ -74,6 +75,7 @@ def update(appointment_id: int, appointment: AppointmentUpdateRequest, db_sessio
             "insurance_id": appointment.insurance_id,
             "establishment_id": appointment.establishment_id,
             "appointment_date": appointment.appointment_date,
+            "appointment_hours": appointment.appointment_hours,
             "duration_minutes": appointment.duration_minutes,
             "status": appointment.status,
             "notes": appointment.notes,
@@ -81,7 +83,7 @@ def update(appointment_id: int, appointment: AppointmentUpdateRequest, db_sessio
             "updated_by": updated_by
         }
 
-        query = text("UPDATE appointments SET patient_id = :patient_id, doctor_id = :doctor_id, insurance_id = :insurance_id, establishment_id = :establishment_id, appointment_date = :appointment_date, duration_minutes = :duration_minutes, status = :status, notes = :notes, updated_at = :updated_at, updated_by = :updated_by WHERE appointment_id = :appointment_id")
+        query = text("UPDATE appointments SET patient_id = :patient_id, doctor_id = :doctor_id, insurance_id = :insurance_id, establishment_id = :establishment_id, appointment_date = :appointment_date, appointment_hours = :appointment_hours duration_minutes = :duration_minutes, status = :status, notes = :notes, updated_at = :updated_at, updated_by = :updated_by WHERE appointment_id = :appointment_id")
 
         db_session.execute(query, {**data_appointment, "appointment_id": appointment_id})
 
