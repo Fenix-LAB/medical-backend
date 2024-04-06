@@ -53,7 +53,7 @@ def create(appointment: AppointmentRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Appointment created successfully"}
+        return {"message": "Appointment created successfully", "data": data_appointment}
 
     except Exception as ex:
         db_session.rollback()
@@ -89,7 +89,7 @@ def update(appointment_id: int, appointment: AppointmentUpdateRequest, db_sessio
 
         db_session.commit()
 
-        return {"message": "Appointment updated successfully"}
+        return {"message": "Appointment updated successfully", "data": data_appointment}
 
     except Exception as ex:
         db_session.rollback()
