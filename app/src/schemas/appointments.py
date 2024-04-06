@@ -9,6 +9,7 @@ class AppointmentRequest(BaseModel):
     doctor_id: Optional[int] = None
     insurance_id: Optional[int] = None
     establishment_id: Optional[int] = None
+    appointment_hours: Optional[int] = None
     appointment_date: date
     duration_minutes: int
     # status: int
@@ -22,6 +23,7 @@ class AppointmentUpdateRequest(BaseModel):
     insurance_id: Optional[int] = None
     establishment_id: Optional[int] = None
     appointment_date: Optional[date] = None
+    appointment_hours: Optional[int] = None
     duration_minutes: Optional[int] = None
     status: Optional[int] = None
     notes: Optional[str] = None
