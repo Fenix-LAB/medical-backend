@@ -48,7 +48,7 @@ def create(disease_type: DiseaseTypesRequest, db_session: Session, token):
 
         db_session.commit()
 
-        return {"message": "Disease Type created successfully"}
+        return {"message": "Disease Type created successfully", "data": data_disease_type}
 
     except Exception as ex:
         db_session.rollback()
@@ -79,7 +79,7 @@ def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_ses
 
         db_session.commit()
 
-        return {"message": "Disease Type updated successfully"}
+        return {"message": "Disease Type updated successfully", "data": data_disease_type}
 
     except Exception as ex:
         db_session.rollback()

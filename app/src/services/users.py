@@ -53,7 +53,7 @@ def create(user: UserRequest, db_session: Session):
 
         db_session.commit()
 
-        return {"message": "User created successfully"}
+        return {"message": "User created successfully", "data": data_user}
 
     except Exception as ex:
         db_session.rollback()
@@ -86,7 +86,7 @@ def update(user: UserUpdateRequest, user_id: int, db_session: Session):
 
         db_session.commit()
 
-        return {"message": "User updated successfully"}
+        return {"message": "User updated successfully", "data": data_user}
 
     except Exception as ex:
         db_session.rollback()

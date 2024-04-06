@@ -49,7 +49,7 @@ def create(insurance: InsurancesRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Insurance created successfully"}
+        return {"message": "Insurance created successfully", "data": data_insurance}
 
     except Exception as ex:
         db_session.rollback()
@@ -81,7 +81,7 @@ def update(insurance_id: int, insurance: InsurancesUpdateRequest, db_session: Se
 
         db_session.commit()
 
-        return {"message": "Insurance updated successfully"}
+        return {"message": "Insurance updated successfully", "data": data_insurance}
 
     except Exception as ex:
         db_session.rollback()

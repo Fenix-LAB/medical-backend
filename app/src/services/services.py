@@ -52,7 +52,7 @@ def create(service: ServiceRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Service created successfully"}
+        return {"message": "Service created successfully", "data": data_service}
 
     except Exception as ex:
         db_session.rollback()
@@ -87,7 +87,7 @@ def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, 
 
         db_session.commit()
 
-        return {"message": "Service updated successfully"}
+        return {"message": "Service updated successfully", "data": data_service}
     
     except Exception as ex:
         db_session.rollback()

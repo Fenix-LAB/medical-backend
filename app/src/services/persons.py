@@ -59,7 +59,7 @@ def create(person: PersonsRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Person created successfully"}
+        return {"message": "Person created successfully", "data": data_person}
     
     except Exception as ex:
         db_session.rollback()
@@ -97,7 +97,7 @@ def update(person: PersonsUpdateRequest, person_id: int, db_session: Session, pa
 
         db_session.commit()
 
-        return {"message": "Person updated successfully"}
+        return {"message": "Person updated successfully", "data": data_person}
     
     except Exception as ex:
         db_session.rollback()

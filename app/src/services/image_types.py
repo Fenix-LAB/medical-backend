@@ -49,7 +49,7 @@ def create(image_type: ImageTypeRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Image Type created successfully"}
+        return {"message": "Image Type created successfully", "data": data_image_type}
 
     except Exception as ex:
         db_session.rollback()
@@ -79,7 +79,7 @@ def update(image_type_id: int, image_type: ImageTypeUpdateRequest, db_session: S
 
         db_session.commit()
 
-        return {"message": "Image Type updated successfully"}
+        return {"message": "Image Type updated successfully", "data": data_image_type}
 
     except Exception as ex:
         db_session.rollback()

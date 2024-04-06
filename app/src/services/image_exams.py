@@ -49,7 +49,7 @@ def create(image_exam: ImageExamRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Image Exam created successfully"}
+        return {"message": "Image Exam created successfully", "data": data_image_exam}
     
     except Exception as ex:
         db_session.rollback()
@@ -81,7 +81,7 @@ def update(image_exam_id: int, image_exam: ImageExamRequest, db_session: Session
 
         db_session.commit()
 
-        return {"message": "Image Exam updated successfully"}
+        return {"message": "Image Exam updated successfully", "data": data_image_exam}
     
     except Exception as ex:
         db_session.rollback()

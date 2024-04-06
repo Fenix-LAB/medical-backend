@@ -50,7 +50,7 @@ def create(exam_type: ExamTypesRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Exam Type created successfully"}
+        return {"message": "Exam Type created successfully", "data": data_exam_type}
 
     except Exception as ex:
         db_session.rollback()
@@ -82,7 +82,7 @@ def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Ses
 
         db_session.commit()
 
-        return {"message": "Exam Type updated successfully"}
+        return {"message": "Exam Type updated successfully", "data": data_exam_type}
 
     except Exception as ex:
         db_session.rollback()

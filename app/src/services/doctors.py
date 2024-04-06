@@ -48,7 +48,7 @@ def create(doctor: DoctorsRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Doctor created successfully"}
+        return {"message": "Doctor created successfully", "data": data_doctor}
 
     except Exception as ex:
         db_session.rollback()
@@ -80,7 +80,7 @@ def update(doctor_id: int, doctor: DoctorsUpdateRequest, db_session: Session, pa
 
         db_session.commit()
 
-        return {"message": "Doctor updated successfully"}
+        return {"message": "Doctor updated successfully", "data": data_doctor}
     
     except Exception as ex:
         db_session.rollback()

@@ -47,7 +47,7 @@ def create(specialty: SpecialtyRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Specialty created successfully"}
+        return {"message": "Specialty created successfully", "data": data_specialty}
     
     except Exception as ex:
         db_session.rollback()
@@ -77,7 +77,7 @@ def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Specialty updated successfully"}
+        return {"message": "Specialty updated successfully", "data": data_specialty}
     
     except Exception as ex:
         db_session.rollback()

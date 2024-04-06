@@ -46,7 +46,7 @@ def create(company: CompanyRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Company created successfully"}
+        return {"message": "Company created successfully", "data": data_company}
 
     except Exception as ex:
         db_session.rollback()
@@ -76,7 +76,7 @@ def update(company_id: int, company: CompanyUpdateRequest, db_session: Session, 
 
         db_session.commit()
 
-        return {"message": f"Company with id {company_id} updated successfully"}
+        return {"message": f"Company with id {company_id} updated successfully", "data": data_company}
     
     except Exception as ex:
         db_session.rollback()

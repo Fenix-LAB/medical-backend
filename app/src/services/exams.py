@@ -50,7 +50,7 @@ def create(exam: ExamsRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Exam created successfully"}
+        return {"message": "Exam created successfully", "data": data_exam}
 
     except Exception as ex:
         db_session.rollback()
@@ -83,7 +83,7 @@ def update(exam: ExamsUpdateRequest, exam_id: int, db_session: Session, payload)
 
         db_session.commit()
 
-        return {"message": "Exam updated successfully"}
+        return {"message": "Exam updated successfully", "data": data_exam}
     
     except Exception as ex:
         db_session.rollback()

@@ -58,7 +58,7 @@ def create(medical_attention: MedicalAttentionRequest, db_session: Session, payl
 
         db_session.commit()
 
-        return {"message": "Medical Attention created successfully"}
+        return {"message": "Medical Attention created successfully", "data": data_medical_attention}
 
     except Exception as ex:
         db_session.rollback()
@@ -99,7 +99,7 @@ def update(medical_attention_id: int, medical_attention: MedicalAttentionUpdateR
 
         db_session.commit()
 
-        return {"message": f"Medical Attention with id {medical_attention_id} updated successfully"}
+        return {"message": f"Medical Attention with id {medical_attention_id} updated successfully", "data": data_medical_attention}
     
     except Exception as ex:
         db_session.rollback()

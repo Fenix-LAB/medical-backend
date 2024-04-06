@@ -48,7 +48,7 @@ def create(medication_type: MedicationTypesRequest, db_session: Session, payload
 
         db_session.commit()
 
-        return {"message": "Medication Type created successfully"}
+        return {"message": "Medication Type created successfully", "data": data_medication_type}
 
     except Exception as ex:
         db_session.rollback()
@@ -79,7 +79,7 @@ def update(medication_type: MedicationTypesUpdateRequest, db_session: Session, p
 
         db_session.commit()
 
-        return {"message": "Medication Type updated successfully"}
+        return {"message": "Medication Type updated successfully", "data": data_medication_type}
     
     except Exception as ex:
         db_session.rollback()

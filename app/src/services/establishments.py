@@ -51,7 +51,7 @@ def create(establishment: EstablishmentRequest, db_session: Session, payload):
 
         db_session.commit()
 
-        return {"message": "Establishment created successfully"}
+        return {"message": "Establishment created successfully", "data": data_establishment}
 
     except Exception as ex:
         db_session.rollback()
@@ -85,7 +85,7 @@ def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_
 
         db_session.commit()
 
-        return {"message": "Establishment updated successfully"}
+        return {"message": "Establishment updated successfully", "data": data_establishment}
 
     except Exception as ex:
         db_session.rollback()

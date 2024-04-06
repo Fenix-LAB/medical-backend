@@ -51,7 +51,7 @@ def create(medication_diet: MedicationDietsRequest, db_session: Session, payload
 
         db_session.commit()
 
-        return {"message": "Medication Diet created successfully"}
+        return {"message": "Medication Diet created successfully", "data": data_medication_diet}
 
     except Exception as ex:
         db_session.rollback()
@@ -85,7 +85,7 @@ def update(medication_diet_id: int, medication_diet: MedicationDietsUpdateReques
 
         db_session.commit()
 
-        return {"message": f"Medication Diet with id {medication_diet_id} updated successfully"}
+        return {"message": f"Medication Diet with id {medication_diet_id} updated successfully", "data": data_medication_diet}
     
     except Exception as ex:
         db_session.rollback()
