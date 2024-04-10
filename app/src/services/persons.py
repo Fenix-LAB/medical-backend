@@ -57,6 +57,9 @@ def create(person: PersonsRequest, db_session: Session, payload):
 
         db_session.execute(query, data_person)
 
+        data_person["birthdate"] = data_person["birthdate"].strftime("%Y-%m-%d")
+        data_person["created_at"] = data_person["created_at"].strftime("%Y-%m-%d")
+
         db_session.commit()
 
         return {"message": "Person created successfully", "data": data_person}
