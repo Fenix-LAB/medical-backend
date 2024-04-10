@@ -100,6 +100,9 @@ def update(person: PersonsUpdateRequest, person_id: int, db_session: Session, pa
 
         db_session.commit()
 
+        data_person["created_at"] = data_person["created_at"].strftime("%Y-%m-%d")
+        data_person["updated_at"] = data_person["updated_at"].strftime("%Y-%m-%d")
+
         return {"message": "Person updated successfully", "data": data_person}
     
     except Exception as ex:
