@@ -54,7 +54,7 @@ def create(patient: PatientRequest, db_session: Session, payload):
         db_session.execute(query, data_patient)
 
         data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
-
+        data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
 
         db_session.commit()
 
@@ -96,6 +96,7 @@ def update(patient_id: int, patient: PatientUpdateRequest, db_session: Session, 
         db_session.execute(query, {**data_patient, "patient_id": patient_id})
 
         data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
+        data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
 
         db_session.commit()
 
