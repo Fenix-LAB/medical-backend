@@ -24,4 +24,4 @@ if __name__ == "__main__":
         return {"message": "Welcome medical, server is up and running"}
 
     print("Starting server...")
-    uvicorn.run(application, host="127.0.0.1", port=80)
+    uvicorn.run(application, host="127.0.0.1", port=8880)
