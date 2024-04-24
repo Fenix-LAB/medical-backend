@@ -6,6 +6,7 @@ from fastapi import status
 from src.config.get_session import get_data_base
 from src.config.session import engine
 
+
 load_dotenv()
 
 
