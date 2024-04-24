@@ -55,6 +55,7 @@ API REST/
 │ ├── config/
 │ │ ├── db_config.py
 │ │ ├── session.py
+│ │ ├── database.py
 │ │ └── ...
 │ │
 │ ├── models/
