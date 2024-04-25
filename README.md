@@ -23,9 +23,24 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Configuration
+
+### Database Configuration
+
+Create the file `database.py` in the directory `app/config/` with the following connection variables for PostgreSQL database:
+
+
+# app/config/database.py
+
+DATABASE_HOST = "localhost"
+DATABASE_PORT = "5432"
+DATABASE_USER = "your_username"
+DATABASE_PASSWORD = "your_password"
+DATABASE_NAME = "your_database_name"
+
 ### Run the application
 ```bash
-python app/server.py
+python app/main.py
 ```
 
 ### Look at the documentation
@@ -40,6 +55,7 @@ API REST/
 │ ├── config/
 │ │ ├── db_config.py
 │ │ ├── session.py
+│ │ ├── database.py
 │ │ └── ...
 │ │
 │ ├── models/

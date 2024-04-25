@@ -1,17 +1,11 @@
 from contextlib import contextmanager
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from .database import DATABASE_HOST, DATABASE_PORT, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME
 
-
-# Database connection
-host = "localhost"
-port = "5432"
-user = "postgres"
-password = "medical"
-db_name = "medical_db"
 
 POSTGRES_SQL_CONNECTION = (
-    f"postgresql://{user}:{password}@{host}:{port}/{db_name}"
+    f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 )
 
 try:
