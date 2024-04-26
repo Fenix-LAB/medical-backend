@@ -51,6 +51,8 @@ def create(appointment: AppointmentRequest, db_session: Session, payload):
 
         db_session.execute(query, data_appointment)
 
+        data_appointment["created_at"] = data_appointment["created_at"].strftime("%Y-%m-%d")
+
         db_session.commit()
 
         return {"message": "Appointment created successfully", "data": data_appointment}
@@ -86,6 +88,8 @@ def update(appointment_id: int, appointment: AppointmentUpdateRequest, db_sessio
         query = text("UPDATE appointments SET patient_id = :patient_id, doctor_id = :doctor_id, insurance_id = :insurance_id, establishment_id = :establishment_id, appointment_date = :appointment_date, appointment_hours = :appointment_hours duration_minutes = :duration_minutes, status = :status, notes = :notes, updated_at = :updated_at, updated_by = :updated_by WHERE appointment_id = :appointment_id")
 
         db_session.execute(query, {**data_appointment, "appointment_id": appointment_id})
+
+        data_appointment["updated_at"] = data_appointment["updated_at"].strftime("%Y-%m-%d")
 
         db_session.commit()
 
