@@ -49,14 +49,27 @@ def create(patient: PatientRequest, db_session: Session, payload):
             "updated_by": None
         }
 
-        query = text("INSERT INTO patients (person_id, category, occupation_ref, income_date, is_client, insurance, alert_1, alert_2, alert_3, company_id, status, created_at, created_by, updated_at, updated_by) VALUES (:person_id, :category, :occupation_ref, :income_date, :is_client, :insurance, :alert_1, :alert_2, :alert_3, :company_id, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text("""
+            INSERT INTO patients (
+                person_id, category, occupation_ref, income_date, is_client, 
+                insurance, alert_1, alert_2, alert_3, company_id, status, 
+                created_at, created_by, updated_at, updated_by
+            ) VALUES (
+                :person_id, :category, :occupation_ref, :income_date, :is_client, 
+                :insurance, :alert_1, :alert_2, :alert_3, :company_id, :status, 
+                :created_at, :created_by, :updated_at, :updated_by
+            ) RETURNING patient_id
+        """)
 
-        db_session.execute(query, data_patient)
+        result = db_session.execute(query, data_patient)
+        patient_id = result.fetchone()[0]
 
         data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
         data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
 
         db_session.commit()
+
+        data_patient["patient_id"] = patient_id
 
         return {"message": "Patient created successfully", "data": data_patient}
 
