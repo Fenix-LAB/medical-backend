@@ -20,6 +20,7 @@ class PersonsRequest(BaseModel):
     # updated_at: date
     # updated_by: int
     company_id: Optional[int]
+    person_id: Optional[int] = None
 
 class PersonsUpdateRequest(BaseModel):
     """Schema for update body of persons"""
