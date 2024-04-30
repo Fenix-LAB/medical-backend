@@ -15,6 +15,9 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         patients = rows_to_dicts(patients, PATIENTS_ROW)
+
+        for patient in patients:
+            patient["income_date"] = patient["income_date"].strftime("%Y-%m-%d")
         
         return patients
 
