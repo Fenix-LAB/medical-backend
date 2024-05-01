@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.medical_attentions import MedicalAttentionRequest, MedicalAttentionUpdateRequest
 from src.utils.ctes import MEDICAL_ATTENTIONS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -58,6 +58,8 @@ def create(medical_attention: MedicalAttentionRequest, db_session: Session, payl
 
         db_session.commit()
 
+        data_medical_attention = clean_dict(data_medical_attention)
+
         return {"message": "Medical Attention created successfully", "data": data_medical_attention}
 
     except Exception as ex:
@@ -98,6 +100,8 @@ def update(medical_attention_id: int, medical_attention: MedicalAttentionUpdateR
         db_session.execute(query, {**data_medical_attention, "attention_id": medical_attention_id})
 
         db_session.commit()
+
+        data_medical_attention = clean_dict(data_medical_attention)
 
         return {"message": f"Medical Attention with id {medical_attention_id} updated successfully", "data": data_medical_attention}
     

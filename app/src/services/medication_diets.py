@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.medication_diets import MedicationDietsRequest, MedicationDietsUpdateRequest
 from src.utils.ctes import MEDICATION_DIETS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -51,6 +51,8 @@ def create(medication_diet: MedicationDietsRequest, db_session: Session, payload
 
         db_session.commit()
 
+        data_medication_diet = clean_dict(data_medication_diet)
+
         return {"message": "Medication Diet created successfully", "data": data_medication_diet}
 
     except Exception as ex:
@@ -84,6 +86,8 @@ def update(medication_diet_id: int, medication_diet: MedicationDietsUpdateReques
         db_session.execute(query, {**data_medication_diet, "medication_diet_id": medication_diet_id})
 
         db_session.commit()
+
+        data_medication_diet = clean_dict(data_medication_diet)
 
         return {"message": f"Medication Diet with id {medication_diet_id} updated successfully", "data": data_medication_diet}
     

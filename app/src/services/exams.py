@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.exams import ExamsRequest, ExamsUpdateRequest
 from src.utils.ctes import EXAMS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -50,6 +50,8 @@ def create(exam: ExamsRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_exam = clean_dict(data_exam)
+
         return {"message": "Exam created successfully", "data": data_exam}
 
     except Exception as ex:
@@ -82,6 +84,8 @@ def update(exam: ExamsUpdateRequest, exam_id: int, db_session: Session, payload)
         db_session.execute(query, {**data_exam, "exam_id": exam_id})
 
         db_session.commit()
+
+        data_exam = clean_dict(data_exam)
 
         return {"message": "Exam updated successfully", "data": data_exam}
     

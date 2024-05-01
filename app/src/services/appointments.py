@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.appointments import AppointmentRequest, AppointmentUpdateRequest
 from src.utils.ctes import APPPOINTMENTS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -15,7 +15,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         appointments = rows_to_dicts(appointments, APPPOINTMENTS_ROW)
-        
+
         return appointments
 
     except Exception as ex:
@@ -51,7 +51,7 @@ def create(appointment: AppointmentRequest, db_session: Session, payload):
 
         db_session.execute(query, data_appointment)
 
-        data_appointment["created_at"] = data_appointment["created_at"].strftime("%Y-%m-%d")
+        data_appointment = clean_dict(data_appointment)
 
         db_session.commit()
 
@@ -89,7 +89,7 @@ def update(appointment_id: int, appointment: AppointmentUpdateRequest, db_sessio
 
         db_session.execute(query, {**data_appointment, "appointment_id": appointment_id})
 
-        data_appointment["updated_at"] = data_appointment["updated_at"].strftime("%Y-%m-%d")
+        data_appointment = clean_dict(data_appointment)
 
         db_session.commit()
 

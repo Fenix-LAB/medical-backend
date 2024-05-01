@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.exam_types import ExamTypesRequest, ExamTypesUpdateRequest
 from src.utils.ctes import EXAM_TYPES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -50,6 +50,8 @@ def create(exam_type: ExamTypesRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_exam_type = clean_dict(data_exam_type)
+
         return {"message": "Exam Type created successfully", "data": data_exam_type}
 
     except Exception as ex:
@@ -81,6 +83,8 @@ def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Ses
         db_session.execute(query, {**data_exam_type, "exam_type_id": exam_type_id})
 
         db_session.commit()
+
+        data_exam_type = clean_dict(data_exam_type)
 
         return {"message": "Exam Type updated successfully", "data": data_exam_type}
 

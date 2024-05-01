@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.services import ServiceRequest, ServiceUpdateRequest
 from src.utils.ctes import SERVICE_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -52,6 +52,8 @@ def create(service: ServiceRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_service = clean_dict(data_service)
+
         return {"message": "Service created successfully", "data": data_service}
 
     except Exception as ex:
@@ -86,6 +88,8 @@ def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, 
         db_session.execute(query, {**data_service, "service_id": service_id})
 
         db_session.commit()
+
+        data_service = clean_dict(data_service)
 
         return {"message": "Service updated successfully", "data": data_service}
     

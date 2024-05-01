@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.image_exams import ImageExamRequest
 from src.utils.ctes import COMPANIES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -49,6 +49,8 @@ def create(image_exam: ImageExamRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_image_exam = clean_dict(data_image_exam)
+
         return {"message": "Image Exam created successfully", "data": data_image_exam}
     
     except Exception as ex:
@@ -80,6 +82,8 @@ def update(image_exam_id: int, image_exam: ImageExamRequest, db_session: Session
         db_session.execute(query, {**data_image_exam, "id": image_exam_id})
 
         db_session.commit()
+
+        data_image_exam = clean_dict(data_image_exam)
 
         return {"message": "Image Exam updated successfully", "data": data_image_exam}
     

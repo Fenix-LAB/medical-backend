@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.image_type import ImageTypeRequest, ImageTypeUpdateRequest
 from src.utils.ctes import IMAGE_TYPES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -49,6 +49,8 @@ def create(image_type: ImageTypeRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_image_type = clean_dict(data_image_type)
+
         return {"message": "Image Type created successfully", "data": data_image_type}
 
     except Exception as ex:
@@ -78,6 +80,8 @@ def update(image_type_id: int, image_type: ImageTypeUpdateRequest, db_session: S
         db_session.execute(query, {**data_image_type, "id": image_type_id})
 
         db_session.commit()
+
+        data_image_type = clean_dict(data_image_type)
 
         return {"message": "Image Type updated successfully", "data": data_image_type}
 

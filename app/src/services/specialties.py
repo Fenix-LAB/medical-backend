@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.specialties import SpecialtyRequest, SpecialtyUpdateRequest
 from src.utils.ctes import SPECIALTIES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -47,6 +47,8 @@ def create(specialty: SpecialtyRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_specialty = clean_dict(data_specialty)
+
         return {"message": "Specialty created successfully", "data": data_specialty}
     
     except Exception as ex:
@@ -76,6 +78,8 @@ def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
         db_session.execute(query, data_specialty)
 
         db_session.commit()
+
+        data_specialty = clean_dict(data_specialty)
 
         return {"message": "Specialty updated successfully", "data": data_specialty}
     

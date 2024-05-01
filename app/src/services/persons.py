@@ -14,10 +14,6 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         persons = rows_to_dicts(persons, PERSONS_ROW)
-
-        # Convert birthdate to string
-        for person in persons:
-            person["birthdate"] = person["birthdate"].strftime("%Y-%m-%d")
         
         return persons
 

@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.doctors import DoctorsRequest, DoctorsUpdateRequest
 from src.utils.ctes import DOCTORS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -48,6 +48,8 @@ def create(doctor: DoctorsRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_doctor = clean_dict(data_doctor)
+
         return {"message": "Doctor created successfully", "data": data_doctor}
 
     except Exception as ex:
@@ -79,6 +81,8 @@ def update(doctor_id: int, doctor: DoctorsUpdateRequest, db_session: Session, pa
         db_session.execute(query, {**data_doctor, "doctor_id": doctor_id})
 
         db_session.commit()
+
+        data_doctor = clean_dict(data_doctor)
 
         return {"message": "Doctor updated successfully", "data": data_doctor}
     

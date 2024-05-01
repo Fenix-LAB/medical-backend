@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.users import UserRequest, UserUpdateRequest
 from src.utils.ctes import USERS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 from src.utils.security import encrypt_password
 
@@ -53,6 +53,8 @@ def create(user: UserRequest, db_session: Session):
 
         db_session.commit()
 
+        data_user = clean_dict(data_user)
+
         return {"message": "User created successfully", "data": data_user}
 
     except Exception as ex:
@@ -85,6 +87,8 @@ def update(user: UserUpdateRequest, user_id: int, db_session: Session):
         db_session.execute(query, {**data_user, "id": user_id})
 
         db_session.commit()
+
+        data_user = clean_dict(data_user)
 
         return {"message": "User updated successfully", "data": data_user}
 

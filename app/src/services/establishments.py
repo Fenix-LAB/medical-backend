@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.establishments import EstablishmentRequest, EstablishmentUpdateRequest
 from src.utils.ctes import ESTABLISHMENTS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -51,6 +51,8 @@ def create(establishment: EstablishmentRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_establishment = clean_dict(data_establishment)
+
         return {"message": "Establishment created successfully", "data": data_establishment}
 
     except Exception as ex:
@@ -84,6 +86,8 @@ def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_
         db_session.execute(query, {**data_establishment, "establishment_id": establishment_id})
 
         db_session.commit()
+
+        data_establishment = clean_dict(data_establishment)
 
         return {"message": "Establishment updated successfully", "data": data_establishment}
 

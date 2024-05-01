@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.insurances import InsurancesRequest, InsurancesUpdateRequest
 from src.utils.ctes import INSURANCES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -49,6 +49,8 @@ def create(insurance: InsurancesRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_insurance = clean_dict(data_insurance)
+
         return {"message": "Insurance created successfully", "data": data_insurance}
 
     except Exception as ex:
@@ -80,6 +82,8 @@ def update(insurance_id: int, insurance: InsurancesUpdateRequest, db_session: Se
         db_session.execute(query, {**data_insurance, "insurance_id": insurance_id})
 
         db_session.commit()
+
+        data_insurance = clean_dict(data_insurance)
 
         return {"message": "Insurance updated successfully", "data": data_insurance}
 

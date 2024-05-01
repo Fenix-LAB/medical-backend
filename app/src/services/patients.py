@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.patients import PatientRequest, PatientUpdateRequest
 from src.utils.ctes import PATIENTS_ROW, PERSONS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -17,8 +17,6 @@ def get(db_session: Session):
         patients = rows_to_dicts(patients, PATIENTS_ROW)
 
         for patient in patients:
-            patient["income_date"] = patient["income_date"].strftime("%Y-%m-%d")
-
             person_id = patient.get("person_id")
 
             # Get person details
@@ -27,7 +25,6 @@ def get(db_session: Session):
 
             if person:
                 person = rows_to_dicts([person], PERSONS_ROW)[0]
-                person["birthdate"] = person["birthdate"].strftime("%Y-%m-%d")
                 patient["person"] = person
 
         return patients
@@ -80,12 +77,11 @@ def create(patient: PatientRequest, db_session: Session, payload):
         result = db_session.execute(query, data_patient)
         patient_id = result.fetchone()[0]
 
-        data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
-        data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
-
         db_session.commit()
 
         data_patient["patient_id"] = patient_id
+
+        data_patient = clean_dict(data_patient)
 
         return {"message": "Patient created successfully", "data": data_patient}
 
@@ -127,9 +123,7 @@ def update(
 
         db_session.execute(query, {**data_patient, "patient_id": patient_id})
 
-        # data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
-        data_patient["updated_at"] = data_patient["updated_at"].strftime("%Y-%m-%d")
-        data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
+        data_patient = clean_dict(data_patient)
 
         db_session.commit()
 

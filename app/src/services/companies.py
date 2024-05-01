@@ -3,7 +3,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 from datetime import datetime
 
 
@@ -46,6 +46,8 @@ def create(company: CompanyRequest, db_session: Session, payload):
 
         db_session.commit()
 
+        data_company = clean_dict(data_company)
+
         return {"message": "Company created successfully", "data": data_company}
 
     except Exception as ex:
@@ -75,6 +77,8 @@ def update(company_id: int, company: CompanyUpdateRequest, db_session: Session, 
         db_session.execute(query, {**data_company, "company_id": company_id})
 
         db_session.commit()
+
+        data_company = clean_dict(data_company)
 
         return {"message": f"Company with id {company_id} updated successfully", "data": data_company}
     
