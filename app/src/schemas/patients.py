@@ -31,4 +31,4 @@ class PatientUpdateRequest(BaseModel):
     alert_2: Optional[str] = None
     alert_3: Optional[str] = None
     company_id: Optional[int] = None
-    updated_by: Optional[int] = None
+    # updated_by: Optional[int] = None

@@ -97,7 +97,7 @@ async def update_patient(patient: PatientUpdateRequest, patient_id: int,  db_ses
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
 
-    result = patients.update(patient, patient_id, db_session, payload)
+    result = patients.update(patient_id, patient, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
 

@@ -18,7 +18,7 @@ def get(db_session: Session):
 
         for patient in patients:
             patient["income_date"] = patient["income_date"].strftime("%Y-%m-%d")
-        
+
         return patients
 
     except Exception as ex:
@@ -26,7 +26,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(patient: PatientRequest, db_session: Session, payload):
     """Create Patient"""
@@ -49,10 +49,11 @@ def create(patient: PatientRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("""
+        query = text(
+            """
             INSERT INTO patients (
                 person_id, category, occupation_ref, income_date, is_client, 
                 insurance, alert_1, alert_2, alert_3, company_id, status, 
@@ -62,7 +63,8 @@ def create(patient: PatientRequest, db_session: Session, payload):
                 :insurance, :alert_1, :alert_2, :alert_3, :company_id, :status, 
                 :created_at, :created_by, :updated_at, :updated_by
             ) RETURNING patient_id
-        """)
+        """
+        )
 
         result = db_session.execute(query, data_patient)
         patient_id = result.fetchone()[0]
@@ -82,10 +84,11 @@ def create(patient: PatientRequest, db_session: Session, payload):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
 
 
-def update(patient_id: int, patient: PatientUpdateRequest, db_session: Session, payload):
+def update(
+    patient_id: int, patient: PatientUpdateRequest, db_session: Session, payload
+):
     """Update Patient"""
     try:
         updated_at = datetime.now()
@@ -104,27 +107,33 @@ def update(patient_id: int, patient: PatientUpdateRequest, db_session: Session, 
             "company_id": patient.company_id,
             "status": patient.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE patients SET person_id = :person_id, category = :category, occupation_ref = :occupation_ref, income_date = :income_date, is_client = :is_client, insurance = :insurance, alert_1 = :alert_1, alert_2 = :alert_2, alert_3 = :alert_3, company_id = :company_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE patient_id = :patient_id")
+        query = text(
+            "UPDATE patients SET person_id = :person_id, category = :category, occupation_ref = :occupation_ref, income_date = :income_date, is_client = :is_client, insurance = :insurance, alert_1 = :alert_1, alert_2 = :alert_2, alert_3 = :alert_3, company_id = :company_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE patient_id = :patient_id"
+        )
 
         db_session.execute(query, {**data_patient, "patient_id": patient_id})
 
-        data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
+        # data_patient["created_at"] = data_patient["created_at"].strftime("%Y-%m-%d")
+        data_patient["updated_at"] = data_patient["updated_at"].strftime("%Y-%m-%d")
         data_patient["income_date"] = data_patient["income_date"].strftime("%Y-%m-%d")
 
         db_session.commit()
 
-        return {"message": f"Patient with id {patient_id} updated successfully", "data": data_patient}
-    
+        return {
+            "message": f"Patient with id {patient_id} updated successfully",
+            "data": data_patient,
+        }
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(patient_id: int, db_session: Session):
     """Delete Patient"""
