@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from sqlalchemy import text
 from src.schemas.patients import PatientRequest, PatientUpdateRequest
-from src.utils.ctes import PATIENTS_ROW
+from src.utils.ctes import PATIENTS_ROW, PERSONS_ROW
 from src.utils.helper import rows_to_dicts
 from datetime import datetime
 
@@ -18,6 +18,17 @@ def get(db_session: Session):
 
         for patient in patients:
             patient["income_date"] = patient["income_date"].strftime("%Y-%m-%d")
+
+            person_id = patient.get("person_id")
+
+            # Get person details
+            query = text("SELECT * FROM persons WHERE person_id = :person_id")
+            person = db_session.execute(query, {"person_id": person_id}).fetchone()
+
+            if person:
+                person = rows_to_dicts([person], PERSONS_ROW)[0]
+                person["birthdate"] = person["birthdate"].strftime("%Y-%m-%d")
+                patient["person"] = person
 
         return patients
 
