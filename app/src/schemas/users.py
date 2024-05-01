@@ -1,9 +1,11 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
 
 class UserRequest(BaseModel):
     """Schema for request body of user"""
+
     username: str
     password: str
     email: str
@@ -16,6 +18,7 @@ class UserRequest(BaseModel):
 
 class UserUpdateRequest(BaseModel):
     """Schema for update body of user"""
+
     username: Optional[str] = None
     password: Optional[str] = None
     email: Optional[str] = None

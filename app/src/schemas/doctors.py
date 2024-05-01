@@ -1,11 +1,12 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
 
 class DoctorsRequest(BaseModel):
     """Schema for request body of doctor"""
+
     person_id: Optional[int] = None
     specialty_id: Optional[int] = None
     license_number: str
@@ -15,6 +16,7 @@ class DoctorsRequest(BaseModel):
 
 class DoctorsUpdateRequest(BaseModel):
     """Schema for update body of doctor"""
+
     person_id: Optional[int] = None
     specialty_id: Optional[int] = None
     license_number: Optional[str] = None

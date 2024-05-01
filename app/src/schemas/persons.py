@@ -1,10 +1,12 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
+
 class PersonsRequest(BaseModel):
     """Schema for request body of persons"""
+
     first_name: str
     last_name: str
     identification_type: int
@@ -22,8 +24,10 @@ class PersonsRequest(BaseModel):
     company_id: Optional[int]
     person_id: Optional[int] = None
 
+
 class PersonsUpdateRequest(BaseModel):
     """Schema for update body of persons"""
+
     first_name: Optional[str]
     last_name: Optional[str]
     identification_type: Optional[int]

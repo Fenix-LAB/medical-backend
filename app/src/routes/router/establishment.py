@@ -1,17 +1,21 @@
-from fastapi import APIRouter
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import establishments
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
+from src.config.get_session import get_db_connect
 from src.schemas.establishments import EstablishmentRequest, EstablishmentUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from src.services import establishments
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
-@router.get(path="/establishments", status_code=status.HTTP_200_OK, summary="Get All Establishments")
-async def get_establishments(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+
+@router.get(
+    path="/establishments", status_code=status.HTTP_200_OK, summary="Get All Establishments"
+)
+async def get_establishments(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of establishments
@@ -21,7 +25,7 @@ async def get_establishments(db_session: Session = Depends(get_db_connect), toke
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -29,12 +33,18 @@ async def get_establishments(db_session: Session = Depends(get_db_connect), toke
     result = establishments.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.post(path="/establishments", status_code=status.HTTP_201_CREATED, summary="Create Establishment")
-async def create_establishment(establishment: EstablishmentRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.post(
+    path="/establishments", status_code=status.HTTP_201_CREATED, summary="Create Establishment"
+)
+async def create_establishment(
+    establishment: EstablishmentRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - name: str
@@ -51,7 +61,7 @@ async def create_establishment(establishment: EstablishmentRequest, db_session: 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -59,12 +69,21 @@ async def create_establishment(establishment: EstablishmentRequest, db_session: 
     result = establishments.create(establishment, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
-@router.put(path="/establishments{establishment_id}", status_code=status.HTTP_200_OK, summary="Update Establishment")
-async def update_establishment(establishment: EstablishmentUpdateRequest, establishment_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.put(
+    path="/establishments{establishment_id}",
+    status_code=status.HTTP_200_OK,
+    summary="Update Establishment",
+)
+async def update_establishment(
+    establishment: EstablishmentUpdateRequest,
+    establishment_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - name: str (optional)
@@ -80,20 +99,28 @@ async def update_establishment(establishment: EstablishmentUpdateRequest, establ
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
-    
+
     result = establishments.update(establishment, establishment_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.delete(path="/establishments{establishment_id}", status_code=status.HTTP_200_OK, summary="Delete Establishment")
-async def delete_establishment(establishment_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.delete(
+    path="/establishments{establishment_id}",
+    status_code=status.HTTP_200_OK,
+    summary="Delete Establishment",
+)
+async def delete_establishment(
+    establishment_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## RESPONSE
         - Returns the deleted establishment
@@ -103,13 +130,13 @@ async def delete_establishment(establishment_id: int, db_session: Session = Depe
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
-    
+
     result = establishments.delete(establishment_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)

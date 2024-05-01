@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.patients import PatientRequest, PatientUpdateRequest
 from src.utils.ctes import PATIENTS_ROW, PERSONS_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -93,9 +95,7 @@ def create(patient: PatientRequest, db_session: Session, payload):
         ) from ex
 
 
-def update(
-    patient_id: int, patient: PatientUpdateRequest, db_session: Session, payload
-):
+def update(patient_id: int, patient: PatientUpdateRequest, db_session: Session, payload):
     """Update Patient"""
     try:
         updated_at = datetime.now()

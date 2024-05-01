@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.disease_types import DiseaseTypesRequest, DiseaseTypesUpdateRequest
 from src.utils.ctes import DISEASE_TYPES_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         disease_types = rows_to_dicts(disease_types, DISEASE_TYPES_ROW)
-        
+
         return disease_types
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(disease_type: DiseaseTypesRequest, db_session: Session, token):
     """Create Disease Type"""
@@ -39,10 +41,12 @@ def create(disease_type: DiseaseTypesRequest, db_session: Session, token):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO disease_types (disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO disease_types (disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_disease_type)
 
@@ -58,9 +62,11 @@ def create(disease_type: DiseaseTypesRequest, db_session: Session, token):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
 
-def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_session: Session, token):
+
+def update(
+    disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_session: Session, token
+):
     """Update Disease Type"""
     try:
         # Generate the current datetime
@@ -72,10 +78,12 @@ def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_ses
             "description": disease_type.description,
             "status": disease_type.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE disease_types SET disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")
+        query = text(
+            "UPDATE disease_types SET disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+        )
 
         db_session.execute(query, {**data_disease_type, "id": disease_type_id})
 
@@ -91,7 +99,7 @@ def update(disease_type: DiseaseTypesUpdateRequest, disease_type_id: int, db_ses
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(disease_type_id: int, db_session: Session):
     """Delete Disease Type"""
@@ -100,11 +108,10 @@ def delete(disease_type_id: int, db_session: Session):
         db_session.execute(query, {"id": disease_type_id})
         db_session.commit()
         return {"message": "Disease Type deleted successfully"}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    

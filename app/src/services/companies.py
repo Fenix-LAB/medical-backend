@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
 from src.utils.ctes import COMPANIES_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         companies = rows_to_dicts(companies, COMPANIES_ROW)
-        
+
         return companies
 
     except Exception as ex:
@@ -37,10 +39,12 @@ def create(company: CompanyRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO companies (commercial_name, contact_person_id, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO companies (commercial_name, contact_person_id, created_at, created_by, updated_at, updated_by) VALUES (:commercial_name, :contact_person_id, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_company)
 
@@ -69,10 +73,12 @@ def update(company_id: int, company: CompanyUpdateRequest, db_session: Session, 
             "contact_person_id": company.contact_person_id,
             "status": company.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE company_id = :company_id")
+        query = text(
+            "UPDATE companies SET commercial_name = :commercial_name, contact_person_id = :contact_person_id, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE company_id = :company_id"
+        )
 
         db_session.execute(query, {**data_company, "company_id": company_id})
 
@@ -80,15 +86,18 @@ def update(company_id: int, company: CompanyUpdateRequest, db_session: Session, 
 
         data_company = clean_dict(data_company)
 
-        return {"message": f"Company with id {company_id} updated successfully", "data": data_company}
-    
+        return {
+            "message": f"Company with id {company_id} updated successfully",
+            "data": data_company,
+        }
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(company_id: int, db_session: Session):
     """Delete Company"""
@@ -100,7 +109,7 @@ def delete(company_id: int, db_session: Session):
         db_session.commit()
 
         return {"message": f"Company with id {company_id} deleted successfully"}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(

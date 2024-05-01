@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.exam_types import ExamTypesRequest, ExamTypesUpdateRequest
 from src.utils.ctes import EXAM_TYPES_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         exam_types = rows_to_dicts(exam_types, EXAM_TYPES_ROW)
-        
+
         return exam_types
 
     except Exception as ex:
@@ -23,7 +25,6 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
 
 
 def create(exam_type: ExamTypesRequest, db_session: Session, payload):
@@ -41,10 +42,12 @@ def create(exam_type: ExamTypesRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO exam_types (company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :exam_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO exam_types (company_id, exam_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :exam_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_exam_type)
 
@@ -60,7 +63,7 @@ def create(exam_type: ExamTypesRequest, db_session: Session, payload):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Session, payload):
     """Update Exam Type"""
@@ -75,10 +78,12 @@ def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Ses
             "description": exam_type.description,
             "status": exam_type.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE exam_types SET company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE exam_type_id = :exam_type_id")
+        query = text(
+            "UPDATE exam_types SET company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE exam_type_id = :exam_type_id"
+        )
 
         db_session.execute(query, {**data_exam_type, "exam_type_id": exam_type_id})
 
@@ -94,7 +99,7 @@ def update(exam_type: ExamTypesUpdateRequest, exam_type_id: int, db_session: Ses
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(exam_type_id: int, db_session: Session):
     """Delete Exam Type"""

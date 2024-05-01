@@ -1,7 +1,7 @@
-from datetime import datetime, date
-
+from datetime import date, datetime
 
 """Funciones de ayuda para la manipulación de datos."""
+
 
 def rows_to_dicts(rows, columns):
     """
@@ -23,6 +23,7 @@ def rows_to_dicts(rows, columns):
 
     # Convertir las tuplas en una lista de diccionarios
     return [dict(zip(columns, row)) for row in converted_rows]
+
 
 def clean_dict(data):
     """Covierte los objetos datetime y date a cadenas de texto."""

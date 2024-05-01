@@ -1,34 +1,36 @@
 from fastapi import APIRouter, status
 
 from .router import (
+    appointments,
     companies,
-    persons,
     disease_types,
+    diseases,
+    doctors,
+    establishment,
     exam_types,
     exams,
     image_exams,
     images_types,
-    services,
-    diseases,
-    establishment,
-    users,
-    login,
-    appointments,
-    doctors,
     insurances,
-    medication_types,
-    medication_diets,
+    login,
     medical_attention,
+    medication_diets,
+    medication_types,
     patients,
-    specialties
+    persons,
+    services,
+    specialties,
+    users,
 )
 
 router = APIRouter()
+
 
 @router.get(path="/", status_code=status.HTTP_200_OK, tags=["server up"])
 async def server_start():
     """Server is up and running"""
     return {"message": "Welcome medical, server is up and running"}
+
 
 router.include_router(login.router, tags=["login"])
 

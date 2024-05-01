@@ -1,8 +1,11 @@
 from typing import Optional
+
 from pydantic import BaseModel
+
 
 class DiseaseRequest(BaseModel):
     """Schema for request body of disease"""
+
     disease_type_id: Optional[int] = None
     disease_code: str
     disease_name: str
@@ -14,6 +17,7 @@ class DiseaseRequest(BaseModel):
 
 class DiseaseUpdateRequest(BaseModel):
     """Schema for update body of disease"""
+
     disease_type_id: Optional[int] = None
     disease_code: Optional[str] = None
     disease_name: Optional[str] = None

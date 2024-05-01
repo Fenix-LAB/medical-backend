@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.establishments import EstablishmentRequest, EstablishmentUpdateRequest
 from src.utils.ctes import ESTABLISHMENTS_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         establishments = rows_to_dicts(establishments, ESTABLISHMENTS_ROW)
-        
+
         return establishments
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(establishment: EstablishmentRequest, db_session: Session, payload):
     try:
@@ -42,10 +44,12 @@ def create(establishment: EstablishmentRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO establishments (company_id, establishment_name, establishment_number, address, city, country, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :establishment_name, :establishment_number, :address, :city, :country, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO establishments (company_id, establishment_name, establishment_number, address, city, country, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :establishment_name, :establishment_number, :address, :city, :country, :status, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_establishment)
 
@@ -61,9 +65,11 @@ def create(establishment: EstablishmentRequest, db_session: Session, payload):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
 
-def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_session: Session, payload):
+
+def update(
+    establishment: EstablishmentUpdateRequest, establishment_id: int, db_session: Session, payload
+):
     """Update Establishment"""
     try:
         # Generate the current datetime
@@ -78,10 +84,12 @@ def update(establishment: EstablishmentUpdateRequest, establishment_id: int, db_
             "country": establishment.country,
             "status": establishment.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE establishments SET establishment_name = :establishment_name, establishment_number = :establishment_number, address = :address, city = :city, country = :country, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE establishment_id = :establishment_id")
+        query = text(
+            "UPDATE establishments SET establishment_name = :establishment_name, establishment_number = :establishment_number, address = :address, city = :city, country = :country, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE establishment_id = :establishment_id"
+        )
 
         db_session.execute(query, {**data_establishment, "establishment_id": establishment_id})
 

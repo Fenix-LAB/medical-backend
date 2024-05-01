@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.diseases import DiseaseRequest, DiseaseUpdateRequest
 from src.utils.ctes import DISEASES_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         diseases = rows_to_dicts(diseases, DISEASES_ROW)
-        
+
         return diseases
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(disease: DiseaseRequest, db_session: Session, token):
     """Create Disease"""
@@ -41,10 +43,12 @@ def create(disease: DiseaseRequest, db_session: Session, token):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO diseases (disease_type_id, disease_code, disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_type_id, :disease_code, :disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO diseases (disease_type_id, disease_code, disease_name, description, status, created_at, created_by, updated_at, updated_by) VALUES (:disease_type_id, :disease_code, :disease_name, :description, :status, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_disease)
 
@@ -60,7 +64,7 @@ def create(disease: DiseaseRequest, db_session: Session, token):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session, token):
     """Update Disease"""
@@ -76,10 +80,12 @@ def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session, 
             "description": disease.description,
             "status": disease.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE diseases SET disease_type_id = :disease_type_id, disease_code = :disease_code, disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE disease_id = :disease_id")
+        query = text(
+            "UPDATE diseases SET disease_type_id = :disease_type_id, disease_code = :disease_code, disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE disease_id = :disease_id"
+        )
 
         db_session.execute(query, {**data_disease, "disease_id": disease_id})
 
@@ -95,7 +101,7 @@ def update(disease: DiseaseUpdateRequest, disease_id: int, db_session: Session, 
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(disease_id: int, db_session: Session):
     """Delete Disease"""

@@ -1,18 +1,19 @@
-from fastapi import APIRouter
-from fastapi import APIRouter, Depends, HTTPException, status, Header
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import doctors
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from fastapi.responses import JSONResponse
-from src.schemas.doctors import DoctorsRequest, DoctorsUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from sqlalchemy.orm import Session
 
+from src.config.get_session import get_db_connect
+from src.schemas.doctors import DoctorsRequest, DoctorsUpdateRequest
+from src.services import doctors
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
+
 @router.get(path="/doctors", status_code=status.HTTP_200_OK, summary="Get All Doctors")
-async def get_doctors(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def get_doctors(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of doctors
@@ -22,7 +23,7 @@ async def get_doctors(db_session: Session = Depends(get_db_connect), token: str 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -30,12 +31,16 @@ async def get_doctors(db_session: Session = Depends(get_db_connect), token: str 
     result = doctors.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
 @router.post(path="/doctors", status_code=status.HTTP_201_CREATED, summary="Create Doctor")
-async def create_doctor(doctor: DoctorsRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def create_doctor(
+    doctor: DoctorsRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - person_id: int (optional)
@@ -54,7 +59,7 @@ async def create_doctor(doctor: DoctorsRequest, db_session: Session = Depends(ge
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -67,7 +72,12 @@ async def create_doctor(doctor: DoctorsRequest, db_session: Session = Depends(ge
 
 
 @router.put(path="/doctors/{doctor_id}", status_code=status.HTTP_200_OK, summary="Update Doctor")
-async def update_doctor(doctor: DoctorsUpdateRequest, doctor_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def update_doctor(
+    doctor: DoctorsUpdateRequest,
+    doctor_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - person_id: int (optional)
@@ -87,7 +97,7 @@ async def update_doctor(doctor: DoctorsUpdateRequest, doctor_id: int,  db_sessio
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -100,7 +110,11 @@ async def update_doctor(doctor: DoctorsUpdateRequest, doctor_id: int,  db_sessio
 
 
 @router.delete(path="/doctors/{doctor_id}", status_code=status.HTTP_200_OK, summary="Delete Doctor")
-async def delete_doctor(doctor_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def delete_doctor(
+    doctor_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## RESPONSE
         - Returns a message of success
@@ -110,7 +124,7 @@ async def delete_doctor(doctor_id: int, db_session: Session = Depends(get_db_con
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))

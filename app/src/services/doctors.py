@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.doctors import DoctorsRequest, DoctorsUpdateRequest
 from src.utils.ctes import DOCTORS_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         doctors = rows_to_dicts(doctors, DOCTORS_ROW)
-        
+
         return doctors
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(doctor: DoctorsRequest, db_session: Session, payload):
     """Create Doctor"""
@@ -39,10 +41,12 @@ def create(doctor: DoctorsRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO doctors (person_id, specialty_id, license_number, company_id, created_at, created_by, updated_at, updated_by) VALUES (:person_id, :specialty_id, :license_number, :company_id, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO doctors (person_id, specialty_id, license_number, company_id, created_at, created_by, updated_at, updated_by) VALUES (:person_id, :specialty_id, :license_number, :company_id, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_doctor)
 
@@ -58,7 +62,7 @@ def create(doctor: DoctorsRequest, db_session: Session, payload):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(doctor_id: int, doctor: DoctorsUpdateRequest, db_session: Session, payload):
     """Update Doctor"""
@@ -73,10 +77,12 @@ def update(doctor_id: int, doctor: DoctorsUpdateRequest, db_session: Session, pa
             "status": doctor.status,
             "company_id": doctor.company_id,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE doctors SET person_id = :person_id, specialty_id = :specialty_id, license_number = :license_number, status = :status, company_id = :company_id, updated_at = :updated_at, updated_by = :updated_by WHERE doctor_id = :doctor_id")
+        query = text(
+            "UPDATE doctors SET person_id = :person_id, specialty_id = :specialty_id, license_number = :license_number, status = :status, company_id = :company_id, updated_at = :updated_at, updated_by = :updated_by WHERE doctor_id = :doctor_id"
+        )
 
         db_session.execute(query, {**data_doctor, "doctor_id": doctor_id})
 
@@ -85,14 +91,14 @@ def update(doctor_id: int, doctor: DoctorsUpdateRequest, db_session: Session, pa
         data_doctor = clean_dict(data_doctor)
 
         return {"message": "Doctor updated successfully", "data": data_doctor}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(doctor_id: int, db_session: Session):
     """Delete Doctor"""
@@ -103,7 +109,7 @@ def delete(doctor_id: int, db_session: Session):
         db_session.commit()
 
         return {"message": "Doctor deleted successfully"}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(

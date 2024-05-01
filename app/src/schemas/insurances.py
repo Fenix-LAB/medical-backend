@@ -1,10 +1,12 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
+
 class InsurancesRequest(BaseModel):
     """Schema for request body of insurance"""
+
     person_id: Optional[int] = None
     insurance_name: str
     policy_number: str
@@ -13,6 +15,7 @@ class InsurancesRequest(BaseModel):
 
 class InsurancesUpdateRequest(BaseModel):
     """Schema for update body of insurance"""
+
     person_id: Optional[int] = None
     insurance_name: Optional[str] = None
     policy_number: Optional[str] = None

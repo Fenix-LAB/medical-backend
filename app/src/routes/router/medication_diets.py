@@ -1,18 +1,24 @@
-from fastapi import APIRouter
-from fastapi import APIRouter, Depends, HTTPException, status, Header
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import medication_diets
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from fastapi.responses import JSONResponse
-from src.schemas.medication_diets import MedicationDietsRequest, MedicationDietsUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from sqlalchemy.orm import Session
 
+from src.config.get_session import get_db_connect
+from src.schemas.medication_diets import (
+    MedicationDietsRequest,
+    MedicationDietsUpdateRequest,
+)
+from src.services import medication_diets
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
-@router.get(path="/medication_diets", status_code=status.HTTP_200_OK, summary="Get All Medication Diets")
-async def get_medication_diets(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+
+@router.get(
+    path="/medication_diets", status_code=status.HTTP_200_OK, summary="Get All Medication Diets"
+)
+async def get_medication_diets(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of medication diets
@@ -22,7 +28,7 @@ async def get_medication_diets(db_session: Session = Depends(get_db_connect), to
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -30,12 +36,18 @@ async def get_medication_diets(db_session: Session = Depends(get_db_connect), to
     result = medication_diets.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.post(path="/medication_diets", status_code=status.HTTP_201_CREATED, summary="Create Medication Diet")
-async def create_medication_diet(medication_diet: MedicationDietsRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.post(
+    path="/medication_diets", status_code=status.HTTP_201_CREATED, summary="Create Medication Diet"
+)
+async def create_medication_diet(
+    medication_diet: MedicationDietsRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - medication_type_id: int
@@ -57,7 +69,7 @@ async def create_medication_diet(medication_diet: MedicationDietsRequest, db_ses
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -65,12 +77,21 @@ async def create_medication_diet(medication_diet: MedicationDietsRequest, db_ses
     result = medication_diets.create(medication_diet, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
-@router.put(path="/medication_diets/{medication_diet_id}", status_code=status.HTTP_200_OK, summary="Update Medication Diet")
-async def update_medication_diet(medication_diet: MedicationDietsUpdateRequest, medication_diet_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.put(
+    path="/medication_diets/{medication_diet_id}",
+    status_code=status.HTTP_200_OK,
+    summary="Update Medication Diet",
+)
+async def update_medication_diet(
+    medication_diet: MedicationDietsUpdateRequest,
+    medication_diet_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - medication_type_id: int (optional)
@@ -89,7 +110,7 @@ async def update_medication_diet(medication_diet: MedicationDietsUpdateRequest, 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -97,12 +118,20 @@ async def update_medication_diet(medication_diet: MedicationDietsUpdateRequest, 
     result = medication_diets.update(medication_diet, medication_diet_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.delete(path="/medication_diets/{medication_diet_id}", status_code=status.HTTP_200_OK, summary="Delete Medication Diet")
-async def delete_medication_diet(medication_diet_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.delete(
+    path="/medication_diets/{medication_diet_id}",
+    status_code=status.HTTP_200_OK,
+    summary="Delete Medication Diet",
+)
+async def delete_medication_diet(
+    medication_diet_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## RESPONSE
         - Returns a message that the medication diet has been deleted
@@ -112,7 +141,7 @@ async def delete_medication_diet(medication_diet_id: int, db_session: Session = 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -120,5 +149,5 @@ async def delete_medication_diet(medication_diet_id: int, db_session: Session = 
     result = medication_diets.delete(medication_diet_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)

@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.services import ServiceRequest, ServiceUpdateRequest
 from src.utils.ctes import SERVICE_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         services = rows_to_dicts(services, SERVICE_ROW)
-        
+
         return services
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(service: ServiceRequest, db_session: Session, payload):
     """Create Service"""
@@ -43,10 +45,12 @@ def create(service: ServiceRequest, db_session: Session, payload):
             "updated_at": None,
             "updated_by": None,
             "company_id": service.company_id,
-            "specialty_id": service.specialty_id
+            "specialty_id": service.specialty_id,
         }
 
-        query = text("INSERT INTO services (service_name, description, price, iva_percentage, status, created_at, created_by, updated_at, updated_by, company_id, specialty_id) VALUES (:service_name, :description, :price, :iva_percentage, :status, :created_at, :created_by, :updated_at, :updated_by, :company_id, :specialty_id)")
+        query = text(
+            "INSERT INTO services (service_name, description, price, iva_percentage, status, created_at, created_by, updated_at, updated_by, company_id, specialty_id) VALUES (:service_name, :description, :price, :iva_percentage, :status, :created_at, :created_by, :updated_at, :updated_by, :company_id, :specialty_id)"
+        )
 
         db_session.execute(query, data_service)
 
@@ -62,7 +66,7 @@ def create(service: ServiceRequest, db_session: Session, payload):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, payload):
     """Update Service"""
@@ -80,10 +84,12 @@ def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, 
             "updated_at": updated_at,
             "updated_by": updated_by,
             "company_id": service.company_id,
-            "specialty_id": service.specialty_id
+            "specialty_id": service.specialty_id,
         }
 
-        query = text("UPDATE services SET service_name = :service_name, description = :description, price = :price, iva_percentage = :iva_percentage, status = :status, updated_at = :updated_at, updated_by = :updated_by, company_id = :company_id, specialty_id = :specialty_id WHERE service_id = :service_id")
+        query = text(
+            "UPDATE services SET service_name = :service_name, description = :description, price = :price, iva_percentage = :iva_percentage, status = :status, updated_at = :updated_at, updated_by = :updated_by, company_id = :company_id, specialty_id = :specialty_id WHERE service_id = :service_id"
+        )
 
         db_session.execute(query, {**data_service, "service_id": service_id})
 
@@ -92,14 +98,14 @@ def update(service: ServiceUpdateRequest, service_id: int, db_session: Session, 
         data_service = clean_dict(data_service)
 
         return {"message": "Service updated successfully", "data": data_service}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(service_id: int, db_session: Session):
     """Delete Service"""
@@ -111,7 +117,7 @@ def delete(service_id: int, db_session: Session):
         db_session.commit()
 
         return {"message": "Service deleted successfully"}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(

@@ -1,10 +1,12 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
+
 class MedicalAttentionRequest(BaseModel):
     """Schema for request body of medical attention"""
+
     appointment_id: Optional[int] = None
     establishment_id: Optional[int] = None
     doctor_id: Optional[int] = None
@@ -18,9 +20,11 @@ class MedicalAttentionRequest(BaseModel):
     current_condition: str
     evolution: str
     next_appointment_date: date
-    
+
+
 class MedicalAttentionUpdateRequest(BaseModel):
     """Schema for update body of medical attention"""
+
     appointment_id: Optional[int] = None
     establishment_id: Optional[int] = None
     doctor_id: Optional[int] = None

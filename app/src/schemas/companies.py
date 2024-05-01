@@ -1,11 +1,12 @@
-from typing import Optional
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
 
 class CompanyRequest(BaseModel):
     """Schema for request body of company"""
+
     commercial_name: str
     contact_person_id: Optional[int] = None
     # status: int
@@ -17,6 +18,7 @@ class CompanyRequest(BaseModel):
 
 class CompanyUpdateRequest(BaseModel):
     """Schema for update body of company"""
+
     commercial_name: Optional[str] = None
     contact_person_id: Optional[int] = None
     status: Optional[int] = None

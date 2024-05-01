@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.specialties import SpecialtyRequest, SpecialtyUpdateRequest
 from src.utils.ctes import SPECIALTIES_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 
 
 def get(db_session: Session):
@@ -15,7 +17,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         specialties = rows_to_dicts(specialties, SPECIALTIES_ROW)
-        
+
         return specialties
 
     except Exception as ex:
@@ -23,7 +25,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(specialty: SpecialtyRequest, db_session: Session, payload):
     """Create Specialty"""
@@ -38,10 +40,12 @@ def create(specialty: SpecialtyRequest, db_session: Session, payload):
             "created_at": created_at,
             "created_by": created_by,
             "updated_at": None,
-            "updated_by": None
+            "updated_by": None,
         }
 
-        query = text("INSERT INTO specialties (company_id, specialty_name, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :specialty_name, :status, :created_at, :created_by, :updated_at, :updated_by)")
+        query = text(
+            "INSERT INTO specialties (company_id, specialty_name, status, created_at, created_by, updated_at, updated_by) VALUES (:company_id, :specialty_name, :status, :created_at, :created_by, :updated_at, :updated_by)"
+        )
 
         db_session.execute(query, data_specialty)
 
@@ -50,14 +54,14 @@ def create(specialty: SpecialtyRequest, db_session: Session, payload):
         data_specialty = clean_dict(data_specialty)
 
         return {"message": "Specialty created successfully", "data": data_specialty}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
     """Update Specialty"""
@@ -70,10 +74,12 @@ def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
             "specialty_name": specialty.specialty_name,
             "status": specialty.status,
             "updated_at": updated_at,
-            "updated_by": updated_by
+            "updated_by": updated_by,
         }
 
-        query = text("UPDATE specialties SET company_id = :company_id, specialty_name = :specialty_name, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id")
+        query = text(
+            "UPDATE specialties SET company_id = :company_id, specialty_name = :specialty_name, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+        )
 
         db_session.execute(query, data_specialty)
 
@@ -82,14 +88,13 @@ def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
         data_specialty = clean_dict(data_specialty)
 
         return {"message": "Specialty updated successfully", "data": data_specialty}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
 
 
 def delete(specialty_id: int, db_session: Session):
@@ -101,7 +106,7 @@ def delete(specialty_id: int, db_session: Session):
         db_session.commit()
 
         return {"message": "Specialty deleted successfully"}
-    
+
     except Exception as ex:
         db_session.rollback()
         raise HTTPException(

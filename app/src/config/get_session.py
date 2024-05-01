@@ -1,10 +1,13 @@
 # from src.config.session import connect_to_db
 from contextlib import contextmanager
+
 from sqlalchemy import MetaData
 from sqlalchemy.orm import declarative_base, sessionmaker
+
 from src.config.session import SessionLocal
 
 # SessionLocal = connect_to_db()
+
 
 # @contextmanager
 # def get_db_connect() -> SessionLocal:
@@ -18,11 +21,11 @@ from src.config.session import SessionLocal
 #         print("Closing database connection...")
 #         db.close()
 def get_data_base(engine):
-    meta = MetaData() 
+    meta = MetaData()
 
     meta.reflect(bind=engine)
 
-    Base = declarative_base() 
+    Base = declarative_base()
 
     # for table_name in meta.tables:
     #     print("Table name:", table_name)
@@ -30,6 +33,7 @@ def get_data_base(engine):
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     return SessionLocal
+
 
 # @contextmanager
 def get_db_connect():

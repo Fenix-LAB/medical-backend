@@ -1,17 +1,19 @@
-from fastapi import APIRouter
-from fastapi import APIRouter, Depends, HTTPException, status, Header
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import companies
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
+from src.config.get_session import get_db_connect
 from src.schemas.companies import CompanyRequest, CompanyUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from src.services import companies
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
+
 @router.get(path="/companies", status_code=status.HTTP_200_OK, summary="Get All Companies")
-async def get_companies(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def get_companies(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of companies
@@ -21,7 +23,7 @@ async def get_companies(db_session: Session = Depends(get_db_connect), token: st
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -29,12 +31,16 @@ async def get_companies(db_session: Session = Depends(get_db_connect), token: st
     result = companies.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
 @router.post(path="/companies", status_code=status.HTTP_201_CREATED, summary="Create Company")
-async def create_company(company: CompanyRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def create_company(
+    company: CompanyRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - commercial_name: str
@@ -51,7 +57,7 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -59,12 +65,17 @@ async def create_company(company: CompanyRequest, db_session: Session = Depends(
     result = companies.create(company, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
 @router.put(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Update Company")
-async def update_company(company: CompanyUpdateRequest, company_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def update_company(
+    company: CompanyUpdateRequest,
+    company_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - commercial_name: str (optional)
@@ -78,24 +89,30 @@ async def update_company(company: CompanyUpdateRequest, company_id: int,  db_ses
         - All fields are optional
 
     """
-    
+
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
-    
+
     result = companies.update(company, company_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.delete(path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Delete Company")
-async def delete_company(company_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.delete(
+    path="/companies{company_id}", status_code=status.HTTP_200_OK, summary="Delete Company"
+)
+async def delete_company(
+    company_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## RESPONSE
         - Returns the deleted company
@@ -105,7 +122,7 @@ async def delete_company(company_id: int, db_session: Session = Depends(get_db_c
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -113,5 +130,5 @@ async def delete_company(company_id: int, db_session: Session = Depends(get_db_c
     result = companies.delete(company_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)

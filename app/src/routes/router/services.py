@@ -1,17 +1,19 @@
-from fastapi import APIRouter
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import services
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
+from src.config.get_session import get_db_connect
 from src.schemas.services import ServiceRequest, ServiceUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from src.services import services
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
+
 @router.get(path="/services", status_code=status.HTTP_200_OK, summary="Get All Services")
-async def get_services(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def get_services(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of services
@@ -21,7 +23,7 @@ async def get_services(db_session: Session = Depends(get_db_connect), token: str
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -29,12 +31,16 @@ async def get_services(db_session: Session = Depends(get_db_connect), token: str
     result = services.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
 @router.post(path="/services", status_code=status.HTTP_201_CREATED, summary="Create Service")
-async def create_service(service: ServiceRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def create_service(
+    service: ServiceRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - service_name: str
@@ -58,7 +64,7 @@ async def create_service(service: ServiceRequest, db_session: Session = Depends(
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -66,12 +72,17 @@ async def create_service(service: ServiceRequest, db_session: Session = Depends(
     result = services.create(service, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
 @router.put(path="/services{service_id}", status_code=status.HTTP_200_OK, summary="Update Service")
-async def update_service(service: ServiceUpdateRequest, service_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def update_service(
+    service: ServiceUpdateRequest,
+    service_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - service_name: str (optional)
@@ -91,7 +102,7 @@ async def update_service(service: ServiceUpdateRequest, service_id: int,  db_ses
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -99,12 +110,18 @@ async def update_service(service: ServiceUpdateRequest, service_id: int,  db_ses
     result = services.update(service, service_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.delete(path="/services{service_id}", status_code=status.HTTP_200_OK, summary="Delete Service")
-async def delete_service(service_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.delete(
+    path="/services{service_id}", status_code=status.HTTP_200_OK, summary="Delete Service"
+)
+async def delete_service(
+    service_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## RESPONSE
         - Returns a message that indicates that the service was deleted successfully
@@ -114,7 +131,7 @@ async def delete_service(service_id: int, db_session: Session = Depends(get_db_c
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -122,5 +139,5 @@ async def delete_service(service_id: int, db_session: Session = Depends(get_db_c
     result = services.delete(service_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)

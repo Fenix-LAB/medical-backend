@@ -1,9 +1,11 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
 
 class EstablishmentRequest(BaseModel):
     """Schema for request body of establishment"""
+
     company_id: Optional[int] = None
     establishment_name: str
     establishment_number: str
@@ -17,6 +19,7 @@ class EstablishmentRequest(BaseModel):
 
 class EstablishmentUpdateRequest(BaseModel):
     """Schema for update body of establishment"""
+
     company_id: Optional[int] = None
     establishment_name: Optional[str] = None
     establishment_number: Optional[str] = None

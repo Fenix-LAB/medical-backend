@@ -1,18 +1,20 @@
-import jwt
-import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional
-from sqlalchemy.orm import Session
-from sqlalchemy import text
+
+import bcrypt
+import jwt
 from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy import text
+from sqlalchemy.orm import Session
 
 # Secret key para firmar los tokens JWT (debería ser una clave secreta más segura en un entorno de producción)
 SECRET_KEY = "43611869c1ed09fe5388ecbc8b3eab582f2c5c4fe22a2ed8de1fe9455c10267c"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 480 # Hours: 8 * 60 = 480
-#TODO: Mover a archivo .env
+ACCESS_TOKEN_EXPIRE_MINUTES = 480  # Hours: 8 * 60 = 480
+# TODO: Mover a archivo .env
 # Dependencia para obtener el token JWT de la cabecera de autorización
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
+
 
 # Función para generar un token JWT
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
@@ -31,6 +33,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+
 def verify_token(token: str):
     """
     Función para verificar un token JWT
@@ -46,7 +49,8 @@ def verify_token(token: str):
         return "Invalid token"
     except Exception as e:
         return e
-    
+
+
 def valid_user(db_session: Session, payload):
     """
     Función para obtener la información de un usuario
@@ -58,10 +62,10 @@ def valid_user(db_session: Session, payload):
     try:
         query = text("SELECT username, password, email FROM users WHERE username = :username")
         db_session.execute(query, {"username": username}).fetchone()
-        return f'User {username} is valid'
+        return f"User {username} is valid"
     except Exception as ex:
-        return f'Error: {ex}'
-    
+        return f"Error: {ex}"
+
 
 def encrypt_password(password: str):
     """
@@ -69,7 +73,8 @@ def encrypt_password(password: str):
     :param password: str: Contraseña a encriptar
     :return: str: Contraseña encriptada
     """
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
 
 def verify_password(plain_password: str, hashed_password: str):
     """
@@ -78,5 +83,4 @@ def verify_password(plain_password: str, hashed_password: str):
     :param hashed_password: str: Contraseña encriptada
     :return: bool: Retorna True si la contraseña es válida, de lo contrario False
     """
-    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
-       
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))

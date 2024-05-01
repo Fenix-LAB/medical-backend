@@ -1,8 +1,11 @@
 from typing import Optional
+
 from pydantic import BaseModel
+
 
 class ServiceRequest(BaseModel):
     """Schema for request body of service"""
+
     service_name: str
     description: Optional[str] = None
     price: float
@@ -16,6 +19,7 @@ class ServiceRequest(BaseModel):
 
 class ServiceUpdateRequest(BaseModel):
     """Schema for update body of service"""
+
     service_name: Optional[str] = None
     description: Optional[str] = None
     price: Optional[float] = None

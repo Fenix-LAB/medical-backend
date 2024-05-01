@@ -1,17 +1,19 @@
-from fastapi import APIRouter
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
-from sqlalchemy.orm import Session
-from src.config.get_session import get_db_connect
-from src.services import image_exams
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
+
+from src.config.get_session import get_db_connect
 from src.schemas.image_exams import ImageExamRequest, ImageExamUpdateRequest
-from src.utils.security import verify_token, valid_user
-from src.utils.security import oauth2_scheme
+from src.services import image_exams
+from src.utils.security import oauth2_scheme, valid_user, verify_token
 
 router = APIRouter()
 
+
 @router.get(path="/image_exams", status_code=status.HTTP_200_OK, summary="Get All Image Exams")
-async def get_image_exams(db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def get_image_exams(
+    db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)
+):
     """
     ## RESPONSE
         - Returns a list of image exams
@@ -21,7 +23,7 @@ async def get_image_exams(db_session: Session = Depends(get_db_connect), token: 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -29,12 +31,16 @@ async def get_image_exams(db_session: Session = Depends(get_db_connect), token: 
     result = image_exams.get(db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
 @router.post(path="/image_exams", status_code=status.HTTP_201_CREATED, summary="Create Image Exam")
-async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+async def create_image_exam(
+    image_exam: ImageExamRequest,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -56,20 +62,27 @@ async def create_image_exam(image_exam: ImageExamRequest, db_session: Session = 
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
-    
+
     result = image_exams.create(image_exam, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
-@router.put(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Update Image Exam")
-async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: int,  db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.put(
+    path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Update Image Exam"
+)
+async def update_image_exam(
+    image_exam: ImageExamUpdateRequest,
+    image_exam_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST BODY
         - image_type_id: int (optional)
@@ -90,7 +103,7 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -98,12 +111,18 @@ async def update_image_exam(image_exam: ImageExamUpdateRequest, image_exam_id: i
     result = image_exams.update(image_exam, image_exam_id, db_session, payload)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)
 
 
-@router.delete(path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Delete Image Exam")
-async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(get_db_connect), token: str = Depends(oauth2_scheme)):
+@router.delete(
+    path="/image_exams{image_exam_id}", status_code=status.HTTP_200_OK, summary="Delete Image Exam"
+)
+async def delete_image_exam(
+    image_exam_id: int,
+    db_session: Session = Depends(get_db_connect),
+    token: str = Depends(oauth2_scheme),
+):
     """
     ## REQUEST PARAMS
         - image_exam_id: int
@@ -116,7 +135,7 @@ async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(ge
     payload = verify_token(token)
     if isinstance(payload, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(payload))
-    
+
     valid = valid_user(db_session, payload)
     if isinstance(valid, Exception):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(valid))
@@ -124,5 +143,5 @@ async def delete_image_exam(image_exam_id: int, db_session: Session = Depends(ge
     result = image_exams.delete(image_exam_id, db_session)
     if isinstance(result, Exception):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(result))
-    
+
     return JSONResponse(content=result, status_code=status.HTTP_200_OK)

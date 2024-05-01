@@ -46,6 +46,14 @@ python app/main.py
 ### Look at the documentation
 Go to the following URL: http://localhost:80/docs
 
+### Format the code
+Run the following commands to format the code, please make sure you are in the app directory of the project:
+```bash
+black --config ../pyproject.toml .
+isort . --resolve-all-configs --config-root ..
+flake8 --config ../.flake8 .
+```
+
 ## Files structure
     
 ```bash 

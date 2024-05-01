@@ -1,18 +1,17 @@
 import uvicorn
 from dotenv import load_dotenv
+from fastapi import status
+
 # from src.config.session import connect_to_db, get_data_base
 from src.app import create_app
-from fastapi import status
 from src.config.get_session import get_data_base
 from src.config.session import engine
-
 
 load_dotenv()
 
 
-
 if __name__ == "__main__":
- 
+
     # engine = connect_to_db()
 
     # get_data_base(engine)

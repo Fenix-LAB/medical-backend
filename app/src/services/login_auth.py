@@ -1,13 +1,14 @@
-from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 
 def get_user_info(db_session: Session, username: str) -> tuple:
     """Get User name, email and Password"""
     # try:
     query = text("SELECT username, password, email, user_id FROM users WHERE username = :username")
     user = db_session.execute(query, {"username": username}).fetchone()
-    print(f'User: {user}')
+    print(f"User: {user}")
 
     if user is None:
         return None, None, None, None

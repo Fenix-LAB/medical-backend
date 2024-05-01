@@ -1,11 +1,14 @@
-from sqlalchemy.orm import Session
+from datetime import datetime
+
 from fastapi import HTTPException, status
 from sqlalchemy import text
+from sqlalchemy.orm import Session
+
 from src.schemas.users import UserRequest, UserUpdateRequest
 from src.utils.ctes import USERS_ROW
-from src.utils.helper import rows_to_dicts, clean_dict
-from datetime import datetime
+from src.utils.helper import clean_dict, rows_to_dicts
 from src.utils.security import encrypt_password
+
 
 def get(db_session: Session):
     """Get All Users"""
@@ -15,7 +18,7 @@ def get(db_session: Session):
 
         # Convert the list of tuples to a list of dictionaries
         users = rows_to_dicts(users, USERS_ROW)
-        
+
         return users
 
     except Exception as ex:
@@ -23,7 +26,7 @@ def get(db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def create(user: UserRequest, db_session: Session):
     """Create User"""
@@ -44,10 +47,12 @@ def create(user: UserRequest, db_session: Session):
             "created_by": user.created_by,
             "updated_by": user.updated_by,
             "created_at": created_at,
-            "updated_at": updated_at
+            "updated_at": updated_at,
         }
 
-        query = text("INSERT INTO users (username, password, email, full_name, role, status, created_by, updated_by, created_at, updated_at) VALUES (:username, :password, :email, :full_name, :role, :status, :created_by, :updated_by, :created_at, :updated_at)")
+        query = text(
+            "INSERT INTO users (username, password, email, full_name, role, status, created_by, updated_by, created_at, updated_at) VALUES (:username, :password, :email, :full_name, :role, :status, :created_by, :updated_by, :created_at, :updated_at)"
+        )
 
         db_session.execute(query, data_user)
 
@@ -63,7 +68,7 @@ def create(user: UserRequest, db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def update(user: UserUpdateRequest, user_id: int, db_session: Session):
     """Update User"""
@@ -79,10 +84,12 @@ def update(user: UserUpdateRequest, user_id: int, db_session: Session):
             "role": user.role,
             "status": user.status,
             "updated_by": user.updated_by,
-            "updated_at": updated_at
+            "updated_at": updated_at,
         }
 
-        query = text("UPDATE users SET username = :username, password = :password, email = :email, full_name = :full_name, role = :role, status = :status, updated_by = :updated_by, updated_at = :updated_at WHERE id = :id")
+        query = text(
+            "UPDATE users SET username = :username, password = :password, email = :email, full_name = :full_name, role = :role, status = :status, updated_by = :updated_by, updated_at = :updated_at WHERE id = :id"
+        )
 
         db_session.execute(query, {**data_user, "id": user_id})
 
@@ -98,7 +105,7 @@ def update(user: UserUpdateRequest, user_id: int, db_session: Session):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
-    
+
 
 def delete(user_id: int, db_session: Session):
     """Delete User"""
