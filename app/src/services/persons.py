@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from src.schemas.persons import PersonsRequest, PersonsUpdateRequest
 from src.utils.ctes import PERSONS_ROW
-from src.utils.helper import rows_to_dicts
+from src.utils.helper import rows_to_dicts, clean_dict
 
 
 def get(db_session: Session):
@@ -125,8 +125,8 @@ def update(person: PersonsUpdateRequest, person_id: int, db_session: Session, pa
 
         db_session.commit()
 
-        # data_person["created_at"] = data_person["created_at"].strftime("%Y-%m-%d")
-        data_person["updated_at"] = data_person["updated_at"].strftime("%Y-%m-%d")
+        data_person = clean_dict(data_person)
+
 
         return {"message": "Person updated successfully", "data": data_person}
 
