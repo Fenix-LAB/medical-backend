@@ -83,7 +83,7 @@ def update(image_type_id: int, image_type: ImageTypeUpdateRequest, db_session: S
             "UPDATE image_types SET image_type_name = :image_type_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE image_type_id = :image_type_id"
         )
 
-        db_session.execute(query, {**data_image_type, "id": image_type_id})
+        db_session.execute(query, {**data_image_type, "image_type_id": image_type_id})
 
         db_session.commit()
 
