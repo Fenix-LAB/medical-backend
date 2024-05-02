@@ -78,7 +78,7 @@ async def create_person(
     return JSONResponse(content=result, status_code=status.HTTP_201_CREATED)
 
 
-@router.put(path="/persons{person_id}", status_code=status.HTTP_200_OK, summary="Update Person")
+@router.put(path="/persons/{person_id}", status_code=status.HTTP_200_OK, summary="Update Person")
 async def update_person(
     person: PersonsUpdateRequest,
     person_id: int,

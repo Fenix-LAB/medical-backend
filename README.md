@@ -12,8 +12,7 @@ Create a virtual environment with the following command:
 python -m venv venv
 ```
 
-
-Para MAC:
+### Para MAC:
 ```bash
 source venv/bin/activate
 ```
