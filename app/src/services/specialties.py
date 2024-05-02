@@ -63,7 +63,7 @@ def create(specialty: SpecialtyRequest, db_session: Session, payload):
         ) from ex
 
 
-def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
+def update(specialty_id: int,specialty: SpecialtyUpdateRequest, db_session: Session, payload):
     """Update Specialty"""
     try:
         updated_at = datetime.now()
@@ -78,10 +78,11 @@ def update(specialty: SpecialtyUpdateRequest, db_session: Session, payload):
         }
 
         query = text(
-            "UPDATE specialties SET company_id = :company_id, specialty_name = :specialty_name, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+            "UPDATE specialties SET company_id = :company_id, specialty_name = :specialty_name, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE specialty_id = :specialty_id"
         )
 
-        db_session.execute(query, data_specialty)
+        # db_session.execute(query, data_specialty)
+        db_session.execute(query, {**data_specialty, "id": specialty_id})
 
         db_session.commit()
 

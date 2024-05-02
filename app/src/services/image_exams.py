@@ -82,10 +82,10 @@ def update(image_exam_id: int, image_exam: ImageExamRequest, db_session: Session
         }
 
         query = text(
-            "UPDATE image_exams SET image_type_id = :image_type_id, company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+            "UPDATE image_exams SET image_type_id = :image_type_id, company_id = :company_id, exam_name = :exam_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE image_exam_id = :image_exam_id"
         )
 
-        db_session.execute(query, {**data_image_exam, "id": image_exam_id})
+        db_session.execute(query, {**data_image_exam, "image_exam_id": image_exam_id})
 
         db_session.commit()
 

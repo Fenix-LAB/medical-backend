@@ -105,3 +105,21 @@ def update(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(ex),
         ) from ex
+    
+
+def delete(establishment_id: int, db_session: Session):
+    """Delete Establishment"""
+    try:
+        query = text("DELETE FROM establishments WHERE establishment_id = :establishment_id")
+        db_session.execute(query, {"establishment_id": establishment_id})
+
+        db_session.commit()
+
+        return {"message": "Establishment deleted successfully"}
+
+    except Exception as ex:
+        db_session.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(ex),
+        ) from ex

@@ -67,7 +67,7 @@ def create(medication_type: MedicationTypesRequest, db_session: Session, payload
         ) from ex
 
 
-def update(medication_type: MedicationTypesUpdateRequest, db_session: Session, payload):
+def update(medication_type_id: int, medication_type: MedicationTypesUpdateRequest, db_session: Session, payload):
     """Update Medication Type"""
     try:
         updated_at = datetime.now()
@@ -83,10 +83,11 @@ def update(medication_type: MedicationTypesUpdateRequest, db_session: Session, p
         }
 
         query = text(
-            "UPDATE medication_types SET company_id = :company_id, medication_name = :medication_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+            "UPDATE medication_types SET company_id = :company_id, medication_name = :medication_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE medication_type_id = :medication_type_id"
         )
 
-        db_session.execute(query, data_medication_type)
+        # db_session.execute(query, data_medication_type)
+        db_session.execute(query, {**data_medication_type, "medication_type_id": medication_type_id})
 
         db_session.commit()
 
@@ -106,7 +107,7 @@ def delete(medication_type_id: int, db_session: Session):
     """Delete Medication Type"""
     try:
         query = text("DELETE FROM medication_types WHERE id = :id")
-        db_session.execute(query, {"id": medication_type_id})
+        db_session.execute(query, {"medication_type_id": medication_type_id})
 
         db_session.commit()
 

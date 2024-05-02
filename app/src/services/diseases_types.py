@@ -82,10 +82,10 @@ def update(
         }
 
         query = text(
-            "UPDATE disease_types SET disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE id = :id"
+            "UPDATE disease_types SET disease_name = :disease_name, description = :description, status = :status, updated_at = :updated_at, updated_by = :updated_by WHERE disease_type_id = :disease_type_id"
         )
 
-        db_session.execute(query, {**data_disease_type, "id": disease_type_id})
+        db_session.execute(query, {**data_disease_type, "disease_type_id": disease_type_id})
 
         db_session.commit()
 
@@ -104,8 +104,8 @@ def update(
 def delete(disease_type_id: int, db_session: Session):
     """Delete Disease Type"""
     try:
-        query = text("DELETE FROM disease_types WHERE id = :id")
-        db_session.execute(query, {"id": disease_type_id})
+        query = text("DELETE FROM disease_types WHERE disease_type_id = :disease_type_id")
+        db_session.execute(query, {"disease_type_id": disease_type_id})
         db_session.commit()
         return {"message": "Disease Type deleted successfully"}
 

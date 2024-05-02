@@ -103,7 +103,7 @@ def delete(image_type_id: int, db_session: Session):
     """Delete Image Type"""
     try:
         query = text("DELETE FROM image_types WHERE id = :id")
-        db_session.execute(query, {"id": image_type_id})
+        db_session.execute(query, {"image_type_id": image_type_id})
         db_session.commit()
 
         return {"message": "Image Type deleted successfully"}

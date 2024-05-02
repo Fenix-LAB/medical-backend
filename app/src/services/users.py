@@ -88,11 +88,12 @@ def update(user: UserUpdateRequest, user_id: int, db_session: Session):
         }
 
         query = text(
-            "UPDATE users SET username = :username, password = :password, email = :email, full_name = :full_name, role = :role, status = :status, updated_by = :updated_by, updated_at = :updated_at WHERE id = :id"
+            "UPDATE users SET username = :username, password = :password, email = :email, full_name = :full_name, role = :role, status = :status, updated_by = :updated_by, updated_at = :updated_at WHERE user_id = :user_id"
         )
 
-        db_session.execute(query, {**data_user, "id": user_id})
-
+        # db_session.execute(query, {**data_user, "id": user_id})
+        db_session.execute(query, {**data_user, "user_id": user_id})
+        
         db_session.commit()
 
         data_user = clean_dict(data_user)
