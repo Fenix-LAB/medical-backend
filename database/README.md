@@ -54,6 +54,12 @@ docker exec -it <id_container> bash
 docker exec -it <id_container> psql -u postgres
 ```
 
+### Load backup
+
+```bash
+psql -U potgres -d medical_db -f medicalrecords.sql
+```
+
 ### SQL Shell
 
 Init the SQL Shell
